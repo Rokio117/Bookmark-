@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import bookMarkContext from "./context";
+import AddBook from "./components/addBook/addBook";
 import "./App.css";
 import config from "./config";
 
@@ -29,7 +30,9 @@ class App extends Component {
           books: this.state.books,
           page: this.state.page
         }}
-      ></bookMarkContext.Provider>
+      >
+        <AddBook />
+      </bookMarkContext.Provider>
     );
   }
 }

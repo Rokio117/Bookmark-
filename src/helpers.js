@@ -6,6 +6,7 @@ const helpers = {
       `${config.BOOK_ENDPOINT}${title}&maxResults=5&key=${config.API_KEY}`
     )
       .then(results => {
+        console.log(results, "results of fetch to google books");
         return results.json();
       })
       .catch(error => {

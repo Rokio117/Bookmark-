@@ -13,7 +13,8 @@ class addBook extends Component {
       //searchResults is the list of items from the query
       startedOn: undefined,
       finishedOn: undefined,
-      currentPage: undefined
+      currentPage: undefined,
+      noBookChosen: false
     };
   }
 
@@ -31,9 +32,10 @@ class addBook extends Component {
     if (resultList.length) {
       return resultList.map(result => {
         //where is authors coming from?
+        console.log(result, "result in result list");
         let authors = [];
         let formattedAuthors = [];
-        if (result.authors.length === 1) {
+        if (result.volumeInfo.authors.length === 1) {
           authors = <p>{`Author: ${result.volumeInfo.authors[0]}`}</p>;
         } else {
           result.volumeInfo.authors.forEach(author => {
@@ -50,7 +52,7 @@ class addBook extends Component {
             ? result.volumeInfo.imageLinks.smallThumbnail
             : "No Picture available",
           bookDescription: result.volumeInfo.description
-            ? JSON.parse(result.volumeInfo.description)
+            ? result.volumeInfo.description
             : "No description available"
         };
         return (
@@ -64,7 +66,13 @@ class addBook extends Component {
             {authors}
             <br></br>
             <p>{`Published on: ${result.volumeInfo.publishedDate}`}</p>
-            <button onClick={e => this.setState({ chosenBook: bookObject })}>
+            <button
+              onClick={e => {
+                e.preventDefault();
+                console.log(bookObject, "bookObject in choose book");
+                this.setState({ chosenBook: bookObject });
+              }}
+            >
               Choose
             </button>
           </li>
@@ -123,19 +131,49 @@ class addBook extends Component {
     }
   }
 
+  noBookChosen(state) {
+    if (state) {
+      return <p className="error">Please Enter A Book</p>;
+    }
+  }
+
   render() {
     return (
       <bookmarkContext.Consumer>
         {value => {
           return (
-            <form>
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+              }}
+            >
               <fieldset>
                 <legend id="findBookFieldset">Find Book</legend>
-                <input type="text" required></input>
-                <button
-                  type="button"
+
+                <input
+                  type="text"
+                  required
                   placeholder="Pride and Prejudice"
-                ></button>
+                  onChange={e => {
+                    this.setState({
+                      bookToSearch: e.target.value,
+                      noBookChosen: false
+                    });
+                  }}
+                ></input>
+                <button
+                  type="submit"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.state.bookToSearch
+                      ? this.findBookClickHandler(this.state.bookToSearch)
+                      : this.setState({ noBookChosen: true });
+                  }}
+                >
+                  Search
+                </button>
+                {this.noBookChosen(this.state.noBookChosen)}
+                <br></br>
                 <h2>Results</h2>
                 <ul>{this.results(this.state.searchResults)}</ul>
               </fieldset>
