@@ -2,48 +2,67 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookmarkContext from "../../context";
 import helpers from "../../helpers";
+import "./addBook.css";
 class addBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
       addingTo: "upcoming",
       bookToSearch: "",
-      chosenBook: {},
+      chosenBook: undefined,
       searchResults: [],
       //searchResults is the list of items from the query
       startedOn: undefined,
       finishedOn: undefined,
       currentPage: undefined,
-      noBookChosen: false
+      noBookEntered: false,
+      noBookSelected: false
     };
   }
 
   componentDidMount() {}
 
   findBookClickHandler(event) {
-    helpers.getBook(this.state.bookToSearch).then(results => {
-      const searchResults = results.items;
-      this.setState({ searchResults: searchResults });
-    });
+    //add case where only blank space is entered
+    //it will throw a 400 if thats the case
+    const noSpaces = this.state.bookToSearch.replace(/\s/g, "");
+
+    if (noSpaces === "") {
+      this.setState({ noBookEntered: true });
+    } else
+      helpers.getBook(this.state.bookToSearch).then(results => {
+        //totalItems
+        let searchResults = results.items;
+        if (results.totalItems === 0) {
+          searchResults = ["No results found"];
+        }
+        this.setState({ searchResults: searchResults });
+      });
   }
 
   results(resultList) {
     //needs to be sent results.items
-    if (resultList.length) {
+    if (resultList[0] !== "No results found") {
       return resultList.map(result => {
         //where is authors coming from?
-        console.log(result, "result in result list");
+
         let authors = [];
         let formattedAuthors = [];
-        if (result.volumeInfo.authors.length === 1) {
-          authors = <p>{`Author: ${result.volumeInfo.authors[0]}`}</p>;
-        } else {
-          result.volumeInfo.authors.forEach(author => {
-            formattedAuthors.unshift(author);
-          });
+        if (result.volumeInfo.authors) {
+          if (result.volumeInfo.authors.length === 1) {
+            authors = <p>{`Author: ${result.volumeInfo.authors[0]}`}</p>;
+          } else {
+            result.volumeInfo.authors.forEach(author => {
+              formattedAuthors.unshift(author);
+            });
 
-          authors = <p>{`Authors: ${formattedAuthors}`}</p>;
-        }
+            authors = <p>{`Authors: ${formattedAuthors}`}</p>;
+          }
+        } else
+          authors = (
+            <p>{`Author: Sorry, we could not find an author for this`}</p>
+          );
+
         const bookObject = {
           title: result.volumeInfo.title,
           authors: result.volumeInfo.authors,
@@ -56,7 +75,7 @@ class addBook extends Component {
             : "No description available"
         };
         return (
-          <li id="bookResult">
+          <li id="bookResult" key={result.volumeInfo.id}>
             <img
               src={bookObject.coverArt}
               alt={`Cover art for ${bookObject.title}`}
@@ -69,7 +88,7 @@ class addBook extends Component {
             <button
               onClick={e => {
                 e.preventDefault();
-                console.log(bookObject, "bookObject in choose book");
+
                 this.setState({ chosenBook: bookObject });
               }}
             >
@@ -78,7 +97,7 @@ class addBook extends Component {
           </li>
         );
       });
-    }
+    } else return <p>No results found</p>;
   }
 
   bookDetailsToRender(state) {
@@ -131,9 +150,15 @@ class addBook extends Component {
     }
   }
 
-  noBookChosen(state) {
+  noBookEntered(state) {
     if (state) {
       return <p className="error">Please Enter A Book</p>;
+    }
+  }
+
+  noBookSelected(state) {
+    if (state) {
+      return <p className="error">Please select a book</p>;
     }
   }
 
@@ -145,6 +170,9 @@ class addBook extends Component {
             <form
               onSubmit={e => {
                 e.preventDefault();
+                if (!this.state.chosenBook) {
+                  this.setState({ noBookSelected: true });
+                }
               }}
             >
               <fieldset>
@@ -157,7 +185,7 @@ class addBook extends Component {
                   onChange={e => {
                     this.setState({
                       bookToSearch: e.target.value,
-                      noBookChosen: false
+                      noBookEntered: false
                     });
                   }}
                 ></input>
@@ -167,12 +195,12 @@ class addBook extends Component {
                     e.preventDefault();
                     this.state.bookToSearch
                       ? this.findBookClickHandler(this.state.bookToSearch)
-                      : this.setState({ noBookChosen: true });
+                      : this.setState({ noBookEntered: true });
                   }}
                 >
                   Search
                 </button>
-                {this.noBookChosen(this.state.noBookChosen)}
+                {this.noBookEntered(this.state.noBookEntered)}
                 <br></br>
                 <h2>Results</h2>
                 <ul>{this.results(this.state.searchResults)}</ul>
@@ -192,6 +220,7 @@ class addBook extends Component {
                 </select>
                 <br></br>
                 {this.bookDetailsToRender(this.state.addingTo)}
+                {this.noBookSelected(this.state.noBookSelected)}
               </fieldset>
               <button type="submit">Submit</button>
             </form>
