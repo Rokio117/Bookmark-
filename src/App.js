@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import bookMarkContext from "./context";
 import "./App.css";
+import config from "./config";
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +15,12 @@ class App extends Component {
     };
   }
 
+  setError() {
+    this.setState({ hasError: true });
+  }
+  componentDidMount() {
+    console.log(config.API_KEY, "config.API_KEY");
+  }
   render() {
     return (
       <bookMarkContext.Provider

@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookmarkContext from "../../context";
-import src from "*.bmp";
+import helpers from "../../helpers";
 class addBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addingTo: "",
+      addingTo: "upcoming",
       bookToSearch: "",
       chosenBook: {},
       searchResults: [],
+      //searchResults is the list of items from the query
       startedOn: undefined,
       finishedOn: undefined,
       currentPage: undefined
@@ -18,17 +19,21 @@ class addBook extends Component {
 
   componentDidMount() {}
 
+  findBookClickHandler(event) {
+    helpers.getBook(this.state.bookToSearch).then(results => {
+      const searchResults = results.items;
+      this.setState({ searchResults: searchResults });
+    });
+  }
+
   results(resultList) {
     //needs to be sent results.items
     if (resultList.length) {
       return resultList.map(result => {
-        //make authors section
-        //if one author return <p>{`Author: {author}`}</P
-        //if more than one author return in format:
-        //<p>{`Authors: ${author1} and ${author2}}
+        //where is authors coming from?
         let authors = [];
         let formattedAuthors = [];
-        if (authors.length === 1) {
+        if (result.authors.length === 1) {
           authors = <p>{`Author: ${result.volumeInfo.authors[0]}`}</p>;
         } else {
           result.volumeInfo.authors.forEach(author => {
@@ -68,6 +73,56 @@ class addBook extends Component {
     }
   }
 
+  bookDetailsToRender(state) {
+    if (state === "current") {
+      return (
+        <>
+          <label htmlFor="startOnSelector"></label>
+          <input
+            type="date"
+            id="startOnSelector"
+            onChange={e => {
+              this.setState({ startedOn: e.target.value });
+            }}
+          ></input>
+          <br></br>
+          <label htmlFor="currentPageSelector">Current Page</label>
+          <input
+            type="number"
+            id="currentPageSelector"
+            onChange={e => {
+              this.setState({ currentPage: e.target.value });
+            }}
+          ></input>
+        </>
+      );
+    }
+    if (state === "finished") {
+      return (
+        <>
+          <label htmlFor="startOnSelector"></label>
+          <input
+            type="date"
+            id="startOnSelector"
+            onChange={e => {
+              this.setState({ startedOn: e.target.value });
+            }}
+          ></input>
+          <br></br>
+          <label htmlFor="finishedOnSelector"></label>
+          <input
+            type="date"
+            id="finishedOnSelector"
+            onChange={e => {
+              this.setState({ finishedOn: e.target.value });
+            }}
+          ></input>
+          <br></br>
+        </>
+      );
+    }
+  }
+
   render() {
     return (
       <bookmarkContext.Consumer>
@@ -75,15 +130,32 @@ class addBook extends Component {
           return (
             <form>
               <fieldset>
-                <legend>Find Book</legend>
+                <legend id="findBookFieldset">Find Book</legend>
                 <input type="text" required></input>
                 <button
-                  type="submit"
+                  type="button"
                   placeholder="Pride and Prejudice"
                 ></button>
                 <h2>Results</h2>
                 <ul>{this.results(this.state.searchResults)}</ul>
               </fieldset>
+              <fieldset id="bookDetailsFieldset">
+                <legend>Book Details</legend>
+                <label htmlFor="pageSelect">Add to:</label>
+                <select
+                  id="pageSelect"
+                  onChange={e => {
+                    this.setState({ addingTo: e.target.value });
+                  }}
+                >
+                  <option value="upcoming">Upcoming</option>
+                  <option value="current">Current</option>
+                  <option value="finished">Finished</option>
+                </select>
+                <br></br>
+                {this.bookDetailsToRender(this.state.addingTo)}
+              </fieldset>
+              <button type="submit">Submit</button>
             </form>
           );
         }}

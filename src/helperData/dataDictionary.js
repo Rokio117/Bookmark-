@@ -144,23 +144,25 @@ const dataDictionary = [
       "the current page displayed, one of current, upcoming, finished, or add"
   },
   {
-    name: "",
-    type: "",
-    foundIn: "",
-    contains: "",
-    description: ""
+    name: "upcoming, Upcoming as displayed to user",
+    type: "string",
+    foundIn: "main component, add component, tab component",
+    contains: null,
+    description:
+      "noun for the 'upcoming' display (main page when upcoming book data is displayed)"
   },
   {
-    name: "",
-    type: "",
-    foundIn: "",
-    contains: "",
-    description: ""
+    name: "current, Current as displayed to user",
+    type: "string",
+    foundIn: "main component, add component, tab component",
+    contains: null,
+    description:
+      "noun used for 'current' display (main page when current book data is displayed)"
   },
   {
-    name: "",
-    type: "",
-    foundIn: "",
+    name: "finished, Finished as displayed to user",
+    type: "string",
+    foundIn: "main component, add component, tab component",
     contains: "",
     description: ""
   },
