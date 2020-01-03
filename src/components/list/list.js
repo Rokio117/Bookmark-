@@ -42,6 +42,6 @@ class List extends Component {
     );
   }
 }
-List.defaultProps = defaultProps.listProps;
+List.defaultProps = defaultProps.listProps();
 
 export default withRouter(List);

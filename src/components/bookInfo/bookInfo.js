@@ -4,6 +4,7 @@ import bookmarkContext from "../../context";
 import Accordion from "../accordion/accordion";
 import List from "../list/list";
 import PropTypes from "prop-types";
+import defaultProps from "../defaultProps";
 class BookInfo extends Component {
   constructor(props) {
     super(props);
@@ -96,6 +97,6 @@ class BookInfo extends Component {
   }
 }
 
-BookInfo.defaultProps = {};
+BookInfo.defaultProps = defaultProps.bookInfoProps();
 
 export default withRouter(BookInfo);

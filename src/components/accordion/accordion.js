@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookMarkContext from "../../context";
 import BookInfo from "../bookInfo/bookInfo";
+import PropTypes from "prop-types";
+import defaultProps from "../defaultProps";
 class Accordion extends Component {
   constructor(props) {
     super(props);
@@ -82,5 +84,7 @@ class Accordion extends Component {
     );
   }
 }
+
+Accordion.defaultProps = defaultProps.accordionProps();
 
 export default withRouter(Accordion);
