@@ -3,6 +3,8 @@ import bookMarkContext from "./context";
 import AddBook from "./components/addBook/addBook";
 import "./App.css";
 import config from "./config";
+import Tab from "./components/tab/tab";
+import MainPage from "./components/mainPage/mainPage";
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +24,9 @@ class App extends Component {
   componentDidMount() {
     console.log(config.API_KEY, "config.API_KEY");
   }
+  changePage(page) {
+    this.setState({ page: page });
+  }
   render() {
     return (
       <bookMarkContext.Provider
@@ -31,7 +36,8 @@ class App extends Component {
           page: this.state.page
         }}
       >
-        <AddBook />
+        <Tab changePage={this.changePage.bind(this)} />
+        <MainPage />
       </bookMarkContext.Provider>
     );
   }
