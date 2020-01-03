@@ -5,6 +5,9 @@ import "./App.css";
 import config from "./config";
 import Tab from "./components/tab/tab";
 import MainPage from "./components/mainPage/mainPage";
+import WelcomePage from "./components/welcomePage/welcomePage";
+import { withRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -50,8 +53,27 @@ class App extends Component {
           tab: this.state.tab
         }}
       >
-        <Tab changeTab={this.changeTab.bind(this)} />
-        <MainPage />
+        <Switch>
+          <Route
+            exact
+            path="/welcome"
+            component={props => {
+              return <WelcomePage />;
+            }}
+          ></Route>
+          <Route
+            exact
+            path="/home"
+            component={props => {
+              return (
+                <>
+                  <Tab changeTab={this.changeTab.bind(this)} />
+                  <MainPage />
+                </>
+              );
+            }}
+          ></Route>
+        </Switch>
       </bookMarkContext.Provider>
     );
   }
