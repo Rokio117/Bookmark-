@@ -12,6 +12,8 @@ const store = [
         currentPage: "171",
         startedOn: "2018-07-22",
         finishedOn: "2018-10-11",
+        description:
+          "'I have stolen princesses back from sleeping barrow kings. I burned down the town...",
         notes: [
           {
             noteTitle: "Amazing",
@@ -28,8 +30,10 @@ const store = [
           "http://books.google.com/books/content?id=cJnXmrk7BxAC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
         onTab: "finished",
         currentPage: null,
-        startedOn: "unknown",
-        finishedOn: "unknown",
+        startedOn: null,
+        finishedOn: null,
+        description:
+          "The Once-ler describes the results of the local pollution problem.",
         notes: [
           {
             noteTitle: "Unless",
@@ -48,6 +52,7 @@ const store = [
         currentPage: "1",
         startedOn: "2020-01-01",
         finishedOn: null,
+        description: "No description available",
         notes: [
           {
             noteTitle: "Multiple Authors",
@@ -65,6 +70,8 @@ const store = [
         currentPage: null,
         startedOn: null,
         finishedOn: null,
+        description:
+          "Winner of the Newbery Medal and the National Book Award! This #1 New York Times",
         notes: []
       }
     ]

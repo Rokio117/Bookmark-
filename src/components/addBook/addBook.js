@@ -84,6 +84,8 @@ class addBook extends Component {
             <br></br>
             {authors}
             <br></br>
+            <p>{`Description: ${bookObject.description}`}</p>
+            <br></br>
             <p>{`Published on: ${result.volumeInfo.publishedDate}`}</p>
             <button
               onClick={e => {

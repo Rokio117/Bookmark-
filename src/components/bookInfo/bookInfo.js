@@ -3,15 +3,16 @@ import { withRouter } from "react-router-dom";
 import bookmarkContext from "../../context";
 import Accordion from "../accordion/accordion";
 import List from "../list/list";
+import PropTypes from "prop-types";
 class BookInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  bookInfoDisplay(books, tab) {
+  bookNotesDisplay(book, tab) {
     if (!tab === "upcoming") {
-      return <List books={books} />;
+      return <List notes={book.notes} />;
     }
   }
 
@@ -50,21 +51,51 @@ class BookInfo extends Component {
       <bookmarkContext.Consumer>
         {value => {
           const book = this.props.book;
-          return (
+          const fullBookInfo = (
             <div>
               <p>{`Title: ${book.title}`}</p>
-              <p>{`: ${book.title}`}</p>
+              <br></br>
+              <img
+                src={book.coverArt}
+                alt={`Cover art for ${book.title}`}
+              ></img>
               {this.formatAuthors(book.authors)}
+              <br></br>
               {this.formatData(book.currentPage)}
+              <br></br>
               {this.formatData(book.startedOn)}
+              <br></br>
               {this.formatData(book.finishedOn)}
-              {this.bookInfoDisplay(book, value.tab)}
+              <br></br>
+              {this.bookNotesDisplay(book, value.tab)}
             </div>
           );
+          const upcomingInfo = (
+            <div>
+              <p>{`Title: ${book.title}`}</p>
+              <img
+                src={book.coverArt}
+                alt={`Cover art for ${book.title}`}
+              ></img>
+              <br></br>
+              {this.formatAuthors(book.authors)}
+              <br></br>
+              <p>{`Description: ${book.description}`}</p>
+            </div>
+          );
+
+          function displayInfo(tab) {
+            if (tab === "upcoming") {
+              return upcomingInfo;
+            } else return fullBookInfo;
+          }
+          return <div>{displayInfo(value.tab)}</div>;
         }}
       </bookmarkContext.Consumer>
     );
   }
 }
+
+BookInfo.defaultProps = {};
 
 export default withRouter(BookInfo);

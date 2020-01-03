@@ -27,6 +27,20 @@ class App extends Component {
   changeTab(tab) {
     this.setState({ tab: tab });
   }
+  login(userProfile) {
+    //all information about user
+    //sent after login auth
+    //auth and validation handled by login screen fetch requests
+    //historyu.push will also be handled in login screen
+    const user = {
+      username: userProfile.username,
+      password: userProfile.password
+    };
+    const books = userProfile.books;
+    const appState = { ...user, books };
+    sessionStorage.setItem("state", JSON.stringify(appState));
+    this.setState({ user: user, books: books, tab: "current" });
+  }
   render() {
     return (
       <bookMarkContext.Provider

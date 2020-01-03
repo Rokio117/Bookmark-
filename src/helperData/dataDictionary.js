@@ -167,11 +167,11 @@ const dataDictionary = [
     description: ""
   },
   {
-    name: "",
-    type: "",
-    foundIn: "",
-    contains: "",
-    description: ""
+    name: "userProfile",
+    type: "object",
+    foundIn: "database, state",
+    contains: "all data on user and their books",
+    description: "all data on user and their books"
   },
   {
     name: "",

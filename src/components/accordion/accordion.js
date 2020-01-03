@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookMarkContext from "../../context";
+import BookInfo from "../bookInfo/bookInfo";
 class Accordion extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +47,12 @@ class Accordion extends Component {
     }
   }
 
+  renderContent(props) {
+    if (props.book) {
+      return <BookInfo book={props.book} />;
+    } else return <BookInfo note={props.note} />;
+  }
+
   render() {
     return (
       //returns wither props.notes or props.book
@@ -65,7 +72,9 @@ class Accordion extends Component {
               >
                 {"&#8964"}
               </button>
-              <h2></h2>
+              <h2>{title}</h2>
+              {this.buttonRender(this.props, value.tab)}
+              {this.renderContent(this.props)}
             </div>
           );
         }}
