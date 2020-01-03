@@ -14,7 +14,7 @@ class App extends Component {
       isLoading: false,
       user: {},
       books: [],
-      page: "welcome"
+      tab: "welcome"
     };
   }
 
@@ -24,8 +24,8 @@ class App extends Component {
   componentDidMount() {
     console.log(config.API_KEY, "config.API_KEY");
   }
-  changePage(page) {
-    this.setState({ page: page });
+  changeTab(tab) {
+    this.setState({ tab: tab });
   }
   render() {
     return (
@@ -33,10 +33,10 @@ class App extends Component {
         value={{
           user: this.state.user,
           books: this.state.books,
-          page: this.state.page
+          tab: this.state.tab
         }}
       >
-        <Tab changePage={this.changePage.bind(this)} />
+        <Tab changeTab={this.changeTab.bind(this)} />
         <MainPage />
       </bookMarkContext.Provider>
     );

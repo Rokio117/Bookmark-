@@ -10,10 +10,33 @@ class MainPage extends Component {
     super(props);
     this.state = {};
   }
-  bookDisplay(value) {
+  addBookDisplay(value) {
     if (value === "add") {
       return <AddBook />;
     }
+  }
+  bookSorter(userBooks, value) {
+    let currentBooks = [];
+    let finishedBooks = [];
+    let upcomingBooks = [];
+    userBooks.forEach(book => {
+      if (book.onTab === "current") {
+        currentBooks.push(book);
+      }
+      if (book.onTab === "finished") {
+        finishedBooks.push(book);
+      } else upcomingBooks.push(book);
+    });
+    const sortedBooks = {
+      current: currentBooks,
+      finished: finishedBooks,
+      upcoming: upcomingBooks
+    };
+    if (value.tab === "current") {
+      return sortedBooks.current;
+    } else if (value.tab === "finished") {
+      return sortedBooks.finished;
+    } else return sortedBooks.upcoming;
   }
   render() {
     return (
@@ -22,7 +45,8 @@ class MainPage extends Component {
           return (
             <>
               <h2>{value.page}</h2>
-              {this.bookDisplay(value.page)}
+              {this.addBookDisplay(value.page)}
+              <List books={this.bookSorter(value.books, value)} />
             </>
           );
         }}
