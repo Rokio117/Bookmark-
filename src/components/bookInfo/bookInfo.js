@@ -12,7 +12,7 @@ class BookInfo extends Component {
   }
 
   bookNotesDisplay(book, tab) {
-    if (!tab === "upcoming") {
+    if (tab !== "upcoming") {
       return <List notes={book.notes} />;
     }
   }
@@ -35,15 +35,68 @@ class BookInfo extends Component {
       return <p>{`Author: Sorry, we could not find an author for this`}</p>;
   }
 
-  formatData(dataObject) {
+  formatData(key, value) {
     //takes currentPage, startedOn, finishedOn and changes 'null' to ~
-    const value = Object.values(dataObject)[0];
-    const key = Object.keys(dataObject)[0];
+
     if (value === null) {
       return <p>{`${key}: ~`}</p>;
     } else {
       return <p>{`${key}: ${value}`}</p>;
     }
+  }
+  fullBookInfo(book, tab) {
+    //needs this.props.book
+    //and value.tab
+    return (
+      <div>
+        <p>{`Title: ${book.title}`}</p>
+        <br></br>
+        <img src={book.coverArt} alt={`Cover art for ${book.title}`}></img>
+        {this.formatAuthors(book.authors)}
+        <br></br>
+        {this.formatData("Current page", book.currentPage)}
+        <br></br>
+        {this.formatData("Started on", book.startedOn)}
+        <br></br>
+        {this.formatData("Finished on", book.finishedOn)}
+        <br></br>
+        {this.bookNotesDisplay(book, tab)}
+      </div>
+    );
+  }
+  upcomingInfo(book) {
+    //requires this.props.book
+    return (
+      <div>
+        <p>{`Title: ${book.title}`}</p>
+        <img src={book.coverArt} alt={`Cover art for ${book.title}`}></img>
+        <br></br>
+        {this.formatAuthors(book.authors)}
+        <br></br>
+        <p>{`Description: ${book.description}`}</p>
+      </div>
+    );
+  }
+  noteInfo(note) {
+    return (
+      <>
+        <p>{note.noteTitle}</p>
+        <p>{note.noteDate}</p>
+        <br></br>
+        <p>{note.noteContent}</p>
+      </>
+    );
+  }
+
+  displayInfo(tab, props) {
+    //requires value.tab
+    //requires this.props
+    if (tab === "upcoming") {
+      return this.upcomingInfo(props.book);
+    }
+    if (this.props.note) {
+      return <div></div>;
+    } else return this.fullBookInfo(props.book, tab);
   }
 
   render() {
@@ -51,46 +104,7 @@ class BookInfo extends Component {
       //props will be individual sorted book object
       <bookmarkContext.Consumer>
         {value => {
-          const book = this.props.book;
-          const fullBookInfo = (
-            <div>
-              <p>{`Title: ${book.title}`}</p>
-              <br></br>
-              <img
-                src={book.coverArt}
-                alt={`Cover art for ${book.title}`}
-              ></img>
-              {this.formatAuthors(book.authors)}
-              <br></br>
-              {this.formatData(book.currentPage)}
-              <br></br>
-              {this.formatData(book.startedOn)}
-              <br></br>
-              {this.formatData(book.finishedOn)}
-              <br></br>
-              {this.bookNotesDisplay(book, value.tab)}
-            </div>
-          );
-          const upcomingInfo = (
-            <div>
-              <p>{`Title: ${book.title}`}</p>
-              <img
-                src={book.coverArt}
-                alt={`Cover art for ${book.title}`}
-              ></img>
-              <br></br>
-              {this.formatAuthors(book.authors)}
-              <br></br>
-              <p>{`Description: ${book.description}`}</p>
-            </div>
-          );
-
-          function displayInfo(tab) {
-            if (tab === "upcoming") {
-              return upcomingInfo;
-            } else return fullBookInfo;
-          }
-          return <div>{displayInfo(value.tab)}</div>;
+          return <div>{this.displayInfo(value.tab, this.props)}</div>;
         }}
       </bookmarkContext.Consumer>
     );

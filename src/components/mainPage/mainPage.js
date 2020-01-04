@@ -11,9 +11,10 @@ class MainPage extends Component {
     this.state = {};
   }
   addBookDisplay(value) {
-    if (value === "add") {
+    console.log(value, "value in addBookDisplay");
+    if (value.tab === "add") {
       return <AddBook />;
-    }
+    } else return <List books={this.bookSorter(value.books, value)} />;
   }
   bookSorter(userBooks, value) {
     let currentBooks = [];
@@ -25,13 +26,17 @@ class MainPage extends Component {
       }
       if (book.onTab === "finished") {
         finishedBooks.push(book);
-      } else upcomingBooks.push(book);
+      }
+      if (book.onTab === "upcoming") {
+        upcomingBooks.push(book);
+      }
     });
     const sortedBooks = {
       current: currentBooks,
       finished: finishedBooks,
       upcoming: upcomingBooks
     };
+
     if (value.tab === "current") {
       return sortedBooks.current;
     } else if (value.tab === "finished") {
@@ -44,9 +49,8 @@ class MainPage extends Component {
         {value => {
           return (
             <>
-              <h2>{value.page}</h2>
-              {this.addBookDisplay(value.page)}
-              <List books={this.bookSorter(value.books, value)} />
+              <h2>{value.tab}</h2>
+              {this.addBookDisplay(value.tab, value)}
             </>
           );
         }}

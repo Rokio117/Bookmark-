@@ -23,7 +23,7 @@ class List extends Component {
     });
   }
   listToRender(props) {
-    if (props.book) {
+    if (props.books) {
       return this.createBookList(props.books);
     } else return this.createNoteList(props.notes);
   }

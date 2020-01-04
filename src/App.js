@@ -21,16 +21,15 @@ class App extends Component {
     };
   }
 
-  setError() {
+  setError = () => {
     this.setState({ hasError: true });
-  }
-  componentDidMount() {
-    console.log(config.API_KEY, "config.API_KEY");
-  }
-  changeTab(tab) {
+  };
+  componentDidMount() {}
+  changeTab = tab => {
     this.setState({ tab: tab });
-  }
-  login(userProfile) {
+  };
+  login = userProfile => {
+    console.log("login Ran");
     //all information about user
     //sent after login auth
     //auth and validation handled by login screen fetch requests
@@ -43,7 +42,8 @@ class App extends Component {
     const appState = { ...user, books };
     sessionStorage.setItem("state", JSON.stringify(appState));
     this.setState({ user: user, books: books, tab: "current" });
-  }
+    this.props.history.push("/home");
+  };
   render() {
     return (
       <bookMarkContext.Provider
@@ -56,9 +56,9 @@ class App extends Component {
         <Switch>
           <Route
             exact
-            path="/welcome"
+            path="/"
             component={props => {
-              return <WelcomePage />;
+              return <WelcomePage login={this.login} />;
             }}
           ></Route>
           <Route
@@ -67,7 +67,7 @@ class App extends Component {
             component={props => {
               return (
                 <>
-                  <Tab changeTab={this.changeTab.bind(this)} />
+                  <Tab changeTab={this.changeTab} tab={this.state.tab} />
                   <MainPage />
                 </>
               );
@@ -79,4 +79,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
