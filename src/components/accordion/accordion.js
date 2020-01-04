@@ -4,6 +4,8 @@ import bookMarkContext from "../../context";
 import BookInfo from "../bookInfo/bookInfo";
 import PropTypes from "prop-types";
 import defaultProps from "../defaultProps";
+import helpers from "../../helpers";
+import "./accordion.css";
 class Accordion extends Component {
   constructor(props) {
     super(props);
@@ -12,19 +14,22 @@ class Accordion extends Component {
     };
   }
 
-  buttonRender(prop, currentTab) {
+  buttonRender(prop, value) {
+    //value.tab
+    console.log(value, "value in buttonRender of accordion");
     let tabOptions = [];
-    currentTab === "upcoming"
-      ? (tabOptions = ["current", "finished"])
-      : (tabOptions = ["current", "finished"]);
+    if (value.tab === "upcoming") {
+      tabOptions = ["current", "finished"];
+    } else tabOptions = ["current", "finished"];
     const moveOptions = tabOptions
-      .filter(tab => !tab === currentTab)
+      .filter(tab => tab !== value.tab)
       .map(filteredTab => {
         return <option value={filteredTab}>{filteredTab}</option>;
       });
-    if (prop.notes) {
+    if (prop.note) {
       return (
         <button
+          className="deleteNoteButton"
           onClick={e => {
             e.preventDefault();
             //make fetch request to delete note
@@ -36,11 +41,22 @@ class Accordion extends Component {
     } else {
       return (
         <select
-          onClick={e => {
+          className="moveBookButton"
+          onChange={e => {
+            console.log("event clicked");
+            console.log(e.target.value, "event.target.value of onChange");
             e.preventDefault();
+            if (e.target.value) {
+              helpers.patchBookTab(
+                value.user.username,
+                prop.book.id,
+                e.target.value
+              );
+              value.refresh(value.user.username, value.tab);
+            }
           }}
         >
-          <option selected disabled>
+          <option selected disabled value="">
             Move
           </option>
           {moveOptions}
@@ -49,10 +65,27 @@ class Accordion extends Component {
     }
   }
 
+  buttonDisplay = extended => {
+    if (extended) {
+      return "▲";
+    } else return "▼";
+  };
+
   renderContent(props) {
+    if (this.state.extended) {
+      if (props.book) {
+        return <BookInfo book={props.book} />;
+      } else return <BookInfo note={props.note} />;
+    }
+  }
+
+  accordionClass(props) {
     if (props.book) {
-      return <BookInfo book={props.book} />;
-    } else return <BookInfo note={props.note} />;
+      return "bookAccordion";
+    }
+    if (props.note) {
+      return "noteAccordion";
+    }
   }
 
   render() {
@@ -62,20 +95,23 @@ class Accordion extends Component {
         {value => {
           const title = this.props.book
             ? this.props.book.title
-            : this.props.note.title;
+            : this.props.note.noteTitle;
           return (
-            <div className="accordion">
-              <button
-                onClick={e => {
-                  !this.state.extended
-                    ? this.setState({ extended: true })
-                    : this.setState({ extended: false });
-                }}
-              >
-                {"&#8964"}
-              </button>
-              <h2>{title}</h2>
-              {this.buttonRender(this.props, value.tab)}
+            <div className={this.accordionClass(this.props)}>
+              <div className="accordionTop">
+                <button
+                  className="extenderButton"
+                  onClick={e => {
+                    !this.state.extended
+                      ? this.setState({ extended: true })
+                      : this.setState({ extended: false });
+                  }}
+                >
+                  {this.buttonDisplay(this.state.extended)}
+                </button>
+                <h2 className="bookTitle">{title}</h2>
+                {this.buttonRender(this.props, value)}
+              </div>
               {this.renderContent(this.props)}
             </div>
           );

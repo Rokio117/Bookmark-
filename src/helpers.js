@@ -34,8 +34,21 @@ const helpers = {
       return { message: "Incorrect username or password" };
     }
   },
-  getUserInfo() {
-    store.find();
+  getUserInfo(username) {
+    return store.find(user => user.username === username);
+  },
+  patchBookTab(username, bookId, newTab) {
+    console.log("patchBookTab ran");
+    store
+      .find(user => user.username === username)
+      .books.find(book => book.id === bookId).onTab = newTab;
+  },
+  addBook() {
+    //will also need to give it ID
+    //1 retrieve all ids of all books
+    //2 find largest one
+    //3 largest++
+    //4 assign new largest to new book
   }
 };
 

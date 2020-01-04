@@ -81,7 +81,7 @@ class BookInfo extends Component {
     return (
       <>
         <p>{note.noteTitle}</p>
-        <p>{note.noteDate}</p>
+        <p>{`Date: ${note.noteDate}`}</p>
         <br></br>
         <p>{note.noteContent}</p>
       </>
@@ -95,7 +95,7 @@ class BookInfo extends Component {
       return this.upcomingInfo(props.book);
     }
     if (this.props.note) {
-      return <div></div>;
+      return this.noteInfo(this.props.note);
     } else return this.fullBookInfo(props.book, tab);
   }
 

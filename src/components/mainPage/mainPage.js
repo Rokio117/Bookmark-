@@ -50,7 +50,7 @@ class MainPage extends Component {
           return (
             <>
               <h2>{value.tab}</h2>
-              {this.addBookDisplay(value.tab, value)}
+              {this.addBookDisplay(value)}
             </>
           );
         }}

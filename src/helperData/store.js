@@ -4,6 +4,7 @@ const store = [
     password: "password",
     books: [
       {
+        id: 1,
         title: "The Name of the Wind",
         authors: ["Patrick Rothfuss"],
         coverArt:
@@ -24,6 +25,7 @@ const store = [
         ]
       },
       {
+        id: 2,
         title: "The Lorax",
         authors: ["Dr. Seuss"],
         coverArt:
@@ -44,6 +46,7 @@ const store = [
         ]
       },
       {
+        id: 3,
         title: "Murder, She Wrote: Manuscript for Murder",
         authors: ["Jon Land", "Jessica Fletcher"],
         coverArt:
@@ -62,6 +65,7 @@ const store = [
         ]
       },
       {
+        id: 4,
         title: "Holes",
         authors: ["Louis Sachar"],
         coverArt:

@@ -8,6 +8,7 @@ import MainPage from "./components/mainPage/mainPage";
 import WelcomePage from "./components/welcomePage/welcomePage";
 import { withRouter } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
+import helpers from "./helpers";
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class App extends Component {
       isLoading: false,
       user: {},
       books: [],
-      tab: "welcome"
+      tab: "welcome",
+      userProfile: {}
     };
   }
 
@@ -28,12 +30,13 @@ class App extends Component {
   changeTab = tab => {
     this.setState({ tab: tab });
   };
-  login = userProfile => {
+  login = (userProfile, tab) => {
     console.log("login Ran");
     //all information about user
     //sent after login auth
     //auth and validation handled by login screen fetch requests
     //historyu.push will also be handled in login screen
+
     const user = {
       username: userProfile.username,
       password: userProfile.password
@@ -41,8 +44,31 @@ class App extends Component {
     const books = userProfile.books;
     const appState = { ...user, books };
     sessionStorage.setItem("state", JSON.stringify(appState));
-    this.setState({ user: user, books: books, tab: "current" });
+    this.setState({
+      user: user,
+      books: books,
+      tab: tab || "current",
+      userProfile: userProfile
+    });
     this.props.history.push("/home");
+  };
+
+  refresh = (username, tab) => {
+    console.log("refresh ran");
+    const userProfile = helpers.getUserInfo(username);
+    const user = {
+      username: userProfile.username,
+      password: userProfile.password
+    };
+    const books = userProfile.books;
+    const appState = { ...user, books };
+    sessionStorage.setItem("state", JSON.stringify(appState));
+    this.setState({
+      user: user,
+      books: books,
+      tab: tab || "current",
+      userProfile: userProfile
+    });
   };
   render() {
     return (
@@ -50,7 +76,9 @@ class App extends Component {
         value={{
           user: this.state.user,
           books: this.state.books,
-          tab: this.state.tab
+          tab: this.state.tab,
+          refresh: this.refresh,
+          userProfile: this.state.userProfile
         }}
       >
         <Switch>
