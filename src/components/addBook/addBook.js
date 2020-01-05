@@ -12,11 +12,14 @@ class addBook extends Component {
       chosenBook: undefined,
       searchResults: [],
       //searchResults is the list of items from the query
-      startedOn: undefined,
-      finishedOn: undefined,
-      currentPage: undefined,
+      startedOn: null,
+      finishedOn: null,
+      currentPage: null,
       noBookEntered: false,
-      noBookSelected: false
+      noBookSelected: false,
+      resultId: "",
+      hasError: false,
+      errorMessage: ""
     };
   }
 
@@ -38,6 +41,12 @@ class addBook extends Component {
         }
         this.setState({ searchResults: searchResults });
       });
+  }
+
+  selectedBook(id) {
+    if (id === this.state.resultId) {
+      return "selected-book";
+    } else return "not-selected-book";
   }
 
   results(resultList) {
@@ -64,6 +73,7 @@ class addBook extends Component {
           );
 
         const bookObject = {
+          googleId: result.id,
           title: result.volumeInfo.title,
           authors: result.volumeInfo.authors,
           published: result.volumeInfo.publishedDate,
@@ -75,8 +85,12 @@ class addBook extends Component {
             : "No description available"
         };
         return (
-          <li id="bookResult" key={result.volumeInfo.id}>
+          <li
+            className={`bookResult ${this.selectedBook(bookObject.googleId)}`}
+            key={result.volumeInfo.id}
+          >
             <img
+              className="searchImage"
               src={bookObject.coverArt}
               alt={`Cover art for ${bookObject.title}`}
             ></img>
@@ -91,7 +105,10 @@ class addBook extends Component {
               onClick={e => {
                 e.preventDefault();
 
-                this.setState({ chosenBook: bookObject });
+                this.setState({
+                  chosenBook: bookObject,
+                  resultId: bookObject.googleId
+                });
               }}
             >
               Choose
@@ -106,7 +123,7 @@ class addBook extends Component {
     if (state === "current") {
       return (
         <>
-          <label htmlFor="startOnSelector"></label>
+          <label htmlFor="startOnSelector">Started on:</label>
           <input
             type="date"
             id="startOnSelector"
@@ -129,7 +146,7 @@ class addBook extends Component {
     if (state === "finished") {
       return (
         <>
-          <label htmlFor="startOnSelector"></label>
+          <label htmlFor="startOnSelector">Started on:</label>
           <input
             type="date"
             id="startOnSelector"
@@ -138,7 +155,7 @@ class addBook extends Component {
             }}
           ></input>
           <br></br>
-          <label htmlFor="finishedOnSelector"></label>
+          <label htmlFor="finishedOnSelector">Finished on:</label>
           <input
             type="date"
             id="finishedOnSelector"
@@ -150,6 +167,21 @@ class addBook extends Component {
         </>
       );
     }
+  }
+  formatBook(foundDetails) {
+    const formattedBook = {
+      googleId: foundDetails.googleId,
+      title: foundDetails.title,
+      authors: foundDetails.authors,
+      coverArt: foundDetails.coverArt,
+      onTab: this.state.addingTo,
+      currentPage: this.state.currentPage,
+      startedOn: this.state.startedOn,
+      finishedOn: this.state.finishedOn,
+      description: foundDetails.bookDescription,
+      notes: []
+    };
+    return formattedBook;
   }
 
   noBookEntered(state) {
@@ -163,6 +195,11 @@ class addBook extends Component {
       return <p className="error">Please select a book</p>;
     }
   }
+  duplicateBookMessage() {
+    if (this.state.hasError) {
+      return <p className="error">{this.state.errorMessage}</p>;
+    }
+  }
 
   render() {
     return (
@@ -170,15 +207,25 @@ class addBook extends Component {
         {value => {
           return (
             <form
+              id="addBookForm"
               onSubmit={e => {
                 e.preventDefault();
                 if (!this.state.chosenBook) {
                   this.setState({ noBookSelected: true });
+                } else {
+                  const res = helpers.addBook(
+                    this.formatBook(this.state.chosenBook),
+                    value.user.username
+                  );
+                  if (!res === "ok") {
+                    this.setState({ hasError: true, errorMessage: res });
+                  } else
+                    value.refresh(value.user.username, this.state.addingTo);
                 }
               }}
             >
-              <fieldset>
-                <legend id="findBookFieldset">Find Book</legend>
+              <fieldset className="addBookFieldset" id="findBookFieldset">
+                <legend id="findBookLegend">Find Book</legend>
 
                 <input
                   type="text"
@@ -207,7 +254,7 @@ class addBook extends Component {
                 <h2>Results</h2>
                 <ul>{this.results(this.state.searchResults)}</ul>
               </fieldset>
-              <fieldset id="bookDetailsFieldset">
+              <fieldset id="bookDetailsFieldset" className="addBookFieldset">
                 <legend>Book Details</legend>
                 <label htmlFor="pageSelect">Add to:</label>
                 <select
@@ -224,7 +271,10 @@ class addBook extends Component {
                 {this.bookDetailsToRender(this.state.addingTo)}
                 {this.noBookSelected(this.state.noBookSelected)}
               </fieldset>
-              <button type="submit">Submit</button>
+              {this.duplicateBookMessage()}
+              <button type="submit" id="bookSubmitButton">
+                Submit
+              </button>
             </form>
           );
         }}

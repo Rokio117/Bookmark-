@@ -16,7 +16,7 @@ class Accordion extends Component {
 
   buttonRender(prop, value) {
     //value.tab
-    console.log(value, "value in buttonRender of accordion");
+
     let tabOptions = [];
     if (value.tab === "upcoming") {
       tabOptions = ["current", "finished"];

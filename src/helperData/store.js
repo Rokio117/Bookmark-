@@ -5,6 +5,7 @@ const store = [
     books: [
       {
         id: 1,
+        googleId: "c-qcoAEACAAJ",
         title: "The Name of the Wind",
         authors: ["Patrick Rothfuss"],
         coverArt:
@@ -26,6 +27,7 @@ const store = [
       },
       {
         id: 2,
+        googleId: "cJnXmrk7BxAC",
         title: "The Lorax",
         authors: ["Dr. Seuss"],
         coverArt:
@@ -47,6 +49,7 @@ const store = [
       },
       {
         id: 3,
+        googleId: "Vn9LDwAAQBAJ",
         title: "Murder, She Wrote: Manuscript for Murder",
         authors: ["Jon Land", "Jessica Fletcher"],
         coverArt:
@@ -66,6 +69,7 @@ const store = [
       },
       {
         id: 4,
+        googleId: "U_zINMa9cAAC",
         title: "Holes",
         authors: ["Louis Sachar"],
         coverArt:

@@ -14,6 +14,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loggedIn: false,
       hasError: false,
       isLoading: false,
       user: {},
@@ -26,7 +27,14 @@ class App extends Component {
   setError = () => {
     this.setState({ hasError: true });
   };
-  componentDidMount() {}
+  componentDidMount() {
+    const sessionInfo = JSON.parse(sessionStorage.getItem("state"));
+
+    if (!this.state.loggedIn && sessionInfo) {
+      console.log(sessionInfo, "sessionInfo on did mount");
+      this.setState(sessionInfo);
+    }
+  }
   changeTab = tab => {
     this.setState({ tab: tab });
   };
@@ -42,13 +50,24 @@ class App extends Component {
       password: userProfile.password
     };
     const books = userProfile.books;
-    const appState = { ...user, books };
+    const appState = {
+      user: user,
+      books: books,
+      tab: tab || "current",
+      userProfile: userProfile,
+      loggedIn: true,
+      hasError: false,
+      isLoading: false
+    };
     sessionStorage.setItem("state", JSON.stringify(appState));
     this.setState({
       user: user,
       books: books,
       tab: tab || "current",
-      userProfile: userProfile
+      userProfile: userProfile,
+      loggedIn: true,
+      hasError: false,
+      isLoading: false
     });
     this.props.history.push("/home");
   };

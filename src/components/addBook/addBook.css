@@ -4,3 +4,48 @@ li {
 * {
   text-align: center;
 }
+#addBookForm {
+  width: 100%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+
+  padding: px;
+}
+
+.addBookFieldset {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  border: 3px solid black;
+}
+legend {
+  font-weight: bold;
+}
+
+.bookResult {
+  width: 60%;
+  border: 2px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 20px;
+}
+.searchImage {
+  width: 25%;
+}
+.selected-book {
+  border: 10px solid silver;
+  border-style: outset;
+}
+img {
+  border: 1px solid black;
+}
+
+#bookSubmitButton {
+  width: 20%;
+  height: 40px;
+  margin-top: 20px;
+}

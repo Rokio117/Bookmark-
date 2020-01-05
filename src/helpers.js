@@ -43,7 +43,35 @@ const helpers = {
       .find(user => user.username === username)
       .books.find(book => book.id === bookId).onTab = newTab;
   },
-  addBook() {
+  addBook(bookObject, username) {
+    console.log(username, "username in addbook");
+    const duplicate = store
+      .find(user => user.username === username)
+      .books.find(book => book.googleId === bookObject.googleId);
+    if (duplicate) {
+      return { message: "Already in collection" };
+    } else {
+      let allIds = [];
+      store.forEach(user => user.books.forEach(book => allIds.push(book.id)));
+      const id = Math.max(...allIds) + 1;
+      const bookToAdd = { id: id, ...bookObject };
+      store.find(user => user.username === username).books.push(bookToAdd);
+      console.log(
+        store.find(user => user.username === username).books,
+        "user books after push"
+      );
+
+      return "ok";
+    }
+    //  for(let num=0; num < allIds.length; num++ ){
+    //   let currentHighestId = allIds[0]
+    //   let currentNumber = allIds[num]
+    //   if(currentHighestId < currentNumber){
+    //     currentHighestId = currentNumber
+    //   }
+    //   return currentHighestId
+    // }
+
     //will also need to give it ID
     //1 retrieve all ids of all books
     //2 find largest one

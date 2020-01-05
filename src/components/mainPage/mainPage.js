@@ -12,7 +12,6 @@ class MainPage extends Component {
     this.state = {};
   }
   addBookDisplay(value) {
-    console.log(value, "value in addBookDisplay");
     if (value.tab === "add") {
       return <AddBook />;
     } else return <List books={this.bookSorter(value.books, value)} />;
