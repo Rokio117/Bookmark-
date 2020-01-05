@@ -5,10 +5,16 @@ import Accordion from "../accordion/accordion";
 import List from "../list/list";
 import PropTypes from "prop-types";
 import defaultProps from "../defaultProps";
+import helpers from "../../helpers";
 class BookInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      editMode: false,
+      newCurrentPage: undefined,
+      newStartDate: undefined,
+      newEndDate: undefined
+    };
   }
 
   bookNotesDisplay(book, tab) {
@@ -44,24 +50,103 @@ class BookInfo extends Component {
       return <p>{`${key}: ${value}`}</p>;
     }
   }
-  fullBookInfo(book, tab) {
-    //needs this.props.book
-    //and value.tab
+  editBookInfo(book, value) {
     return (
-      <div>
-        <p>{`Title: ${book.title}`}</p>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          const newBookInfo = [
+            { currentPage: this.state.newCurrentPage || book.currentPage },
+            { startedOn: this.state.newStartDate || book.startedOn },
+            { finishedOn: this.state.newEndDate || book.finishedOn }
+          ];
+          if (
+            helpers.patchBookInfo(
+              book.id,
+              newBookInfo,
+              value.user.username === "ok"
+            )
+          ) {
+            value.refresh(value.username, value.tab);
+          }
+        }}
+      >
+        <label htmlFor="currentPageInput">Current page:</label>
+        <input
+          className="currentPageInput"
+          defaultValue={book.currentPage}
+        ></input>
         <br></br>
-        <img src={book.coverArt} alt={`Cover art for ${book.title}`}></img>
-        {this.formatAuthors(book.authors)}
+        <label htmlFor="startedOnInput">Started on:</label>
+        <input
+          type="date"
+          className="startedOnInput"
+          defaultValue={book.startedOn}
+        ></input>
         <br></br>
+        <label htmlFor="finishedOnInput">Finished on:</label>
+        <input
+          type="date"
+          className="finishedOnInput"
+          defaultValue={book.finishedOn}
+        ></input>
+        <br></br>
+        <button type="submit">Save</button>
+      </form>
+    );
+  }
+  editAndCancelButtons() {
+    if (!this.state.editMode) {
+      return (
+        <button
+          onClick={e => {
+            this.setState({ editMode: true });
+          }}
+        >
+          Edit
+        </button>
+      );
+    } else
+      return (
+        <>
+          <button onClick={e => this.setState({ editMode: false })}>
+            Cancel
+          </button>
+        </>
+      );
+  }
+  bookDisplayInfo(book) {
+    return (
+      <>
         {this.formatData("Current page", book.currentPage)}
         <br></br>
         {this.formatData("Started on", book.startedOn)}
         <br></br>
         {this.formatData("Finished on", book.finishedOn)}
+      </>
+    );
+  }
+  displayMode(book, username, value) {
+    if (this.state.editMode) {
+      return this.editBookInfo(book, value);
+    } else return this.bookDisplayInfo(book);
+  }
+  fullBookInfo(book, tab, username, value) {
+    //needs this.props.book
+    //and value.tab
+    return (
+      <div>
+        <p>{`Title: ${book.title}`}</p>
+        {this.editAndCancelButtons()}
+        <br></br>
+        <img src={book.coverArt} alt={`Cover art for ${book.title}`}></img>
+        {this.formatAuthors(book.authors)}
+        <br></br>
+        {this.displayMode(book, value)}
         <br></br>
         <h2>Notes:</h2>
         {this.bookNotesDisplay(book, tab)}
+        <button id="addNoteButton">Add note</button>
       </div>
     );
   }
@@ -89,7 +174,7 @@ class BookInfo extends Component {
     );
   }
 
-  displayInfo(tab, props) {
+  displayInfo(tab, props, value) {
     //requires value.tab
     //requires this.props
     if (tab === "upcoming") {
@@ -97,7 +182,7 @@ class BookInfo extends Component {
     }
     if (this.props.note) {
       return this.noteInfo(this.props.note);
-    } else return this.fullBookInfo(props.book, tab);
+    } else return this.fullBookInfo(props.book, tab, value);
   }
 
   render() {
@@ -105,7 +190,7 @@ class BookInfo extends Component {
       //props will be individual sorted book object
       <bookmarkContext.Consumer>
         {value => {
-          return <div>{this.displayInfo(value.tab, this.props)}</div>;
+          return <div>{this.displayInfo(value.tab, this.props, value)}</div>;
         }}
       </bookmarkContext.Consumer>
     );

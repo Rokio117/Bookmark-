@@ -77,6 +77,16 @@ const helpers = {
     //2 find largest one
     //3 largest++
     //4 assign new largest to new book
+  },
+  patchBookInfo(bookId, newBookInfo, username) {
+    newBookInfo.forEach(infoObject => {
+      const keyToChange = Object.keys(infoObject)[0];
+      const valueToChange = Object.values(infoObject)[0];
+      store
+        .find(user => user.username === username)
+        .books.find(book => book.id === bookId)[keyToChange] = valueToChange;
+    });
+    return "ok";
   }
 };
 

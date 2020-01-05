@@ -80,13 +80,24 @@ class App extends Component {
       password: userProfile.password
     };
     const books = userProfile.books;
-    const appState = { ...user, books };
+    const appState = {
+      user: user,
+      books: books,
+      tab: tab || "current",
+      userProfile: userProfile,
+      loggedIn: true,
+      hasError: false,
+      isLoading: false
+    };
     sessionStorage.setItem("state", JSON.stringify(appState));
     this.setState({
       user: user,
       books: books,
       tab: tab || "current",
-      userProfile: userProfile
+      userProfile: userProfile,
+      loggedIn: true,
+      hasError: false,
+      isLoading: false
     });
   };
   render() {
