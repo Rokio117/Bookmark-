@@ -51,7 +51,7 @@ class BookInfo extends Component {
 
   formatData(key, value) {
     //takes currentPage, startedOn, finishedOn and changes 'null' to ~
-
+    console.log(key, value, "kay and value in format data");
     if (value === null) {
       return <p>{`${key}: ~`}</p>;
     } else {
@@ -276,10 +276,11 @@ class BookInfo extends Component {
     );
   }
   noteInfo(note) {
+    console.log(note.noteDate, "note.noteDate in noteinfo");
     return (
       <>
         <p>{note.noteTitle}</p>
-        <p>{` ${this.formatData("Date", note.noteDate)}`}</p>
+        {this.formatData("Date", note.noteDate)}
         <br></br>
         <p>{note.noteContent}</p>
       </>
