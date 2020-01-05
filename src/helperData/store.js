@@ -18,6 +18,8 @@ const store = [
           "'I have stolen princesses back from sleeping barrow kings. I burned down the town...",
         notes: [
           {
+            noteId: 1,
+            bookId: 1,
             noteTitle: "Amazing",
             noteDate: "2018-10-11",
             noteContent:
@@ -40,12 +42,16 @@ const store = [
           "The Once-ler describes the results of the local pollution problem.",
         notes: [
           {
+            noteId: 2,
+            bookId: 2,
             noteTitle: "Unless",
             noteDate: null,
             noteContent:
               "Unless someone like you cares a whole awful lot, Nothing is going to get better. It's not."
           },
           {
+            noteId: 3,
+            bookId: 2,
             noteTitle: "My Fav",
             noteDate: null,
             noteContent: "This is my favorite Dr. Seuss book"
@@ -66,6 +72,8 @@ const store = [
         description: "No description available",
         notes: [
           {
+            noteId: 4,
+            bookId: 3,
             noteTitle: "Multiple Authors",
             noteDate: "2020-01-02",
             noteContent: "This book has multiple authors. Cool!!"

@@ -32,7 +32,15 @@ class Accordion extends Component {
           className="deleteNoteButton"
           onClick={e => {
             e.preventDefault();
+            const response = helpers.deleteNote(
+              value.user.username,
+              prop.note.bookId,
+              prop.note.noteId
+            );
             //make fetch request to delete note
+            if (response === "ok") {
+              value.refresh(value.user.username, value.tab);
+            }
           }}
         >
           Delete

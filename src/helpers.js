@@ -30,7 +30,6 @@ const helpers = {
       }
       return user;
     } catch (error) {
-      console.log("supposed to return error");
       return { message: "Incorrect username or password" };
     }
   },
@@ -38,13 +37,11 @@ const helpers = {
     return store.find(user => user.username === username);
   },
   patchBookTab(username, bookId, newTab) {
-    console.log("patchBookTab ran");
     store
       .find(user => user.username === username)
       .books.find(book => book.id === bookId).onTab = newTab;
   },
   AddBook(bookObject, username) {
-    console.log(username, "username in AddBook");
     const duplicate = store
       .find(user => user.username === username)
       .books.find(book => book.googleId === bookObject.googleId);
@@ -56,10 +53,6 @@ const helpers = {
       const id = Math.max(...allIds) + 1;
       const bookToAdd = { id: id, ...bookObject };
       store.find(user => user.username === username).books.push(bookToAdd);
-      console.log(
-        store.find(user => user.username === username).books,
-        "user books after push"
-      );
 
       return "ok";
     }
@@ -112,16 +105,33 @@ const helpers = {
     }
   },
   postNewNote(username, bookId, noteObject) {
+    console.log(bookId, "bookId in postNewNote");
+    const noteIds = [];
+    store.forEach(user =>
+      user.books.forEach(book =>
+        book.notes.forEach(note => noteIds.push(note.noteId))
+      )
+    );
+
+    let maxId = Math.max(...noteIds) + 1;
+    const noteWithId = { noteId: maxId, bookId: bookId, ...noteObject };
+
     store
       .find(user => user.username === username)
-      .books.find(book => (book.id = bookId))
-      .notes.push(noteObject);
-    console.log(
-      store
-        .find(user => user.username === username)
-        .books.find(book => (book.id = bookId)),
-      "book that note was added to"
-    );
+      .books.find(book => book.id === bookId)
+      .notes.push(noteWithId);
+
+    return "ok";
+  },
+  deleteNote(username, bookId, noteId) {
+    const filteredNotes = store
+      .find(user => user.username === username)
+      .books.find(book => book.id === bookId)
+      .notes.filter(note => note.noteId !== noteId);
+
+    store
+      .find(user => user.username === username)
+      .books.find(book => book.id === bookId).notes = filteredNotes;
     return "ok";
   }
 };
