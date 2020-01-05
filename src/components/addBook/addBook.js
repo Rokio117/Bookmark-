@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookmarkContext from "../../context";
 import helpers from "../../helpers";
-import "./addBook.css";
-class addBook extends Component {
+import "./AddBook.css";
+class AddBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -207,13 +207,13 @@ class addBook extends Component {
         {value => {
           return (
             <form
-              id="addBookForm"
+              id="AddBookForm"
               onSubmit={e => {
                 e.preventDefault();
                 if (!this.state.chosenBook) {
                   this.setState({ noBookSelected: true });
                 } else {
-                  const res = helpers.addBook(
+                  const res = helpers.AddBook(
                     this.formatBook(this.state.chosenBook),
                     value.user.username
                   );
@@ -224,7 +224,7 @@ class addBook extends Component {
                 }
               }}
             >
-              <fieldset className="addBookFieldset" id="findBookFieldset">
+              <fieldset className="AddBookFieldset" id="findBookFieldset">
                 <legend id="findBookLegend">Find Book</legend>
 
                 <input
@@ -254,7 +254,7 @@ class addBook extends Component {
                 <h2>Results</h2>
                 <ul>{this.results(this.state.searchResults)}</ul>
               </fieldset>
-              <fieldset id="bookDetailsFieldset" className="addBookFieldset">
+              <fieldset id="bookDetailsFieldset" className="AddBookFieldset">
                 <legend>Book Details</legend>
                 <label htmlFor="pageSelect">Add to:</label>
                 <select
@@ -283,4 +283,4 @@ class addBook extends Component {
   }
 }
 
-export default withRouter(addBook);
+export default withRouter(AddBook);

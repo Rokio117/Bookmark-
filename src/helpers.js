@@ -43,8 +43,8 @@ const helpers = {
       .find(user => user.username === username)
       .books.find(book => book.id === bookId).onTab = newTab;
   },
-  addBook(bookObject, username) {
-    console.log(username, "username in addbook");
+  AddBook(bookObject, username) {
+    console.log(username, "username in AddBook");
     const duplicate = store
       .find(user => user.username === username)
       .books.find(book => book.googleId === bookObject.googleId);

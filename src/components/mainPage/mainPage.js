@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookMarkContext from "../../context";
 import List from "../list/list";
-import AddBook from "../addBook/addBook";
+import AddBook from "../addBook/AddBook";
 import Accordion from "../accordion/accordion";
 import bookInfo from "../bookInfo/bookInfo";
 import "./mainPage.css";
@@ -11,7 +11,7 @@ class MainPage extends Component {
     super(props);
     this.state = {};
   }
-  addBookDisplay(value) {
+  AddBookDisplay(value) {
     if (value.tab === "add") {
       return <AddBook />;
     } else return <List books={this.bookSorter(value.books, value)} />;
@@ -50,7 +50,7 @@ class MainPage extends Component {
           return (
             <div className="mainPage">
               <h2 className="tabTitle">{value.tab}</h2>
-              {this.addBookDisplay(value)}
+              {this.AddBookDisplay(value)}
             </div>
           );
         }}
