@@ -110,6 +110,13 @@ const helpers = {
       store.push(newUser);
       return "ok";
     }
+  },
+  postNewNote(username, bookId, noteObject) {
+    store
+      .find(user => user.username === username)
+      .books.find(book => (book.id = bookId))
+      .notes.push(noteObject);
+    return "ok";
   }
 };
 

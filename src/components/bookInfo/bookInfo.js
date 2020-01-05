@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import defaultProps from "../defaultProps";
 import helpers from "../../helpers";
 import store from "../../helperData/store";
+import "./bookInfo.css";
 class BookInfo extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +15,11 @@ class BookInfo extends Component {
       editMode: false,
       newCurrentPage: undefined,
       newStartDate: undefined,
-      newEndDate: undefined
+      newEndDate: undefined,
+      addNoteMode: false,
+      newNoteTitle: "",
+      newNoteDate: null,
+      newNoteContent: ""
     };
   }
 
@@ -146,6 +151,96 @@ class BookInfo extends Component {
       return this.editBookInfo(book, value);
     } else return this.bookDisplayInfo(book);
   }
+  addNoteForm(value) {
+    if (this.state.addNoteMode) {
+      return (
+        <form id="addNoteForm">
+          <h3>Add note</h3>
+          <label htmlFor="dateSelector">Date: </label>
+
+          <input
+            type="date"
+            className="dateSelector"
+            onChange={e => {
+              this.setState({ newNoteDate: e.target.value });
+            }}
+          ></input>
+          <br></br>
+          <label htmlFor="noteTitleSelector">Title:</label>
+          <input
+            required
+            type="text"
+            className="noteTitleSelector"
+            onClick={e => {
+              this.setState({ newNoteTitle: e.target.value });
+            }}
+          ></input>
+          <br></br>
+          <label for="noteContentSelector">Content:</label>
+          <textarea
+            required
+            className="noteContentSelector"
+            rows="8"
+            cols="35"
+            onChange={e => {
+              this.setState({ newNoteContent: e.target.value });
+            }}
+          ></textarea>
+          <br></br>
+          <button
+            id="addNoteSubmitButton"
+            type="submit"
+            onClick={e => {
+              e.preventDefault();
+              const newNoteObject = {
+                noteTitle: this.state.newNoteTitle,
+                noteDate: this.state.newNoteDate,
+                noteContent: this.state.newNoteContent
+              };
+              const res = helpers.postNewNote(
+                value.user.username,
+                value.book.bookId,
+                newNoteObject
+              );
+              if (res === "ok") {
+                value.refresh(value.user.username, value.tab);
+              }
+            }}
+          >
+            submit
+          </button>
+        </form>
+      );
+    }
+  }
+
+  addNoteButtonChoice() {
+    if (!this.state.addNoteMode) {
+      return (
+        <button
+          className="addNoteButton"
+          id="addNoteButton"
+          onClick={e => {
+            this.setState({ addNoteMode: true });
+          }}
+        >
+          Add note
+        </button>
+      );
+    } else
+      return (
+        <button
+          className="addNoteButton"
+          id="cancelAddNoteButton"
+          onClick={e => {
+            this.setState({ addNoteMode: false });
+          }}
+        >
+          Cancel
+        </button>
+      );
+  }
+
   fullBookInfo(book, tab, value) {
     //needs this.props.book
     //and value.tab
@@ -161,7 +256,9 @@ class BookInfo extends Component {
         <br></br>
         <h2>Notes:</h2>
         {this.bookNotesDisplay(book, tab)}
-        <button id="addNoteButton">Add note</button>
+
+        {this.addNoteForm(value)}
+        {this.addNoteButtonChoice()}
       </div>
     );
   }
@@ -182,7 +279,7 @@ class BookInfo extends Component {
     return (
       <>
         <p>{note.noteTitle}</p>
-        <p>{`Date: ${note.noteDate}`}</p>
+        <p>{`Date: ${this.formatData(note.noteDate)}`}</p>
         <br></br>
         <p>{note.noteContent}</p>
       </>

@@ -41,7 +41,7 @@ const store = [
         notes: [
           {
             noteTitle: "Unless",
-            noteDate: "unknown",
+            noteDate: null,
             noteContent:
               "Unless someone like you cares a whole awful lot, Nothing is going to get better. It's not."
           }

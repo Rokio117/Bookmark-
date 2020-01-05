@@ -1,0 +1,18 @@
+.noteContentSelector {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#addNoteForm {
+  width: 50%;
+  border: 2px solid black;
+  margin-left: auto;
+  margin-right: auto;
+}
+.addNoteButton,
+#addNoteSubmitButton {
+  width: 15%;
+  height: 8%;
+  margin: 20px;
+}

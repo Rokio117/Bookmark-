@@ -18,9 +18,11 @@ class List extends Component {
     });
   }
   createNoteList(noteList) {
-    return noteList.map(note => {
-      return <Accordion note={note} />;
-    });
+    if (noteList) {
+      return noteList.map(note => {
+        return <Accordion note={note} />;
+      });
+    }
   }
   listToRender(props) {
     if (props.books) {

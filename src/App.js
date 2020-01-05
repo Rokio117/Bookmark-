@@ -8,6 +8,7 @@ import MainPage from "./components/mainPage/mainPage";
 import WelcomePage from "./components/welcomePage/welcomePage";
 import { withRouter } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
+import ErrorDisplay from "./components/errorDisplay/errorDisplay";
 import helpers from "./helpers";
 
 class App extends Component {
@@ -111,27 +112,29 @@ class App extends Component {
           userProfile: this.state.userProfile
         }}
       >
-        <Switch>
-          <Route
-            exact
-            path="/"
-            component={props => {
-              return <WelcomePage login={this.login} />;
-            }}
-          ></Route>
-          <Route
-            exact
-            path="/home"
-            component={props => {
-              return (
-                <>
-                  <Tab changeTab={this.changeTab} tab={this.state.tab} />
-                  <MainPage />
-                </>
-              );
-            }}
-          ></Route>
-        </Switch>
+        <ErrorDisplay>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              component={props => {
+                return <WelcomePage login={this.login} />;
+              }}
+            ></Route>
+            <Route
+              exact
+              path="/home"
+              component={props => {
+                return (
+                  <>
+                    <Tab changeTab={this.changeTab} tab={this.state.tab} />
+                    <MainPage />
+                  </>
+                );
+              }}
+            ></Route>
+          </Switch>
+        </ErrorDisplay>
       </bookMarkContext.Provider>
     );
   }
