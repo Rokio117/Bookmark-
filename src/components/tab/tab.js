@@ -26,7 +26,7 @@ class Tab extends Component {
 
           return (
             <div id="tabBorder">
-              <h1>Bookmark!</h1>
+              <h1 id="appTitle">Bookmark!</h1>
               <button
                 className={this.currentPageSelect(tab, "upcoming")}
                 onClick={e => {

@@ -5,6 +5,7 @@ import List from "../list/list";
 import AddBook from "../addBook/addBook";
 import Accordion from "../accordion/accordion";
 import bookInfo from "../bookInfo/bookInfo";
+import "./mainPage.css";
 class MainPage extends Component {
   constructor(props) {
     super(props);
@@ -48,10 +49,10 @@ class MainPage extends Component {
       <bookMarkContext.Consumer>
         {value => {
           return (
-            <>
-              <h2>{value.tab}</h2>
+            <div className="mainPage">
+              <h2 className="tabTitle">{value.tab}</h2>
               {this.addBookDisplay(value)}
-            </>
+            </div>
           );
         }}
       </bookMarkContext.Consumer>
