@@ -60,6 +60,7 @@ class BookInfo extends Component {
         <br></br>
         {this.formatData("Finished on", book.finishedOn)}
         <br></br>
+        <h2>Notes:</h2>
         {this.bookNotesDisplay(book, tab)}
       </div>
     );

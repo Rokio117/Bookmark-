@@ -3,12 +3,15 @@
 }
 
 .selected {
-  background-color: turquoise;
-  border-bottom: turquoise;
+  background-color: white !important;
+  border-bottom: none;
 }
 .tab-button {
   width: 25%;
   margin: 0px;
   height: 50px;
   border-radius: 30px 30px 0px 0px;
+}
+.tab-button {
+  background-color: sandybrown;
 }
