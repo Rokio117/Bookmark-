@@ -44,6 +44,11 @@ const store = [
             noteDate: null,
             noteContent:
               "Unless someone like you cares a whole awful lot, Nothing is going to get better. It's not."
+          },
+          {
+            noteTitle: "My Fav",
+            noteDate: null,
+            noteContent: "This is my favorite Dr. Seuss book"
           }
         ]
       },

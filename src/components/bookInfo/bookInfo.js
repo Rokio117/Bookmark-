@@ -24,13 +24,13 @@ class BookInfo extends Component {
   }
 
   bookNotesDisplay(book, tab) {
+    console.log(book.notes, "book.notes in bookNotesDisplay");
     if (tab !== "upcoming") {
       return <List notes={book.notes} />;
     }
   }
 
   formatAuthors(authors) {
-    console.log(authors, "authors in formatAuthors");
     //authors is either an array or null, depending on if the book had a listed author
     let result = [];
     let formattedAuthors = [];
@@ -59,7 +59,6 @@ class BookInfo extends Component {
     }
   }
   editBookInfo(book, value) {
-    console.log(value, "value in editBookInfo");
     return (
       <form
         onSubmit={e => {
@@ -151,10 +150,30 @@ class BookInfo extends Component {
       return this.editBookInfo(book, value);
     } else return this.bookDisplayInfo(book);
   }
-  addNoteForm(value) {
+  addNoteForm(value, book) {
     if (this.state.addNoteMode) {
       return (
-        <form id="addNoteForm">
+        <form
+          id="addNoteForm"
+          onSubmit={e => {
+            e.preventDefault();
+            const newNoteObject = {
+              noteTitle: this.state.newNoteTitle,
+              noteDate: this.state.newNoteDate,
+              noteContent: this.state.newNoteContent
+            };
+            console.log(newNoteObject, "note object before being submitted");
+
+            const res = helpers.postNewNote(
+              value.user.username,
+              book.id,
+              newNoteObject
+            );
+            if (res === "ok") {
+              value.refresh(value.user.username, value.tab);
+            }
+          }}
+        >
           <h3>Add note</h3>
           <label htmlFor="dateSelector">Date: </label>
 
@@ -171,7 +190,7 @@ class BookInfo extends Component {
             required
             type="text"
             className="noteTitleSelector"
-            onClick={e => {
+            onChange={e => {
               this.setState({ newNoteTitle: e.target.value });
             }}
           ></input>
@@ -187,26 +206,7 @@ class BookInfo extends Component {
             }}
           ></textarea>
           <br></br>
-          <button
-            id="addNoteSubmitButton"
-            type="submit"
-            onClick={e => {
-              e.preventDefault();
-              const newNoteObject = {
-                noteTitle: this.state.newNoteTitle,
-                noteDate: this.state.newNoteDate,
-                noteContent: this.state.newNoteContent
-              };
-              const res = helpers.postNewNote(
-                value.user.username,
-                value.book.bookId,
-                newNoteObject
-              );
-              if (res === "ok") {
-                value.refresh(value.user.username, value.tab);
-              }
-            }}
-          >
+          <button id="addNoteSubmitButton" type="submit">
             submit
           </button>
         </form>
@@ -257,7 +257,7 @@ class BookInfo extends Component {
         <h2>Notes:</h2>
         {this.bookNotesDisplay(book, tab)}
 
-        {this.addNoteForm(value)}
+        {this.addNoteForm(value, book)}
         {this.addNoteButtonChoice()}
       </div>
     );
@@ -279,7 +279,7 @@ class BookInfo extends Component {
     return (
       <>
         <p>{note.noteTitle}</p>
-        <p>{`Date: ${this.formatData(note.noteDate)}`}</p>
+        <p>{` ${this.formatData("Date", note.noteDate)}`}</p>
         <br></br>
         <p>{note.noteContent}</p>
       </>

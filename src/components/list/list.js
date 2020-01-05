@@ -18,6 +18,7 @@ class List extends Component {
     });
   }
   createNoteList(noteList) {
+    console.log(noteList, "noteList in createNoteList");
     if (noteList) {
       return noteList.map(note => {
         return <Accordion note={note} />;

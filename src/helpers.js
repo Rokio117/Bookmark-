@@ -116,6 +116,12 @@ const helpers = {
       .find(user => user.username === username)
       .books.find(book => (book.id = bookId))
       .notes.push(noteObject);
+    console.log(
+      store
+        .find(user => user.username === username)
+        .books.find(book => (book.id = bookId)),
+      "book that note was added to"
+    );
     return "ok";
   }
 };
