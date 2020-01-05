@@ -34,7 +34,13 @@ button:focus {
 #appTitle {
   margin-top: 0px;
   margin-bottom: 0px;
+  font-size: 60px;
   padding-top: 20px;
   padding-bottom: 20px;
   background-color: skyblue;
+}
+#logoutButton {
+  position: absolute;
+  right: 20px;
+  top: 50px;
 }

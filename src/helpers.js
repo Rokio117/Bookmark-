@@ -86,7 +86,30 @@ const helpers = {
         .find(user => user.username === username)
         .books.find(book => book.id === bookId)[keyToChange] = valueToChange;
     });
+
     return "ok";
+  },
+  deleteBook(username, bookId) {
+    const userBooks = store.find(user => user.username === username).books;
+    const trimmedBooks = userBooks.filter(book => book.id !== bookId);
+    store.find(user => user.username === username).books = trimmedBooks;
+    return "ok";
+  },
+  postNewUser(username, password, repeatPassword) {
+    const newUser = {
+      username: username,
+      password: password,
+      books: []
+    };
+    const usernames = store.map(users => users.username);
+    if (password !== repeatPassword) {
+      return { message: "passwords must match" };
+    } else if (usernames.includes(username)) {
+      return { message: "username is taken" };
+    } else {
+      store.push(newUser);
+      return "ok";
+    }
   }
 };
 

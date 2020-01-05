@@ -33,7 +33,7 @@ class App extends Component {
     if (!this.state.loggedIn && sessionInfo) {
       console.log(sessionInfo, "sessionInfo on did mount");
       this.setState(sessionInfo);
-    }
+    } else this.props.history.push("/");
   }
   changeTab = tab => {
     this.setState({ tab: tab });

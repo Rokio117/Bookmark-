@@ -25,45 +25,59 @@ class Tab extends Component {
           const tab = this.props.tab;
 
           return (
-            <div id="tabBorder">
-              <h1 id="appTitle">Bookmark!</h1>
-              <button
-                className={this.currentPageSelect(tab, "upcoming")}
-                onClick={e => {
-                  this.props.changeTab("upcoming");
-                  this.changeActiveTab("upcoming");
-                }}
-              >
-                Upcoming
-              </button>
-              <button
-                className={this.currentPageSelect(tab, "current")}
-                onClick={e => {
-                  this.props.changeTab("current");
-                  this.changeActiveTab("current");
-                }}
-              >
-                Current
-              </button>
-              <button
-                className={this.currentPageSelect(tab, "finished")}
-                onClick={e => {
-                  this.props.changeTab("finished");
-                  this.changeActiveTab("finished");
-                }}
-              >
-                Finished
-              </button>
-              <button
-                className={this.currentPageSelect(tab, "add")}
-                onClick={e => {
-                  this.props.changeTab("add");
-                  this.changeActiveTab("add");
-                }}
-              >
-                Add
-              </button>
-            </div>
+            <>
+              <div id="tabBorder">
+                <button
+                  id="logoutButton"
+                  onClick={e => {
+                    if (window.confirm("Are you sure")) {
+                      sessionStorage.clear();
+                      this.props.history.push("/");
+                    }
+                  }}
+                >
+                  Logout
+                </button>
+                <h1 id="appTitle">Bookmark!</h1>
+
+                <button
+                  className={this.currentPageSelect(tab, "upcoming")}
+                  onClick={e => {
+                    this.props.changeTab("upcoming");
+                    this.changeActiveTab("upcoming");
+                  }}
+                >
+                  Upcoming
+                </button>
+                <button
+                  className={this.currentPageSelect(tab, "current")}
+                  onClick={e => {
+                    this.props.changeTab("current");
+                    this.changeActiveTab("current");
+                  }}
+                >
+                  Current
+                </button>
+                <button
+                  className={this.currentPageSelect(tab, "finished")}
+                  onClick={e => {
+                    this.props.changeTab("finished");
+                    this.changeActiveTab("finished");
+                  }}
+                >
+                  Finished
+                </button>
+                <button
+                  className={this.currentPageSelect(tab, "add")}
+                  onClick={e => {
+                    this.props.changeTab("add");
+                    this.changeActiveTab("add");
+                  }}
+                >
+                  Add
+                </button>
+              </div>
+            </>
           );
         }}
       </bookmarkContext.Consumer>

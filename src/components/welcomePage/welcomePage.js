@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import helpers from "../../helpers";
+import store from "../../helperData/store";
 class WelcomePage extends Component {
   constructor(props) {
     super(props);
@@ -27,13 +28,27 @@ class WelcomePage extends Component {
       <form
         onSubmit={e => {
           e.preventDefault();
-          this.setState({ errorLocation: "register" });
+
+          const res = helpers.postNewUser(
+            this.state.newUserName,
+            this.state.newUserPassword,
+            this.state.repeatPassword
+          );
+          if (res === "ok") {
+            const userInfo = helpers.getUserInfo(this.state.newUserName);
+            this.props.login(userInfo);
+          } else if (res.message) {
+            this.setState({ errorLocation: "register" });
+            this.setState({ hasError: true });
+            this.setState({ errorMessage: res.message });
+          }
         }}
       >
         <fieldset>
           <legend>Sign up</legend>
           <label htmlFor="username">Username(must be unique)</label>
           <input
+            required
             className="signUpform"
             id="username"
             type="text"
@@ -46,6 +61,7 @@ class WelcomePage extends Component {
             Password
           </label>
           <input
+            required
             className="signhtmlForm"
             id="password"
             type="password"
@@ -56,6 +72,7 @@ class WelcomePage extends Component {
           <br></br>
           <label htmlFor="repeatPassword">Repeat Password:</label>
           <input
+            required
             className="signUpform"
             id="repeatPassword"
             type="password"

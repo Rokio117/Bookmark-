@@ -6,6 +6,7 @@ import List from "../list/list";
 import PropTypes from "prop-types";
 import defaultProps from "../defaultProps";
 import helpers from "../../helpers";
+import store from "../../helperData/store";
 class BookInfo extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +25,7 @@ class BookInfo extends Component {
   }
 
   formatAuthors(authors) {
+    console.log(authors, "authors in formatAuthors");
     //authors is either an array or null, depending on if the book had a listed author
     let result = [];
     let formattedAuthors = [];
@@ -32,7 +34,8 @@ class BookInfo extends Component {
         authors.forEach(author => {
           formattedAuthors.unshift(author);
         });
-        result = <p>{`Authors: ${formattedAuthors}`}</p>;
+
+        return (result = <p>{`Authors: ${formattedAuthors}`}</p>);
       } else {
         result = <p>{`Author: ${authors[0]}`}</p>;
         return result;
@@ -51,6 +54,7 @@ class BookInfo extends Component {
     }
   }
   editBookInfo(book, value) {
+    console.log(value, "value in editBookInfo");
     return (
       <form
         onSubmit={e => {
@@ -61,24 +65,24 @@ class BookInfo extends Component {
             { finishedOn: this.state.newEndDate || book.finishedOn }
           ];
           if (
-            helpers.patchBookInfo(
-              book.id,
-              newBookInfo,
-              value.user.username === "ok"
-            )
+            helpers.patchBookInfo(book.id, newBookInfo, value.user.username) ===
+            "ok"
           ) {
-            value.refresh(value.username, value.tab);
+            value.refresh(value.user.username, value.tab);
           }
         }}
       >
         <label htmlFor="currentPageInput">Current page:</label>
         <input
+          type="number"
+          onChange={e => this.setState({ newCurrentPage: e.target.value })}
           className="currentPageInput"
           defaultValue={book.currentPage}
         ></input>
         <br></br>
         <label htmlFor="startedOnInput">Started on:</label>
         <input
+          onChange={e => this.setState({ newStartDate: e.target.value })}
           type="date"
           className="startedOnInput"
           defaultValue={book.startedOn}
@@ -86,12 +90,23 @@ class BookInfo extends Component {
         <br></br>
         <label htmlFor="finishedOnInput">Finished on:</label>
         <input
+          onChange={e => this.setState({ newEndDate: e.target.value })}
           type="date"
           className="finishedOnInput"
           defaultValue={book.finishedOn}
         ></input>
         <br></br>
         <button type="submit">Save</button>
+        <button
+          type="button"
+          onClick={e => {
+            if (helpers.deleteBook(value.user.username, book.id) === "ok") {
+              value.refresh(value.user.username, value.tab);
+            }
+          }}
+        >
+          Delete
+        </button>
       </form>
     );
   }
@@ -126,12 +141,12 @@ class BookInfo extends Component {
       </>
     );
   }
-  displayMode(book, username, value) {
+  displayMode(book, value) {
     if (this.state.editMode) {
       return this.editBookInfo(book, value);
     } else return this.bookDisplayInfo(book);
   }
-  fullBookInfo(book, tab, username, value) {
+  fullBookInfo(book, tab, value) {
     //needs this.props.book
     //and value.tab
     return (
@@ -174,7 +189,8 @@ class BookInfo extends Component {
     );
   }
 
-  displayInfo(tab, props, value) {
+  displayInfo(props, value) {
+    const tab = value.tab;
     //requires value.tab
     //requires this.props
     if (tab === "upcoming") {
@@ -190,7 +206,7 @@ class BookInfo extends Component {
       //props will be individual sorted book object
       <bookmarkContext.Consumer>
         {value => {
-          return <div>{this.displayInfo(value.tab, this.props, value)}</div>;
+          return <div>{this.displayInfo(this.props, value)}</div>;
         }}
       </bookmarkContext.Consumer>
     );
