@@ -48,7 +48,8 @@ class App extends Component {
 
     const user = {
       username: userProfile.username,
-      password: userProfile.password
+      id: userProfile.id
+      //password: userProfile.password
     };
     const books = userProfile.books;
     const appState = {

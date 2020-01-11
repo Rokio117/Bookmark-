@@ -84,6 +84,7 @@ class AddBook extends Component {
             ? result.volumeInfo.description
             : "No description available"
         };
+
         return (
           <li
             className={`bookResult ${this.selectedBook(bookObject.googleId)}`}
@@ -98,7 +99,7 @@ class AddBook extends Component {
             <br></br>
             {authors}
             <br></br>
-            <p>{`Description: ${bookObject.description}`}</p>
+            <p>{`Description: ${result.volumeInfo.description}`}</p>
             <br></br>
             <p>{`Published on: ${result.volumeInfo.publishedDate}`}</p>
             <button

@@ -11,7 +11,7 @@ const store = [
         coverArt:
           "http://books.google.com/books/content?id=c-qcoAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
         onTab: "finished",
-        currentPage: "171",
+        currentPage: 171,
         startedOn: "2018-07-22",
         finishedOn: "2018-10-11",
         description:
@@ -66,7 +66,7 @@ const store = [
         coverArt:
           "http://books.google.com/books/content?id=Vn9LDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
         onTab: "current",
-        currentPage: "1",
+        currentPage: 1,
         startedOn: "2020-01-01",
         finishedOn: null,
         description: "No description available",

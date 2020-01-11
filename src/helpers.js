@@ -16,6 +16,7 @@ const helpers = {
       });
   },
   validateAndGetReturningUser(username, password) {
+    //middleware required: validate user exists, key validator, correct password
     const user = store.find(userObject => userObject.username === username);
 
     const serverError = new Error({
@@ -34,14 +35,26 @@ const helpers = {
     }
   },
   getUserInfo(username) {
+    //
+    //middleware required: jwt validator
     return store.find(user => user.username === username);
   },
   patchBookTab(username, bookId, newTab) {
+    //middleware required: key validator, validate book exists,user validator,bookvalidator
+    //protected endpoint
     store
       .find(user => user.username === username)
       .books.find(book => book.id === bookId).onTab = newTab;
   },
   AddBook(bookObject, username) {
+    //middleware required: key validator,
+    //user validator
+    //
+    //protected endpoint
+    //1 find or add book
+    //2 find or add author
+    //3 post bookmark_user_info
+    //4 post bookmark_notes
     const duplicate = store
       .find(user => user.username === username)
       .books.find(book => book.googleId === bookObject.googleId);
@@ -56,22 +69,12 @@ const helpers = {
 
       return "ok";
     }
-    //  for(let num=0; num < allIds.length; num++ ){
-    //   let currentHighestId = allIds[0]
-    //   let currentNumber = allIds[num]
-    //   if(currentHighestId < currentNumber){
-    //     currentHighestId = currentNumber
-    //   }
-    //   return currentHighestId
-    // }
-
-    //will also need to give it ID
-    //1 retrieve all ids of all books
-    //2 find largest one
-    //3 largest++
-    //4 assign new largest to new book
   },
   patchBookInfo(bookId, newBookInfo, username) {
+    //this will also need bookInfoid, and not the id for a specific book
+    //key validator, bookInfo exists(?),bookvalidator,uservalidator
+    //username might be able to be swapped for JWT for recognition purposes
+    //protected endpoint
     newBookInfo.forEach(infoObject => {
       const keyToChange = Object.keys(infoObject)[0];
       const valueToChange = Object.values(infoObject)[0];
@@ -83,12 +86,16 @@ const helpers = {
     return "ok";
   },
   deleteBook(username, bookId) {
+    //key validator, user validator, book validator
+    //this delets a users relationship to that book, not the book itself
+    //also deletes the notes for that book
     const userBooks = store.find(user => user.username === username).books;
     const trimmedBooks = userBooks.filter(book => book.id !== bookId);
     store.find(user => user.username === username).books = trimmedBooks;
     return "ok";
   },
   postNewUser(username, password, repeatPassword) {
+    //password encrypt,validate user(doesn't exist),new passwords compare
     const newUser = {
       username: username,
       password: password,
@@ -105,6 +112,9 @@ const helpers = {
     }
   },
   postNewNote(username, bookId, noteObject) {
+    //bookId would be book_user_info id
+    //protected endpooint
+    //key validator, bookid validator if necessary
     console.log(bookId, "bookId in postNewNote");
     const noteIds = [];
     store.forEach(user =>
@@ -124,6 +134,10 @@ const helpers = {
     return "ok";
   },
   deleteNote(username, bookId, noteId) {
+    //protected endpoint
+    //validate user
+    //bookId would be book_user_info id
+    //validate note exists if necessary
     const filteredNotes = store
       .find(user => user.username === username)
       .books.find(book => book.id === bookId)

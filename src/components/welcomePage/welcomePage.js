@@ -36,6 +36,7 @@ class WelcomePage extends Component {
           );
           if (res === "ok") {
             const userInfo = helpers.getUserInfo(this.state.newUserName);
+            //change to be same as login fetch request
             this.props.login(userInfo);
           } else if (res.message) {
             this.setState({ errorLocation: "register" });
