@@ -17,6 +17,7 @@ const helpers = {
   },
   validateAndGetReturningUser(username, password) {
     //middleware required: validate user exists, key validator, correct password
+    //endpoint created
     const user = store.find(userObject => userObject.username === username);
 
     const serverError = new Error({
@@ -35,7 +36,7 @@ const helpers = {
     }
   },
   getUserInfo(username) {
-    //
+    //created
     //middleware required: jwt validator
     return store.find(user => user.username === username);
   },
@@ -95,6 +96,7 @@ const helpers = {
     return "ok";
   },
   postNewUser(username, password, repeatPassword) {
+    //created
     //password encrypt,validate user(doesn't exist),new passwords compare
     const newUser = {
       username: username,
