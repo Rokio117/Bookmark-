@@ -40,11 +40,8 @@ class App extends Component {
     this.setState({ tab: tab });
   };
   login = (userProfile, tab) => {
-    console.log("login Ran");
-    //all information about user
-    //sent after login auth
-    //auth and validation handled by login screen fetch requests
-    //historyu.push will also be handled in login screen
+    console.log(userProfile, "userprofile in login");
+    //does props need to call the function itself?
 
     const user = {
       username: userProfile.username,
@@ -62,6 +59,7 @@ class App extends Component {
       isLoading: false
     };
     sessionStorage.setItem("state", JSON.stringify(appState));
+    this.props.history.push("/home");
     this.setState({
       user: user,
       books: books,
@@ -71,7 +69,6 @@ class App extends Component {
       hasError: false,
       isLoading: false
     });
-    this.props.history.push("/home");
   };
 
   refresh = (username, tab) => {
@@ -82,6 +79,7 @@ class App extends Component {
       password: userProfile.password
     };
     const books = userProfile.books;
+
     const appState = {
       user: user,
       books: books,

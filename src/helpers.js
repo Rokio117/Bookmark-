@@ -1,5 +1,7 @@
 import config from "./config";
 import store from "./helperData/store";
+
+const endpoint = config.API_ENDPOINT;
 const helpers = {
   getBook(title) {
     return fetch(
@@ -16,46 +18,71 @@ const helpers = {
       });
   },
   validateAndGetReturningUser(username, password) {
-    //middleware required: validate user exists, key validator, correct password
-    //endpoint created
-    const user = store.find(userObject => userObject.username === username);
+    //POST /api/auth/login
 
-    const serverError = new Error({
-      message: "Incorrect username or password"
-    });
-    try {
-      if (!user) {
-        throw serverError;
-      }
-      if (user.password !== password) {
-        throw serverError;
-      }
-      return user;
-    } catch (error) {
-      return { message: "Incorrect username or password" };
-    }
+    return fetch(`${endpoint}/auth/login`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        user_name: username,
+        password: password
+      })
+    })
+      .then(response => {
+        console.log(response, "response in fetch request");
+        return response.json();
+      })
+      .catch(response => {
+        return response;
+      });
+    // const user = store.find(userObject => userObject.username === username);
+
+    // const serverError = new Error({
+    //   message: "Incorrect username or password"
+    // });
+    // try {
+    //   if (!user) {
+    //     throw serverError;
+    //   }
+    //   if (user.password !== password) {
+    //     throw serverError;
+    //   }
+    //   return user;
+    // } catch (error) {
+    //   return { message: "Incorrect username or password" };
+    // }
   },
-  getUserInfo(username) {
-    //created
-    //middleware required: jwt validator
-    return store.find(user => user.username === username);
+  getUserInfo(username, jwt) {
+    //GET /api/bookmark/userInfo/:username
+    //require auth
+    console.log(jwt, "jwt in get User Info");
+    return fetch(`${endpoint}/bookmark/userInfo/${username}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer=${jwt}`
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .catch(error => {
+        return error;
+      });
   },
   patchBookTab(username, bookId, newTab) {
-    //middleware required: key validator, validate book exists,user validator,bookvalidator
-    //protected endpoint
+    //PATCH/api/bookmark/book/changeTab
+    //body needs keys "bookInfoId" and "ontab"
     store
       .find(user => user.username === username)
       .books.find(book => book.id === bookId).onTab = newTab;
   },
   AddBook(bookObject, username) {
-    //middleware required: key validator,
-    //user validator
-    //
-    //protected endpoint
-    //1 find or add book
-    //2 find or add author
-    //3 post bookmark_user_info
-    //4 post bookmark_notes
+    // POST /api/bookmark/userinfo/:username/books/add
+    //requires keys
+    //"ontab" "currentpage" "startedon" "finishedon" "userid" "title" "coverart" "description" "googleid"
     const duplicate = store
       .find(user => user.username === username)
       .books.find(book => book.googleId === bookObject.googleId);
@@ -72,10 +99,8 @@ const helpers = {
     }
   },
   patchBookInfo(bookId, newBookInfo, username) {
-    //this will also need bookInfoid, and not the id for a specific book
-    //key validator, bookInfo exists(?),bookvalidator,uservalidator
-    //username might be able to be swapped for JWT for recognition purposes
-    //protected endpoint
+    // PATCH /api/bookmark/:username/book/update
+    //needs keys "currentpage" "startedon" "finishedon" "bookInfoId"
     newBookInfo.forEach(infoObject => {
       const keyToChange = Object.keys(infoObject)[0];
       const valueToChange = Object.values(infoObject)[0];
@@ -87,17 +112,16 @@ const helpers = {
     return "ok";
   },
   deleteBook(username, bookId) {
-    //key validator, user validator, book validator
-    //this delets a users relationship to that book, not the book itself
-    //also deletes the notes for that book
+    // DELETE /api/bookmark/:username/book/delete
+    //required keys "bookInfoId"
     const userBooks = store.find(user => user.username === username).books;
     const trimmedBooks = userBooks.filter(book => book.id !== bookId);
     store.find(user => user.username === username).books = trimmedBooks;
     return "ok";
   },
   postNewUser(username, password, repeatPassword) {
-    //created
-    //password encrypt,validate user(doesn't exist),new passwords compare
+    // POST /api/auth/register
+    // required keys "user_name" "password" "repeat_password"
     const newUser = {
       username: username,
       password: password,
@@ -114,9 +138,8 @@ const helpers = {
     }
   },
   postNewNote(username, bookId, noteObject) {
-    //bookId would be book_user_info id
-    //protected endpooint
-    //key validator, bookid validator if necessary
+    //POST /api/bookmark/:username/notes
+    // required keys "notetitle" "notedate" "notecontent" "bookInfoId"
     console.log(bookId, "bookId in postNewNote");
     const noteIds = [];
     store.forEach(user =>
@@ -136,10 +159,8 @@ const helpers = {
     return "ok";
   },
   deleteNote(username, bookId, noteId) {
-    //protected endpoint
-    //validate user
-    //bookId would be book_user_info id
-    //validate note exists if necessary
+    // DELETE /api/bookmark/:username/notes
+    //required keys "noteId"
     const filteredNotes = store
       .find(user => user.username === username)
       .books.find(book => book.id === bookId)

@@ -93,16 +93,29 @@ class WelcomePage extends Component {
       <form
         onSubmit={e => {
           e.preventDefault();
-          const response = helpers.validateAndGetReturningUser(
-            this.state.returnUserName,
-            this.state.loginPassword
-          );
+          helpers
+            .validateAndGetReturningUser(
+              this.state.returnUserName,
+              this.state.loginPassword
+            )
+            .then(loginResponse => {
+              if (loginResponse.error) {
+                this.setState({ hasError: true });
+                this.setState({ errorMessage: loginResponse.error });
+                this.setState({ errorLocation: "login" });
+              } else {
+                sessionStorage.setItem("authToken", loginResponse.authToken);
 
-          if (response.message) {
-            this.setState({ hasError: true });
-            this.setState({ errorMessage: response.message });
-            this.setState({ errorLocation: "login" });
-          } else this.props.login(response);
+                helpers
+                  .getUserInfo(
+                    this.state.returnUserName,
+                    loginResponse.authToken
+                  )
+                  .then(getInfoResponse => {
+                    this.props.login(getInfoResponse);
+                  });
+              }
+            });
         }}
       >
         <fieldset>
