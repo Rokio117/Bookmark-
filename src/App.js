@@ -118,7 +118,7 @@ class App extends Component {
           user: this.state.user,
           books: this.state.books,
           tab: this.state.tab,
-          refresh: this.refresh,
+          refresh: this.login,
           userProfile: this.state.userProfile
         }}
       >

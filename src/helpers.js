@@ -2,6 +2,7 @@ import config from "./config";
 import store from "./helperData/store";
 
 const endpoint = config.API_ENDPOINT;
+const authToken = sessionStorage.getItem("authToken");
 const helpers = {
   getBook(title) {
     return fetch(
@@ -57,7 +58,7 @@ const helpers = {
   getUserInfo(username, jwt) {
     //GET /api/bookmark/userInfo/:username
     //require auth
-    console.log(jwt, "jwt in get User Info");
+
     return fetch(`${endpoint}/bookmark/userInfo/${username}`, {
       method: "GET",
       headers: {
@@ -66,18 +67,27 @@ const helpers = {
       }
     })
       .then(response => {
+        console.log(response, "ressponse in fetch");
         return response.json();
       })
       .catch(error => {
         return error;
       });
   },
-  patchBookTab(username, bookId, newTab) {
+  patchBookTab(bookInfoId, ontab) {
     //PATCH/api/bookmark/book/changeTab
     //body needs keys "bookInfoId" and "ontab"
-    store
-      .find(user => user.username === username)
-      .books.find(book => book.id === bookId).onTab = newTab;
+    return fetch(`${endpoint}/bookmark/book/changeTab`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer=${authToken}`
+      },
+      body: JSON.stringify({
+        bookInfoId,
+        ontab
+      })
+    });
   },
   AddBook(bookObject, username) {
     // POST /api/bookmark/userinfo/:username/books/add
@@ -122,20 +132,21 @@ const helpers = {
   postNewUser(username, password, repeatPassword) {
     // POST /api/auth/register
     // required keys "user_name" "password" "repeat_password"
-    const newUser = {
-      username: username,
-      password: password,
-      books: []
-    };
-    const usernames = store.map(users => users.username);
-    if (password !== repeatPassword) {
-      return { message: "passwords must match" };
-    } else if (usernames.includes(username)) {
-      return { message: "username is taken" };
-    } else {
-      store.push(newUser);
-      return "ok";
-    }
+    return fetch(`${endpoint}/auth/register`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        user_name: username,
+        password: password,
+        repeat_password: repeatPassword
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .catch(error => {
+        return error;
+      });
   },
   postNewNote(username, bookId, noteObject) {
     //POST /api/bookmark/:username/notes

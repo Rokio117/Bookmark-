@@ -55,12 +55,11 @@ class Accordion extends Component {
             console.log(e.target.value, "event.target.value of onChange");
             e.preventDefault();
             if (e.target.value) {
-              helpers.patchBookTab(
-                value.user.username,
-                prop.book.id,
-                e.target.value
-              );
-              value.refresh(value.user.username, value.tab);
+              helpers
+                .patchBookTab(prop.book.id, e.target.value)
+                .then(response => {
+                  return value.refresh(value.user.username, value.tab);
+                });
             }
           }}
         >

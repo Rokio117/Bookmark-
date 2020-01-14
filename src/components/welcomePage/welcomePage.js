@@ -29,20 +29,23 @@ class WelcomePage extends Component {
         onSubmit={e => {
           e.preventDefault();
 
-          const res = helpers.postNewUser(
-            this.state.newUserName,
-            this.state.newUserPassword,
-            this.state.repeatPassword
-          );
-          if (res === "ok") {
-            const userInfo = helpers.getUserInfo(this.state.newUserName);
-            //change to be same as login fetch request
-            this.props.login(userInfo);
-          } else if (res.message) {
-            this.setState({ errorLocation: "register" });
-            this.setState({ hasError: true });
-            this.setState({ errorMessage: res.message });
-          }
+          helpers
+            .postNewUser(
+              this.state.newUserName,
+              this.state.newUserPassword,
+              this.state.repeatPassword
+            )
+            .then(response => {
+              console.log(response, "response after register");
+              if (response.error) {
+                this.setState({ errorLocation: "register" });
+                this.setState({ hasError: true });
+                this.setState({ errorMessage: response.error });
+              } else {
+                sessionStorage.setItem("authToken", response.authToken);
+                return this.props.login(response.username, "add");
+              }
+            });
         }}
       >
         <fieldset>
