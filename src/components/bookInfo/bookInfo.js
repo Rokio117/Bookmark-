@@ -31,6 +31,7 @@ class BookInfo extends Component {
   }
 
   formatAuthors(authors) {
+    console.log(authors, "authors in formatAuthors");
     //authors is either an array or null, depending on if the book had a listed author
     let result = [];
     let formattedAuthors = [];
@@ -50,7 +51,7 @@ class BookInfo extends Component {
   }
 
   formatData(key, value) {
-    //takes currentPage, startedOn, finishedOn and changes 'null' to ~
+    //takes currentpage, startedon, finishedon and changes 'null' to ~
     console.log(key, value, "kay and value in format data");
     if (value === null) {
       return <p>{`${key}: ~`}</p>;
@@ -64,9 +65,9 @@ class BookInfo extends Component {
         onSubmit={e => {
           e.preventDefault();
           const newBookInfo = [
-            { currentPage: this.state.newCurrentPage || book.currentPage },
-            { startedOn: this.state.newStartDate || book.startedOn },
-            { finishedOn: this.state.newEndDate || book.finishedOn }
+            { currentpage: this.state.newCurrentPage || book.currentpage },
+            { startedon: this.state.newStartDate || book.startedon },
+            { finishedon: this.state.newEndDate || book.finishedon }
           ];
           if (
             helpers.patchBookInfo(book.id, newBookInfo, value.user.username) ===
@@ -76,28 +77,28 @@ class BookInfo extends Component {
           }
         }}
       >
-        <label htmlFor="currentPageInput">Current page:</label>
+        <label htmlFor="currentpageInput">Current page:</label>
         <input
           type="number"
           onChange={e => this.setState({ newCurrentPage: e.target.value })}
-          className="currentPageInput"
-          defaultValue={book.currentPage}
+          className="currentpageInput"
+          defaultValue={book.currentpage}
         ></input>
         <br></br>
-        <label htmlFor="startedOnInput">Started on:</label>
+        <label htmlFor="startedonInput">Started on:</label>
         <input
           onChange={e => this.setState({ newStartDate: e.target.value })}
           type="date"
-          className="startedOnInput"
-          defaultValue={book.startedOn}
+          className="startedonInput"
+          defaultValue={book.startedon}
         ></input>
         <br></br>
-        <label htmlFor="finishedOnInput">Finished on:</label>
+        <label htmlFor="finishedonInput">Finished on:</label>
         <input
           onChange={e => this.setState({ newEndDate: e.target.value })}
           type="date"
-          className="finishedOnInput"
-          defaultValue={book.finishedOn}
+          className="finishedonInput"
+          defaultValue={book.finishedon}
         ></input>
         <br></br>
         <button type="submit">Save</button>
@@ -137,11 +138,11 @@ class BookInfo extends Component {
   bookDisplayInfo(book) {
     return (
       <>
-        {this.formatData("Current page", book.currentPage)}
+        {this.formatData("Current page", book.currentpage)}
         <br></br>
-        {this.formatData("Started on", book.startedOn)}
+        {this.formatData("Started on", book.startedon)}
         <br></br>
-        {this.formatData("Finished on", book.finishedOn)}
+        {this.formatData("Finished on", book.finishedon)}
       </>
     );
   }
@@ -158,9 +159,9 @@ class BookInfo extends Component {
           onSubmit={e => {
             e.preventDefault();
             const newNoteObject = {
-              noteTitle: this.state.newNoteTitle,
-              noteDate: this.state.newNoteDate,
-              noteContent: this.state.newNoteContent
+              notetitle: this.state.newNoteTitle,
+              notedate: this.state.newNoteDate,
+              notecontent: this.state.newNoteContent
             };
             console.log(newNoteObject, "note object before being submitted");
 
@@ -185,20 +186,20 @@ class BookInfo extends Component {
             }}
           ></input>
           <br></br>
-          <label htmlFor="noteTitleSelector">Title:</label>
+          <label htmlFor="notetitleSelector">Title:</label>
           <input
             required
             type="text"
-            className="noteTitleSelector"
+            className="notetitleSelector"
             onChange={e => {
               this.setState({ newNoteTitle: e.target.value });
             }}
           ></input>
           <br></br>
-          <label for="noteContentSelector">Content:</label>
+          <label for="notecontentSelector">Content:</label>
           <textarea
             required
-            className="noteContentSelector"
+            className="notecontentSelector"
             rows="8"
             cols="35"
             onChange={e => {
@@ -249,7 +250,7 @@ class BookInfo extends Component {
         <p>{`Title: ${book.title}`}</p>
         {this.editAndCancelButtons()}
         <br></br>
-        <img src={book.coverArt} alt={`Cover art for ${book.title}`}></img>
+        <img src={book.coverart} alt={`Cover art for ${book.title}`}></img>
         {this.formatAuthors(book.authors)}
         <br></br>
         {this.displayMode(book, value)}
@@ -276,13 +277,13 @@ class BookInfo extends Component {
     );
   }
   noteInfo(note) {
-    console.log(note.noteDate, "note.noteDate in noteinfo");
+    console.log(note.notedate, "note.notedate in noteinfo");
     return (
       <>
-        <p>{note.noteTitle}</p>
-        {this.formatData("Date", note.noteDate)}
+        <p>{note.notetitle}</p>
+        {this.formatData("Date", note.notedate)}
         <br></br>
-        <p>{note.noteContent}</p>
+        <p>{note.notecontent}</p>
       </>
     );
   }

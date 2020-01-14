@@ -9,25 +9,25 @@ import "./mainPage.css";
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { tab: this.props.tab };
   }
-  AddBookDisplay(value) {
-    if (value.tab === "add") {
+  AddBookDisplay(props) {
+    if (props.tab === "add") {
       return <AddBook />;
-    } else return <List books={this.bookSorter(value.books, value)} />;
+    } else return <List books={this.bookSorter(props.books, props)} />;
   }
   bookSorter(userBooks, value) {
     let currentBooks = [];
     let finishedBooks = [];
     let upcomingBooks = [];
     userBooks.forEach(book => {
-      if (book.onTab === "current") {
+      if (book.ontab === "current") {
         currentBooks.push(book);
       }
-      if (book.onTab === "finished") {
+      if (book.ontab === "finished") {
         finishedBooks.push(book);
       }
-      if (book.onTab === "upcoming") {
+      if (book.ontab === "upcoming") {
         upcomingBooks.push(book);
       }
     });
@@ -47,10 +47,19 @@ class MainPage extends Component {
     return (
       <bookMarkContext.Consumer>
         {value => {
+          console.log(this.props, "this.props in mainpage");
+          const newProps = {
+            user: this.props.state.user,
+            books: this.props.state.books,
+            tab: this.props.state.tab,
+            refresh: value.refresh,
+            userProfile: this.props.state.userProfile
+          };
+          console.log(newProps.books, "newprops .books in mainpage");
           return (
             <div className="mainPage">
-              <h2 className="tabTitle">{value.tab}</h2>
-              {this.AddBookDisplay(value)}
+              <h2 className="tabTitle">{this.props.tab}</h2>
+              {this.AddBookDisplay(newProps, this.props.state)}
             </div>
           );
         }}

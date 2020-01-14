@@ -8,20 +8,19 @@ import Accordion from "../accordion/accordion";
 class List extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { tab: this.props.tab };
   }
 
   createBookList(bookList) {
     return bookList.map(book => {
       //this will use book info
-      return <Accordion book={book} />;
+      return <Accordion book={book} tab={this.props.tab} />;
     });
   }
   createNoteList(noteList) {
-    console.log(noteList, "noteList in createNoteList");
     if (noteList) {
       return noteList.map(note => {
-        return <Accordion note={note} />;
+        return <Accordion note={note} tab={this.props.tab} />;
       });
     }
   }
@@ -31,6 +30,7 @@ class List extends Component {
     } else return this.createNoteList(props.notes);
   }
   render() {
+    console.log(this.props, "props in list");
     //recieves either books or notes as props
     return (
       <bookmarkContext.Consumer>

@@ -39,36 +39,47 @@ class App extends Component {
   changeTab = tab => {
     this.setState({ tab: tab });
   };
-  login = (userProfile, tab) => {
-    console.log(userProfile, "userprofile in login");
+  login = (username, tab) => {
     //does props need to call the function itself?
+    console.log("loggedIn");
+    const jwt = sessionStorage.getItem("authToken");
+    helpers
+      .getUserInfo(username, jwt)
+      .then(userProfile => {
+        console.log(userProfile, "userprofile after getUserinfo in login");
+        const user = {
+          username: userProfile.username,
+          id: userProfile.id
+          //password: userProfile.password
+        };
+        const books = userProfile.books;
 
-    const user = {
-      username: userProfile.username,
-      id: userProfile.id
-      //password: userProfile.password
-    };
-    const books = userProfile.books;
-    const appState = {
-      user: user,
-      books: books,
-      tab: tab || "current",
-      userProfile: userProfile,
-      loggedIn: true,
-      hasError: false,
-      isLoading: false
-    };
-    sessionStorage.setItem("state", JSON.stringify(appState));
-    this.props.history.push("/home");
-    this.setState({
-      user: user,
-      books: books,
-      tab: tab || "current",
-      userProfile: userProfile,
-      loggedIn: true,
-      hasError: false,
-      isLoading: false
-    });
+        const appState = {
+          user: user,
+          books: books,
+          tab: tab || "current",
+          userProfile: userProfile,
+          loggedIn: true,
+          hasError: false,
+          isLoading: false
+        };
+        return appState;
+        //  this.setState({
+        //   user: user,
+        //   books: books,
+        //   tab: tab || "current",
+        //   userProfile: userProfile,
+        //   loggedIn: true,
+        //   hasError: false,
+        //   isLoading: false
+        // });
+      })
+      .then(appState => {
+        this.props.history.push("/home");
+
+        sessionStorage.setItem("state", JSON.stringify(appState));
+        return this.setState(appState);
+      });
   };
 
   refresh = (username, tab) => {
@@ -127,7 +138,7 @@ class App extends Component {
                 return (
                   <>
                     <Tab changeTab={this.changeTab} tab={this.state.tab} />
-                    <MainPage />
+                    <MainPage state={this.state} />
                   </>
                 );
               }}

@@ -106,14 +106,7 @@ class WelcomePage extends Component {
               } else {
                 sessionStorage.setItem("authToken", loginResponse.authToken);
 
-                helpers
-                  .getUserInfo(
-                    this.state.returnUserName,
-                    loginResponse.authToken
-                  )
-                  .then(getInfoResponse => {
-                    this.props.login(getInfoResponse);
-                  });
+                this.props.login(this.state.returnUserName);
               }
             });
         }}

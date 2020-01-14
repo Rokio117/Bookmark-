@@ -103,7 +103,7 @@ class Accordion extends Component {
         {value => {
           const title = this.props.book
             ? this.props.book.title
-            : this.props.note.noteTitle;
+            : this.props.note.notetitle;
           return (
             <div className={this.accordionClass(this.props)}>
               <div className="accordionTop">
