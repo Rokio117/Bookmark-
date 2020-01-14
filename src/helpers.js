@@ -93,20 +93,16 @@ const helpers = {
     // POST /api/bookmark/userinfo/:username/books/add
     //requires keys
     //"ontab" "currentpage" "startedon" "finishedon" "userid" "title" "coverart" "description" "googleid"
-    const duplicate = store
-      .find(user => user.username === username)
-      .books.find(book => book.googleId === bookObject.googleId);
-    if (duplicate) {
-      return { message: "Already in collection" };
-    } else {
-      let allIds = [];
-      store.forEach(user => user.books.forEach(book => allIds.push(book.id)));
-      const id = Math.max(...allIds) + 1;
-      const bookToAdd = { id: id, ...bookObject };
-      store.find(user => user.username === username).books.push(bookToAdd);
-
-      return "ok";
-    }
+    return fetch(`${endpoint}/bookmark/userinfo/${username}/books/add`, {
+      method: "POAT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer=${authToken}`
+      },
+      body: JSON.stringify({
+        bookObject
+      })
+    });
   },
   patchBookInfo(bookId, newBookInfo, username) {
     // PATCH /api/bookmark/:username/book/update

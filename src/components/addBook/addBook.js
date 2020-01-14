@@ -169,18 +169,18 @@ class AddBook extends Component {
       );
     }
   }
-  formatBook(foundDetails) {
+  formatBook(foundDetails, value) {
     const formattedBook = {
-      googleId: foundDetails.googleId,
+      googleid: foundDetails.googleId,
       title: foundDetails.title,
       authors: foundDetails.authors,
-      coverArt: foundDetails.coverArt,
-      onTab: this.state.addingTo,
-      currentPage: this.state.currentPage,
-      startedOn: this.state.startedOn,
-      finishedOn: this.state.finishedOn,
+      coverart: foundDetails.coverArt,
+      ontab: this.state.addingTo,
+      currentpage: this.state.currentPage,
+      startedon: this.state.startedOn,
+      finishedon: this.state.finishedOn,
       description: foundDetails.bookDescription,
-      notes: []
+      userid: value.user.id
     };
     return formattedBook;
   }
@@ -215,7 +215,7 @@ class AddBook extends Component {
                   this.setState({ noBookSelected: true });
                 } else {
                   const res = helpers.AddBook(
-                    this.formatBook(this.state.chosenBook),
+                    this.formatBook(this.state.chosenBook, value),
                     value.user.username
                   );
                   if (!res === "ok") {
