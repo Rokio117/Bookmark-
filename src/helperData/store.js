@@ -8,7 +8,7 @@ const store = [
         googleId: "c-qcoAEACAAJ",
         title: "The Name of the Wind",
         authors: ["Patrick Rothfuss"],
-        coverArt:
+        coverart:
           "http://books.google.com/books/content?id=c-qcoAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
         onTab: "finished",
         currentPage: 171,
@@ -32,7 +32,7 @@ const store = [
         googleId: "cJnXmrk7BxAC",
         title: "The Lorax",
         authors: ["Dr. Seuss"],
-        coverArt:
+        coverart:
           "http://books.google.com/books/content?id=cJnXmrk7BxAC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
         onTab: "finished",
         currentPage: null,
@@ -63,7 +63,7 @@ const store = [
         googleId: "Vn9LDwAAQBAJ",
         title: "Murder, She Wrote: Manuscript for Murder",
         authors: ["Jon Land", "Jessica Fletcher"],
-        coverArt:
+        coverart:
           "http://books.google.com/books/content?id=Vn9LDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
         onTab: "current",
         currentPage: 1,
@@ -85,7 +85,7 @@ const store = [
         googleId: "U_zINMa9cAAC",
         title: "Holes",
         authors: ["Louis Sachar"],
-        coverArt:
+        coverart:
           "http://books.google.com/books/content?id=U_zINMa9cAAC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
         onTab: "upcoming",
         currentPage: null,

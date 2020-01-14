@@ -268,7 +268,7 @@ class BookInfo extends Component {
     return (
       <div>
         <p>{`Title: ${book.title}`}</p>
-        <img src={book.coverArt} alt={`Cover art for ${book.title}`}></img>
+        <img src={book.coverart} alt={`Cover art for ${book.title}`}></img>
         <br></br>
         {this.formatAuthors(book.authors)}
         <br></br>

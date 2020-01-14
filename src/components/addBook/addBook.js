@@ -77,7 +77,7 @@ class AddBook extends Component {
           title: result.volumeInfo.title,
           authors: result.volumeInfo.authors,
           published: result.volumeInfo.publishedDate,
-          coverArt: result.volumeInfo.imageLinks
+          coverart: result.volumeInfo.imageLinks
             ? result.volumeInfo.imageLinks.smallThumbnail
             : "No Picture available",
           bookDescription: result.volumeInfo.description
@@ -92,7 +92,7 @@ class AddBook extends Component {
           >
             <img
               className="searchImage"
-              src={bookObject.coverArt}
+              src={bookObject.coverart}
               alt={`Cover art for ${bookObject.title}`}
             ></img>
             <p>{`Title: ${bookObject.title}`}</p>
@@ -174,7 +174,7 @@ class AddBook extends Component {
       googleid: foundDetails.googleId,
       title: foundDetails.title,
       authors: foundDetails.authors,
-      coverart: foundDetails.coverArt,
+      coverart: foundDetails.coverart,
       ontab: this.state.addingTo,
       currentpage: this.state.currentPage,
       startedon: this.state.startedOn,
@@ -206,6 +206,7 @@ class AddBook extends Component {
     return (
       <bookmarkContext.Consumer>
         {value => {
+          console.log(value, "value in addBook");
           return (
             <form
               id="AddBookForm"
@@ -214,14 +215,20 @@ class AddBook extends Component {
                 if (!this.state.chosenBook) {
                   this.setState({ noBookSelected: true });
                 } else {
-                  const res = helpers.AddBook(
-                    this.formatBook(this.state.chosenBook, value),
-                    value.user.username
-                  );
-                  if (!res === "ok") {
-                    this.setState({ hasError: true, errorMessage: res });
-                  } else
-                    value.refresh(value.user.username, this.state.addingTo);
+                  return helpers
+                    .AddBook(
+                      this.formatBook(this.state.chosenBook, value),
+                      value.user.username
+                    )
+                    .then(response => {
+                      if (response.error) {
+                        this.setState({
+                          hasError: true,
+                          errorMessage: response.error
+                        });
+                      } else
+                        value.refresh(value.user.username, this.state.addingTo);
+                    });
                 }
               }}
             >

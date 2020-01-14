@@ -39,7 +39,7 @@ const dataDictionary = [
     type: Object,
     foundIn: "books",
     contains:
-      "title, author, coverArt, currentPage, startedOn, finishedOn, notes",
+      "title, author, coverart, currentPage, startedOn, finishedOn, notes",
     description: ""
   },
   {
@@ -57,7 +57,7 @@ const dataDictionary = [
     description: "the author of a book"
   },
   {
-    name: "coverArt",
+    name: "coverart",
     type: [String, "url"],
     foundIn: "book object",
     contains: null,

@@ -90,17 +90,27 @@ const helpers = {
     });
   },
   AddBook(bookObject, username) {
+    console.log(bookObject, "bookobject in addBook");
     // POST /api/bookmark/userinfo/:username/books/add
     //requires keys
     //"ontab" "currentpage" "startedon" "finishedon" "userid" "title" "coverart" "description" "googleid"
     return fetch(`${endpoint}/bookmark/userinfo/${username}/books/add`, {
-      method: "POAT",
+      method: "POST",
       headers: {
         "content-type": "application/json",
         authorization: `Bearer=${authToken}`
       },
       body: JSON.stringify({
-        bookObject
+        googleid: bookObject.googleid,
+        title: bookObject.title,
+        authors: bookObject.authhors,
+        coverart: bookObject.coverart,
+        ontab: bookObject.ontab,
+        currentpage: bookObject.currentpage,
+        startedon: bookObject.startedon,
+        finishedon: bookObject.finishedon,
+        description: bookObject.description,
+        userid: bookObject.userid
       })
     });
   },

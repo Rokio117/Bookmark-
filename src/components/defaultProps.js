@@ -4,7 +4,7 @@ const defaultProps = {
       {
         title: "",
         authors: [null],
-        coverArt:
+        coverart:
           "https://www.solidbackgrounds.com/images/2560x1440/2560x1440-gray-solid-color-background.jpg",
         onTab: "current",
         currentPage: null,
@@ -24,7 +24,7 @@ const defaultProps = {
     return {
       title: "",
       authors: [null],
-      coverArt:
+      coverart:
         "https://www.solidbackgrounds.com/images/2560x1440/2560x1440-gray-solid-color-background.jpg",
       onTab: "current",
       currentPage: null,
@@ -43,7 +43,7 @@ const defaultProps = {
     return {
       title: "",
       authors: [null],
-      coverArt:
+      coverart:
         "https://www.solidbackgrounds.com/images/2560x1440/2560x1440-gray-solid-color-background.jpg",
       onTab: "current",
       currentPage: null,
