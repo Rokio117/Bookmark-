@@ -53,13 +53,15 @@ class Accordion extends Component {
           className="moveBookButton"
           onChange={e => {
             e.preventDefault();
+            console.log(value.tab, "value.tab in change book tab");
+            const newTab = e.target.value;
             if (e.target.value) {
               helpers
                 .patchBookTab(prop.book.id, e.target.value)
                 .then(response => {
                   if (response.error) {
                     value.setError();
-                  } else return value.refresh(value.user.username, value.tab);
+                  } else return value.refresh(value.user.username, newTab);
                 });
             }
           }}

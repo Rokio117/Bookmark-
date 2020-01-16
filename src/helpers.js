@@ -1,6 +1,7 @@
 import config from "./config";
 import store from "./helperData/store";
 
+//const endpoint = config.API_ENDPOINT;
 const endpoint = config.LIVE_ENDPOINT;
 const authToken = sessionStorage.getItem("authToken");
 const helpers = {
@@ -63,7 +64,7 @@ const helpers = {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer=${authToken}`
+        authorization: `Bearer=${sessionStorage.getItem("authToken")}`
       },
       body: JSON.stringify({
         bookInfoId,
@@ -72,6 +73,10 @@ const helpers = {
     });
   },
   AddBook(bookObject, username) {
+    console.log(
+      sessionStorage.getItem("authToken"),
+      "storage.getitem in add book"
+    );
     // POST /api/bookmark/userinfo/:username/books/add
     //requires keys
     //"ontab" "currentpage" "startedon" "finishedon" "userid" "title" "coverart" "description" "googleid"
@@ -79,7 +84,7 @@ const helpers = {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer=${authToken}`
+        authorization: `Bearer=${sessionStorage.getItem("authToken")}`
       },
       body: JSON.stringify({
         googleid: bookObject.googleid,
@@ -123,7 +128,7 @@ const helpers = {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer=${authToken}`
+        authorization: `Bearer=${sessionStorage.getItem("authToken")}`
       },
       body: JSON.stringify({
         bookInfoId: bookId
@@ -162,7 +167,7 @@ const helpers = {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer=${authToken}`
+        authorization: `Bearer=${sessionStorage.getItem("authToken")}`
       },
       body: JSON.stringify({
         notetitle: noteObject.notetitle,
@@ -185,7 +190,7 @@ const helpers = {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer=${authToken}`
+        authorization: `Bearer=${sessionStorage.getItem("authToken")}`
       },
       body: JSON.stringify({
         noteId: noteId
