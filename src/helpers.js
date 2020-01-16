@@ -21,7 +21,6 @@ const helpers = {
   },
   validateAndGetReturningUser(username, password) {
     //POST /api/auth/login
-
     return fetch(`${endpoint}/auth/login`, {
       method: "POST",
       headers: {
@@ -89,7 +88,7 @@ const helpers = {
       body: JSON.stringify({
         googleid: bookObject.googleid,
         title: bookObject.title,
-        authors: bookObject.authhors,
+        authors: bookObject.authors,
         coverart: bookObject.coverart,
         ontab: bookObject.ontab,
         currentpage: bookObject.currentpage,
@@ -195,9 +194,14 @@ const helpers = {
       body: JSON.stringify({
         noteId: noteId
       })
-    }).then(response => {
-      return response.json(response);
-    });
+    })
+      .then(response => {
+        console.log(response, "response after deleteNote");
+        return response.json(response);
+      })
+      .catch(error => {
+        return error;
+      });
   }
 };
 

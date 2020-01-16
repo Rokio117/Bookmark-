@@ -45,6 +45,7 @@ class App extends Component {
     helpers
       .getUserInfo(username, jwt)
       .then(userProfile => {
+        console.log(userProfile, "userProfile after login");
         const user = {
           username: userProfile.username,
           id: userProfile.id

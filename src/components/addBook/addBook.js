@@ -51,6 +51,7 @@ class AddBook extends Component {
   }
 
   results(resultList) {
+    console.log(resultList, "resultList in add book");
     //needs to be sent results.items
     if (resultList[0] !== "No results found") {
       return resultList.map(result => {
