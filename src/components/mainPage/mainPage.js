@@ -47,7 +47,6 @@ class MainPage extends Component {
     return (
       <bookMarkContext.Consumer>
         {value => {
-          console.log(this.props, "this.props in mainpage");
           const newProps = {
             user: this.props.state.user,
             books: this.props.state.books,
@@ -55,7 +54,7 @@ class MainPage extends Component {
             refresh: value.refresh,
             userProfile: this.props.state.userProfile
           };
-          console.log(newProps.books, "newprops .books in mainpage");
+
           return (
             <div className="mainPage">
               <h2 className="tabTitle">{this.props.tab}</h2>

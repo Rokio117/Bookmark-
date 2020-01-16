@@ -207,7 +207,6 @@ class AddBook extends Component {
     return (
       <bookmarkContext.Consumer>
         {value => {
-          console.log(value, "value in addBook");
           return (
             <form
               id="AddBookForm"

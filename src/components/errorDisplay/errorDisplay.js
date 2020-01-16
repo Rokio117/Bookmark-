@@ -15,7 +15,7 @@ class ErrorDisplay extends Component {
     return (
       <bookMarkContext.Consumer>
         {value => {
-          if (this.state.hasError) {
+          if (this.state.hasError || this.props.error) {
             return (
               <div>
                 <h2>
@@ -29,10 +29,8 @@ class ErrorDisplay extends Component {
                     const sessionInfo = JSON.parse(
                       sessionStorage.getItem("state")
                     );
-                    console.log(sessionInfo, "sessioninfo");
                     if (sessionInfo) {
                       if (Object.keys(sessionInfo.user).length) {
-                        console.log(sessionInfo.user.username, sessionInfo.tab);
                         value.refresh(
                           sessionInfo.user.username,
                           sessionInfo.tab

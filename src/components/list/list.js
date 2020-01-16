@@ -30,7 +30,6 @@ class List extends Component {
     } else return this.createNoteList(props.notes);
   }
   render() {
-    console.log(this.props, "props in list");
     //recieves either books or notes as props
     return (
       <bookmarkContext.Consumer>

@@ -32,7 +32,6 @@ const helpers = {
       })
     })
       .then(response => {
-        console.log(response, "response in fetch request");
         return response.json();
       })
       .catch(response => {
@@ -51,7 +50,6 @@ const helpers = {
       }
     })
       .then(response => {
-        console.log(response, "ressponse in fetch");
         return response.json();
       })
       .catch(error => {
@@ -74,7 +72,6 @@ const helpers = {
     });
   },
   AddBook(bookObject, username) {
-    console.log(bookObject, "bookobject in addBook");
     // POST /api/bookmark/userinfo/:username/books/add
     //requires keys
     //"ontab" "currentpage" "startedon" "finishedon" "userid" "title" "coverart" "description" "googleid"

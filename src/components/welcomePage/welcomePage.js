@@ -40,7 +40,6 @@ class WelcomePage extends Component {
               this.state.repeatPassword
             )
             .then(response => {
-              console.log(response, "response after register");
               if (response.error || !response.authToken) {
                 this.setState({ errorLocation: "register" });
                 this.setState({ hasError: true });
@@ -154,7 +153,6 @@ class WelcomePage extends Component {
               helpers
                 .validateAndGetReturningUser("Demo", "password")
                 .then(loginResponse => {
-                  console.log(loginResponse, "loginresponse in login as guest");
                   if (loginResponse.error || !loginResponse.authToken) {
                     this.setState({ hasError: true });
                     this.setState({

@@ -24,14 +24,12 @@ class BookInfo extends Component {
   }
 
   bookNotesDisplay(book, tab) {
-    console.log(book.notes, "book.notes in bookNotesDisplay");
     if (tab !== "upcoming") {
       return <List notes={book.notes} />;
     }
   }
 
   formatAuthors(authors) {
-    console.log(authors, "authors in formatAuthors");
     //authors is either an array or null, depending on if the book had a listed author
     let result = [];
     let formattedAuthors = [];
@@ -52,7 +50,7 @@ class BookInfo extends Component {
 
   formatData(key, value) {
     //takes currentpage, startedon, finishedon and changes 'null' to ~
-    console.log(key, value, "kay and value in format data");
+
     if (value === null) {
       return <p>{`${key}: ~`}</p>;
     } else {
@@ -60,7 +58,6 @@ class BookInfo extends Component {
     }
   }
   editBookInfo(book, value) {
-    console.log(book.id, "book.id in editBookInfo");
     return (
       <form
         onSubmit={e => {
@@ -167,12 +164,9 @@ class BookInfo extends Component {
               notedate: this.state.newNoteDate,
               notecontent: this.state.newNoteContent
             };
-            console.log(newNoteObject, "note object before being submitted");
-
             helpers
               .postNewNote(value.user.username, book.id, newNoteObject)
               .then(response => {
-                console.log(response, "response after postNewnote");
                 if (response.error) {
                   value.setError();
                 } else value.refresh(value.user.username, value.tab);
@@ -281,7 +275,6 @@ class BookInfo extends Component {
     );
   }
   noteInfo(note) {
-    console.log(note.notedate, "note.notedate in noteinfo");
     return (
       <>
         <p>{note.notetitle}</p>

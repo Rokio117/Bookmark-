@@ -27,19 +27,20 @@ class Accordion extends Component {
         return <option value={filteredTab}>{filteredTab}</option>;
       });
     if (prop.note) {
-      console.log(prop.note, "prop.note in notes");
       return (
         <button
           className="deleteNoteButton"
           onClick={e => {
             e.preventDefault();
+
             helpers
-              .deleteNote(value.user.username, prop.note.bookId, prop.note.id)
+              .deleteNote(value.user.username, prop.note.id)
               .then(response => {
-                if (response.error) {
-                  value.setError();
-                } else value.refresh(value.user.username, value.tab);
+                value.refresh(value.user.username, value.tab);
               });
+            // .catch(error => {
+            //   value.setError();
+            // });
             //make fetch request to delete note
           }}
         >
@@ -51,8 +52,6 @@ class Accordion extends Component {
         <select
           className="moveBookButton"
           onChange={e => {
-            console.log("event clicked");
-            console.log(e.target.value, "event.target.value of onChange");
             e.preventDefault();
             if (e.target.value) {
               helpers

@@ -32,7 +32,6 @@ class App extends Component {
     const sessionInfo = JSON.parse(sessionStorage.getItem("state"));
 
     if (!this.state.loggedIn && sessionInfo) {
-      console.log(sessionInfo, "sessionInfo on did mount");
       this.setState(sessionInfo);
     } else this.props.history.push("/");
   }
@@ -41,18 +40,18 @@ class App extends Component {
   };
   login = (username, tab) => {
     //does props need to call the function itself?
-    console.log("loggedIn");
+
     const jwt = sessionStorage.getItem("authToken");
     helpers
       .getUserInfo(username, jwt)
       .then(userProfile => {
-        console.log(userProfile, "userprofile after getUserinfo in login");
         const user = {
           username: userProfile.username,
           id: userProfile.id
           //password: userProfile.password
         };
-        const books = userProfile.books;
+        const books =
+          userProfile.books || sessionStorage.getItem("state").books;
 
         const appState = {
           user: user,
@@ -84,7 +83,7 @@ class App extends Component {
 
   errorDisplay() {
     if (this.state.hasError) {
-      return <ErrorDisplay></ErrorDisplay>;
+      return <ErrorDisplay error={true} />;
     } else
       return (
         <Switch>
