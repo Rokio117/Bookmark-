@@ -23,6 +23,10 @@ class WelcomePage extends Component {
     }
   }
 
+  setError = () => {
+    this.setState({ hasError: true });
+  };
+
   registerForm() {
     return (
       <form
@@ -37,10 +41,12 @@ class WelcomePage extends Component {
             )
             .then(response => {
               console.log(response, "response after register");
-              if (response.error) {
+              if (response.error || !response.authToken) {
                 this.setState({ errorLocation: "register" });
                 this.setState({ hasError: true });
-                this.setState({ errorMessage: response.error });
+                this.setState({
+                  errorMessage: response.error || "Sorry, an error occurred"
+                });
               } else {
                 sessionStorage.setItem("authToken", response.authToken);
                 return this.props.login(response.username, "add");
@@ -86,7 +92,7 @@ class WelcomePage extends Component {
           ></input>
           <br></br>
           {this.loginError("register")}
-          <button>Submit</button>
+          <button>Register</button>
         </fieldset>
       </form>
     );
@@ -141,7 +147,34 @@ class WelcomePage extends Component {
             }}
           ></input>
           {this.loginError("login")}
-          <button type="submit">Submit</button>
+          <button type="submit">Login</button>
+          <button
+            onClick={e => {
+              e.preventDefault();
+              helpers
+                .validateAndGetReturningUser("Demo", "password")
+                .then(loginResponse => {
+                  console.log(loginResponse, "loginresponse in login as guest");
+                  if (loginResponse.error || !loginResponse.authToken) {
+                    this.setState({ hasError: true });
+                    this.setState({
+                      errorMessage:
+                        loginResponse.error || "Sorry, an error occurred"
+                    });
+                    this.setState({ errorLocation: "login" });
+                  } else {
+                    sessionStorage.setItem(
+                      "authToken",
+                      loginResponse.authToken
+                    );
+
+                    this.props.login("Demo");
+                  }
+                });
+            }}
+          >
+            Login as guest
+          </button>
         </fieldset>
       </form>
     );

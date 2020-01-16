@@ -10,7 +10,7 @@ class Accordion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      extended: false
+      extended: true
     };
   }
 
@@ -27,20 +27,20 @@ class Accordion extends Component {
         return <option value={filteredTab}>{filteredTab}</option>;
       });
     if (prop.note) {
+      console.log(prop.note, "prop.note in notes");
       return (
         <button
           className="deleteNoteButton"
           onClick={e => {
             e.preventDefault();
-            const response = helpers.deleteNote(
-              value.user.username,
-              prop.note.bookId,
-              prop.note.noteId
-            );
+            helpers
+              .deleteNote(value.user.username, prop.note.bookId, prop.note.id)
+              .then(response => {
+                if (response.error) {
+                  value.setError();
+                } else value.refresh(value.user.username, value.tab);
+              });
             //make fetch request to delete note
-            if (response === "ok") {
-              value.refresh(value.user.username, value.tab);
-            }
           }}
         >
           Delete
@@ -58,7 +58,9 @@ class Accordion extends Component {
               helpers
                 .patchBookTab(prop.book.id, e.target.value)
                 .then(response => {
-                  return value.refresh(value.user.username, value.tab);
+                  if (response.error) {
+                    value.setError();
+                  } else return value.refresh(value.user.username, value.tab);
                 });
             }
           }}

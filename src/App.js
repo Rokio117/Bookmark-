@@ -82,35 +82,34 @@ class App extends Component {
       });
   };
 
-  refresh = (username, tab) => {
-    console.log("refresh ran");
-    const userProfile = helpers.getUserInfo(username);
-    const user = {
-      username: userProfile.username,
-      password: userProfile.password
-    };
-    const books = userProfile.books;
-
-    const appState = {
-      user: user,
-      books: books,
-      tab: tab || "current",
-      userProfile: userProfile,
-      loggedIn: true,
-      hasError: false,
-      isLoading: false
-    };
-    sessionStorage.setItem("state", JSON.stringify(appState));
-    this.setState({
-      user: user,
-      books: books,
-      tab: tab || "current",
-      userProfile: userProfile,
-      loggedIn: true,
-      hasError: false,
-      isLoading: false
-    });
-  };
+  errorDisplay() {
+    if (this.state.hasError) {
+      return <ErrorDisplay></ErrorDisplay>;
+    } else
+      return (
+        <Switch>
+          <Route
+            exact
+            path="/"
+            component={props => {
+              return <WelcomePage login={this.login} />;
+            }}
+          ></Route>
+          <Route
+            exact
+            path="/home"
+            component={props => {
+              return (
+                <>
+                  <Tab changeTab={this.changeTab} tab={this.state.tab} />
+                  <MainPage state={this.state} />
+                </>
+              );
+            }}
+          ></Route>
+        </Switch>
+      );
+  }
   render() {
     return (
       <bookMarkContext.Provider
@@ -119,32 +118,11 @@ class App extends Component {
           books: this.state.books,
           tab: this.state.tab,
           refresh: this.login,
-          userProfile: this.state.userProfile
+          userProfile: this.state.userProfile,
+          setError: this.setError
         }}
       >
-        <ErrorDisplay>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              component={props => {
-                return <WelcomePage login={this.login} />;
-              }}
-            ></Route>
-            <Route
-              exact
-              path="/home"
-              component={props => {
-                return (
-                  <>
-                    <Tab changeTab={this.changeTab} tab={this.state.tab} />
-                    <MainPage state={this.state} />
-                  </>
-                );
-              }}
-            ></Route>
-          </Switch>
-        </ErrorDisplay>
+        <ErrorDisplay>{this.errorDisplay()}</ErrorDisplay>
       </bookMarkContext.Provider>
     );
   }

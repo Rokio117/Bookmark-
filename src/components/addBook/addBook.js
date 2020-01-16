@@ -35,6 +35,7 @@ class AddBook extends Component {
     } else
       helpers.getBook(this.state.bookToSearch).then(results => {
         //totalItems
+
         let searchResults = results.items;
         if (results.totalItems === 0) {
           searchResults = ["No results found"];

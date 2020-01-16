@@ -60,21 +60,23 @@ class BookInfo extends Component {
     }
   }
   editBookInfo(book, value) {
+    console.log(book.id, "book.id in editBookInfo");
     return (
       <form
         onSubmit={e => {
           e.preventDefault();
-          const newBookInfo = [
-            { currentpage: this.state.newCurrentPage || book.currentpage },
-            { startedon: this.state.newStartDate || book.startedon },
-            { finishedon: this.state.newEndDate || book.finishedon }
-          ];
-          if (
-            helpers.patchBookInfo(book.id, newBookInfo, value.user.username) ===
-            "ok"
-          ) {
-            value.refresh(value.user.username, value.tab);
-          }
+          const newBookInfo = {
+            currentpage: this.state.newCurrentPage || book.currentpage,
+            startedon: this.state.newStartDate || book.startedon,
+            finishedon: this.state.newEndDate || book.finishedon
+          };
+          helpers
+            .patchBookInfo(book.id, newBookInfo, value.user.username)
+            .then(response => {
+              if (response.error) {
+                value.setError();
+              } else value.refresh(value.user.username, value.tab);
+            });
         }}
       >
         <label htmlFor="currentpageInput">Current page:</label>
@@ -105,9 +107,11 @@ class BookInfo extends Component {
         <button
           type="button"
           onClick={e => {
-            if (helpers.deleteBook(value.user.username, book.id) === "ok") {
-              value.refresh(value.user.username, value.tab);
-            }
+            helpers.deleteBook(value.user.username, book.id).then(response => {
+              if (response.error) {
+                value.setError();
+              } else value.refresh(value.user.username, value.tab);
+            });
           }}
         >
           Delete
@@ -165,14 +169,14 @@ class BookInfo extends Component {
             };
             console.log(newNoteObject, "note object before being submitted");
 
-            const res = helpers.postNewNote(
-              value.user.username,
-              book.id,
-              newNoteObject
-            );
-            if (res === "ok") {
-              value.refresh(value.user.username, value.tab);
-            }
+            helpers
+              .postNewNote(value.user.username, book.id, newNoteObject)
+              .then(response => {
+                console.log(response, "response after postNewnote");
+                if (response.error) {
+                  value.setError();
+                } else value.refresh(value.user.username, value.tab);
+              });
           }}
         >
           <h3>Add note</h3>

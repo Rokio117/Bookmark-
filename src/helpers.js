@@ -38,22 +38,6 @@ const helpers = {
       .catch(response => {
         return response;
       });
-    // const user = store.find(userObject => userObject.username === username);
-
-    // const serverError = new Error({
-    //   message: "Incorrect username or password"
-    // });
-    // try {
-    //   if (!user) {
-    //     throw serverError;
-    //   }
-    //   if (user.password !== password) {
-    //     throw serverError;
-    //   }
-    //   return user;
-    // } catch (error) {
-    //   return { message: "Incorrect username or password" };
-    // }
   },
   getUserInfo(username, jwt) {
     //GET /api/bookmark/userInfo/:username
@@ -115,25 +99,45 @@ const helpers = {
     });
   },
   patchBookInfo(bookId, newBookInfo, username) {
-    // PATCH /api/bookmark/:username/book/update
-    //needs keys "currentpage" "startedon" "finishedon" "bookInfoId"
-    newBookInfo.forEach(infoObject => {
-      const keyToChange = Object.keys(infoObject)[0];
-      const valueToChange = Object.values(infoObject)[0];
-      store
-        .find(user => user.username === username)
-        .books.find(book => book.id === bookId)[keyToChange] = valueToChange;
-    });
-
-    return "ok";
+    return fetch(`${endpoint}/bookmark/${username}/book/update`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer=${authToken}`
+      },
+      body: JSON.stringify({
+        currentpage: newBookInfo.currentpage,
+        startedon: newBookInfo.startedon,
+        finishedon: newBookInfo.finishedon,
+        bookInfoId: bookId
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .catch(error => {
+        return error;
+      });
   },
   deleteBook(username, bookId) {
     // DELETE /api/bookmark/:username/book/delete
     //required keys "bookInfoId"
-    const userBooks = store.find(user => user.username === username).books;
-    const trimmedBooks = userBooks.filter(book => book.id !== bookId);
-    store.find(user => user.username === username).books = trimmedBooks;
-    return "ok";
+    return fetch(`${endpoint}/bookmark/${username}/book/delete`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer=${authToken}`
+      },
+      body: JSON.stringify({
+        bookInfoId: bookId
+      })
+    })
+      .then(response => {
+        return response.json(response);
+      })
+      .catch(error => {
+        return error;
+      });
   },
   postNewUser(username, password, repeatPassword) {
     // POST /api/auth/register
@@ -157,36 +161,41 @@ const helpers = {
   postNewNote(username, bookId, noteObject) {
     //POST /api/bookmark/:username/notes
     // required keys "notetitle" "notedate" "notecontent" "bookInfoId"
-    console.log(bookId, "bookId in postNewNote");
-    const noteIds = [];
-    store.forEach(user =>
-      user.books.forEach(book =>
-        book.notes.forEach(note => noteIds.push(note.noteId))
-      )
-    );
-
-    let maxId = Math.max(...noteIds) + 1;
-    const noteWithId = { noteId: maxId, bookId: bookId, ...noteObject };
-
-    store
-      .find(user => user.username === username)
-      .books.find(book => book.id === bookId)
-      .notes.push(noteWithId);
-
-    return "ok";
+    return fetch(`${endpoint}/bookmark/${username}/notes`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer=${authToken}`
+      },
+      body: JSON.stringify({
+        notetitle: noteObject.notetitle,
+        notedate: noteObject.notedate,
+        notecontent: noteObject.notecontent,
+        bookInfoId: bookId
+      })
+    })
+      .then(response => {
+        return response.json(response);
+      })
+      .catch(error => {
+        return error;
+      });
   },
-  deleteNote(username, bookId, noteId) {
+  deleteNote(username, noteId) {
     // DELETE /api/bookmark/:username/notes
     //required keys "noteId"
-    const filteredNotes = store
-      .find(user => user.username === username)
-      .books.find(book => book.id === bookId)
-      .notes.filter(note => note.noteId !== noteId);
-
-    store
-      .find(user => user.username === username)
-      .books.find(book => book.id === bookId).notes = filteredNotes;
-    return "ok";
+    return fetch(`${endpoint}/bookmark/:${username}/notes`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer=${authToken}`
+      },
+      body: JSON.stringify({
+        noteId: noteId
+      })
+    }).then(response => {
+      return response.json(response);
+    });
   }
 };
 

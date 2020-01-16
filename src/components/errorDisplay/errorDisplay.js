@@ -25,12 +25,19 @@ class ErrorDisplay extends Component {
                 <button
                   onClick={e => {
                     this.setState({ hasError: false });
+
                     const sessionInfo = JSON.parse(
                       sessionStorage.getItem("state")
                     );
+                    console.log(sessionInfo, "sessioninfo");
                     if (sessionInfo) {
-                      console.log(sessionInfo.user.username, sessionInfo.tab);
-                      value.refresh(sessionInfo.user.username, sessionInfo.tab);
+                      if (Object.keys(sessionInfo.user).length) {
+                        console.log(sessionInfo.user.username, sessionInfo.tab);
+                        value.refresh(
+                          sessionInfo.user.username,
+                          sessionInfo.tab
+                        );
+                      } else this.props.history.push("/");
                     } else this.props.history.push("/");
                   }}
                 >
