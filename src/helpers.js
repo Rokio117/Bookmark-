@@ -1,7 +1,7 @@
 import config from "./config";
 import store from "./helperData/store";
 
-const endpoint = config.API_ENDPOINT;
+const endpoint = config.LIVE_ENDPOINT;
 const authToken = sessionStorage.getItem("authToken");
 const helpers = {
   getBook(title) {
