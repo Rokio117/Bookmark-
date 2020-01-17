@@ -300,7 +300,9 @@ class BookInfo extends Component {
     //requires this.props.book
     return (
       <div id="upcomingExtendedInfo">
-        <p id="descriptionParagraph">{` ${book.description}`}</p>
+        <div id="descriptionContainer">
+          <p id="descriptionParagraph">{` ${book.description}`}</p>
+        </div>
         <img
           id="upcomingPicture"
           src={book.coverart}

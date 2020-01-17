@@ -88,6 +88,10 @@
 #descriptionParagraph {
   text-align: right !important;
 }
+#descriptionContainer {
+  height: 200px;
+  overflow: scroll;
+}
 .noteInput {
   width: 45%;
 }
