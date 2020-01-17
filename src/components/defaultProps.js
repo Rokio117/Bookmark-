@@ -57,6 +57,15 @@ const defaultProps = {
         }
       ]
     };
+  },
+  mainPage() {
+    return {
+      user: "",
+      books: [],
+      tab: "",
+
+      userProfile: {}
+    };
   }
 };
 

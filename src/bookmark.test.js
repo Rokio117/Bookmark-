@@ -24,7 +24,20 @@ describe("smoke tests", () => {
     },
     { name: "ErrorDisplay", component: <ErrorDisplay /> },
     { name: "List", component: <List book={defaultProps.listProps()} /> },
-    { name: "MainPage", component: <MainPage /> },
+    {
+      name: "MainPage",
+      component: (
+        <MainPage
+          state={{
+            user: "",
+            books: [],
+            tab: "",
+
+            userProfile: {}
+          }}
+        />
+      )
+    },
     { name: "Tab", component: <Tab /> },
     { name: "WelcomePage", component: <WelcomePage /> }
   ];

@@ -5,6 +5,7 @@ import List from "../list/list";
 import AddBook from "../addBook/AddBook";
 import Accordion from "../accordion/accordion";
 import bookInfo from "../bookInfo/bookInfo";
+import defaultProps from "../defaultProps";
 import "./mainPage.css";
 class MainPage extends Component {
   constructor(props) {
@@ -66,5 +67,7 @@ class MainPage extends Component {
     );
   }
 }
+
+MainPage.defaultProps = defaultProps.mainPage();
 
 export default withRouter(MainPage);
