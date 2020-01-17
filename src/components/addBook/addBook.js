@@ -34,6 +34,7 @@ class AddBook extends Component {
       this.setState({ noBookEntered: true });
     } else
       helpers.getBook(this.state.bookToSearch).then(results => {
+        console.log(results, "results of find book");
         //totalItems
 
         let searchResults = results.items;
@@ -61,17 +62,19 @@ class AddBook extends Component {
         let formattedAuthors = [];
         if (result.volumeInfo.authors) {
           if (result.volumeInfo.authors.length === 1) {
-            authors = <p>{`Author: ${result.volumeInfo.authors[0]}`}</p>;
+            authors = (
+              <p className="foundInfo">{` ${result.volumeInfo.authors[0]}`}</p>
+            );
           } else {
             result.volumeInfo.authors.forEach(author => {
               formattedAuthors.unshift(author);
             });
 
-            authors = <p>{`Authors: ${formattedAuthors}`}</p>;
+            authors = <p className="foundInfo">{` ${formattedAuthors}`}</p>;
           }
         } else
           authors = (
-            <p>{`Author: Sorry, we could not find an author for this`}</p>
+            <p className="foundInfo">{` Sorry, we could not find an author for this`}</p>
           );
 
         const bookObject = {
@@ -92,19 +95,8 @@ class AddBook extends Component {
             className={`bookResult ${this.selectedBook(bookObject.googleId)}`}
             key={result.volumeInfo.id}
           >
-            <img
-              className="searchImage"
-              src={bookObject.coverart}
-              alt={`Cover art for ${bookObject.title}`}
-            ></img>
-            <p>{`Title: ${bookObject.title}`}</p>
-            <br></br>
-            {authors}
-            <br></br>
-            <p>{`Description: ${result.volumeInfo.description}`}</p>
-            <br></br>
-            <p>{`Published on: ${result.volumeInfo.publishedDate}`}</p>
             <button
+              id="smallSelectButton"
               onClick={e => {
                 e.preventDefault();
 
@@ -114,7 +106,36 @@ class AddBook extends Component {
                 });
               }}
             >
-              Choose
+              <img
+                className="searchImage"
+                src={bookObject.coverart}
+                alt={`Cover art for ${bookObject.title}`}
+              ></img>
+              <div id="resultsInfo">
+                <h3
+                  className="foundInfo"
+                  id="foundTitle"
+                >{` ${bookObject.title}`}</h3>
+                <br></br>
+                {authors}
+                <br></br>
+                <p id="description">{`Description: ${result.volumeInfo.description}`}</p>
+                <br></br>
+                <p className="foundInfo">{`${result.volumeInfo.publishedDate}`}</p>
+              </div>
+              <button
+                id="selectButton"
+                onClick={e => {
+                  e.preventDefault();
+
+                  this.setState({
+                    chosenBook: bookObject,
+                    resultId: bookObject.googleId
+                  });
+                }}
+              >
+                Choose
+              </button>
             </button>
           </li>
         );
@@ -125,49 +146,65 @@ class AddBook extends Component {
   bookDetailsToRender(state) {
     if (state === "current") {
       return (
-        <>
-          <label htmlFor="startOnSelector">Started on:</label>
-          <input
-            type="date"
-            id="startOnSelector"
-            onChange={e => {
-              this.setState({ startedOn: e.target.value });
-            }}
-          ></input>
+        <div className="detailSelector">
+          <div className="smallDetailSelector">
+            <label htmlFor="startOnSelector" className="detailLabel">
+              Started on:
+            </label>
+            <input
+              type="date"
+              id="startOnSelector"
+              onChange={e => {
+                this.setState({ startedOn: e.target.value });
+              }}
+            ></input>
+          </div>
           <br></br>
-          <label htmlFor="currentPageSelector">Current Page</label>
-          <input
-            type="number"
-            id="currentPageSelector"
-            onChange={e => {
-              this.setState({ currentPage: e.target.value });
-            }}
-          ></input>
-        </>
+          <div className="smallDetailSelector">
+            <label htmlFor="currentPageSelector" className="detailLabel">
+              Current Page
+            </label>
+            <input
+              type="number"
+              id="currentPageSelector"
+              onChange={e => {
+                this.setState({ currentPage: e.target.value });
+              }}
+            ></input>
+          </div>
+        </div>
       );
     }
     if (state === "finished") {
       return (
-        <>
-          <label htmlFor="startOnSelector">Started on:</label>
-          <input
-            type="date"
-            id="startOnSelector"
-            onChange={e => {
-              this.setState({ startedOn: e.target.value });
-            }}
-          ></input>
+        <div className="detailSelector">
+          <div className="smallDetailSelector">
+            <label htmlFor="startOnSelector" className="detailLabel">
+              Started on:
+            </label>
+            <input
+              type="date"
+              id="startOnSelector"
+              onChange={e => {
+                this.setState({ startedOn: e.target.value });
+              }}
+            ></input>
+          </div>
           <br></br>
-          <label htmlFor="finishedOnSelector">Finished on:</label>
-          <input
-            type="date"
-            id="finishedOnSelector"
-            onChange={e => {
-              this.setState({ finishedOn: e.target.value });
-            }}
-          ></input>
+          <div className="smallDetailSelector">
+            <label htmlFor="finishedOnSelector" className="detailLabel">
+              Finished on:
+            </label>
+            <input
+              type="date"
+              id="finishedOnSelector"
+              onChange={e => {
+                this.setState({ finishedOn: e.target.value });
+              }}
+            ></input>
+          </div>
           <br></br>
-        </>
+        </div>
       );
     }
   }
@@ -237,6 +274,7 @@ class AddBook extends Component {
                 <legend id="findBookLegend">Find Book</legend>
 
                 <input
+                  id="findBookInputButton"
                   type="text"
                   required
                   placeholder="Pride and Prejudice"
@@ -248,6 +286,7 @@ class AddBook extends Component {
                   }}
                 ></input>
                 <button
+                  id="searchButton"
                   type="submit"
                   onClick={e => {
                     e.preventDefault();
@@ -261,7 +300,9 @@ class AddBook extends Component {
                 {this.noBookEntered(this.state.noBookEntered)}
                 <br></br>
                 <h2>Results</h2>
-                <ul>{this.results(this.state.searchResults)}</ul>
+                <ul id="resultsList">
+                  {this.results(this.state.searchResults)}
+                </ul>
               </fieldset>
               <fieldset id="bookDetailsFieldset" className="AddBookFieldset">
                 <legend>Book Details</legend>
@@ -279,11 +320,11 @@ class AddBook extends Component {
                 <br></br>
                 {this.bookDetailsToRender(this.state.addingTo)}
                 {this.noBookSelected(this.state.noBookSelected)}
+                {this.duplicateBookMessage()}
+                <button type="submit" id="bookSubmitButton">
+                  Submit
+                </button>
               </fieldset>
-              {this.duplicateBookMessage()}
-              <button type="submit" id="bookSubmitButton">
-                Submit
-              </button>
             </form>
           );
         }}

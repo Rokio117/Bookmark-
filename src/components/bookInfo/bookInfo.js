@@ -39,13 +39,12 @@ class BookInfo extends Component {
           formattedAuthors.unshift(author);
         });
 
-        return (result = <p>{`Authors: ${formattedAuthors}`}</p>);
+        return (result = <p>{` ${formattedAuthors}`}</p>);
       } else {
-        result = <p>{`Author: ${authors[0]}`}</p>;
+        result = <p>{` ${authors[0]}`}</p>;
         return result;
       }
-    } else
-      return <p>{`Author: Sorry, we could not find an author for this`}</p>;
+    } else return <p>{` Sorry, we could not find an author for this`}</p>;
   }
 
   formatData(key, value) {
@@ -60,6 +59,7 @@ class BookInfo extends Component {
   editBookInfo(book, value) {
     return (
       <form
+        id="patchBookForm"
         onSubmit={e => {
           e.preventDefault();
           const newBookInfo = {
@@ -76,43 +76,59 @@ class BookInfo extends Component {
             });
         }}
       >
-        <label htmlFor="currentpageInput">Current page:</label>
-        <input
-          type="number"
-          onChange={e => this.setState({ newCurrentPage: e.target.value })}
-          className="currentpageInput"
-          defaultValue={book.currentpage}
-        ></input>
+        <div className="labelAndInput">
+          <label htmlFor="currentpageInput" className="inputLabel">
+            Current page:
+          </label>
+          <input
+            type="number"
+            onChange={e => this.setState({ newCurrentPage: e.target.value })}
+            className="currentpageInput"
+            defaultValue={book.currentpage}
+          ></input>
+        </div>
         <br></br>
-        <label htmlFor="startedonInput">Started on:</label>
-        <input
-          onChange={e => this.setState({ newStartDate: e.target.value })}
-          type="date"
-          className="startedonInput"
-          defaultValue={book.startedon}
-        ></input>
+        <div className="labelAndInput">
+          <label htmlFor="startedonInput" className="inputLabel">
+            Started on:
+          </label>
+          <input
+            onChange={e => this.setState({ newStartDate: e.target.value })}
+            type="date"
+            className="startedonInput"
+            defaultValue={book.startedon}
+          ></input>
+        </div>
         <br></br>
-        <label htmlFor="finishedonInput">Finished on:</label>
-        <input
-          onChange={e => this.setState({ newEndDate: e.target.value })}
-          type="date"
-          className="finishedonInput"
-          defaultValue={book.finishedon}
-        ></input>
+        <div className="labelAndInput">
+          <label htmlFor="finishedonInput" className="inputLabel">
+            Finished on:
+          </label>
+          <input
+            onChange={e => this.setState({ newEndDate: e.target.value })}
+            type="date"
+            className="finishedonInput"
+            defaultValue={book.finishedon}
+          ></input>
+        </div>
         <br></br>
-        <button type="submit">Save</button>
-        <button
-          type="button"
-          onClick={e => {
-            helpers.deleteBook(value.user.username, book.id).then(response => {
-              if (response.error) {
-                value.setError();
-              } else value.refresh(value.user.username, value.tab);
-            });
-          }}
-        >
-          Delete
-        </button>
+        <div id="saveAndDeleteButtons">
+          <button type="submit">Save</button>
+          <button
+            type="button"
+            onClick={e => {
+              helpers
+                .deleteBook(value.user.username, book.id)
+                .then(response => {
+                  if (response.error) {
+                    value.setError();
+                  } else value.refresh(value.user.username, value.tab);
+                });
+            }}
+          >
+            Delete
+          </button>
+        </div>
       </form>
     );
   }
@@ -120,6 +136,7 @@ class BookInfo extends Component {
     if (!this.state.editMode) {
       return (
         <button
+          id="editButton"
           onClick={e => {
             this.setState({ editMode: true });
           }}
@@ -130,7 +147,10 @@ class BookInfo extends Component {
     } else
       return (
         <>
-          <button onClick={e => this.setState({ editMode: false })}>
+          <button
+            id="cancelEditButton"
+            onClick={e => this.setState({ editMode: false })}
+          >
             Cancel
           </button>
         </>
@@ -174,25 +194,29 @@ class BookInfo extends Component {
           }}
         >
           <h3>Add note</h3>
-          <label htmlFor="dateSelector">Date: </label>
-
-          <input
-            type="date"
-            className="dateSelector"
-            onChange={e => {
-              this.setState({ newNoteDate: e.target.value });
-            }}
-          ></input>
+          <div id="titleSelector">
+            <label htmlFor="notetitleSelector">Title: </label>
+            <input
+              required
+              type="text"
+              className="notetitleSelector noteInput"
+              onChange={e => {
+                this.setState({ newNoteTitle: e.target.value });
+              }}
+            ></input>
+          </div>
           <br></br>
-          <label htmlFor="notetitleSelector">Title:</label>
-          <input
-            required
-            type="text"
-            className="notetitleSelector"
-            onChange={e => {
-              this.setState({ newNoteTitle: e.target.value });
-            }}
-          ></input>
+          <div id="dateSelector">
+            <label htmlFor="dateSelector">Date: </label>
+
+            <input
+              type="date"
+              className="dateSelector noteInput"
+              onChange={e => {
+                this.setState({ newNoteDate: e.target.value });
+              }}
+            ></input>
+          </div>
           <br></br>
           <label for="notecontentSelector">Content:</label>
           <textarea
@@ -245,13 +269,18 @@ class BookInfo extends Component {
     //and value.tab
     return (
       <div>
-        <p>{`Title: ${book.title}`}</p>
+        <h2 id="bookInfoHeader">Info</h2>
+        <br></br>
+        <div id="bookInfoContainer">
+          <div id="bookTextContainer">{this.displayMode(book, value)}</div>
+          <br></br>
+          <img
+            className="fullBookImage"
+            src={book.coverart}
+            alt={`Cover art for ${book.title}`}
+          ></img>
+        </div>
         {this.editAndCancelButtons()}
-        <br></br>
-        <img src={book.coverart} alt={`Cover art for ${book.title}`}></img>
-        {this.formatAuthors(book.authors)}
-        <br></br>
-        {this.displayMode(book, value)}
         <br></br>
         <h2>Notes:</h2>
         {this.bookNotesDisplay(book, tab)}
@@ -264,23 +293,20 @@ class BookInfo extends Component {
   upcomingInfo(book) {
     //requires this.props.book
     return (
-      <div>
-        <p>{`Title: ${book.title}`}</p>
-        <img src={book.coverart} alt={`Cover art for ${book.title}`}></img>
-        <br></br>
-        {this.formatAuthors(book.authors)}
-        <br></br>
-        <p>{`Description: ${book.description}`}</p>
+      <div id="upcomingExtendedInfo">
+        <p id="descriptionParagraph">{` ${book.description}`}</p>
+        <img
+          id="upcomingPicture"
+          src={book.coverart}
+          alt={`Cover art for ${book.title}`}
+        ></img>
       </div>
     );
   }
   noteInfo(note) {
     return (
       <>
-        <p>{note.notetitle}</p>
-        {this.formatData("Date", note.notedate)}
-        <br></br>
-        <p>{note.notecontent}</p>
+        <p id="noteContent">{note.notecontent}</p>
       </>
     );
   }

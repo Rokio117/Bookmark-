@@ -5,14 +5,95 @@
 }
 
 #addNoteForm {
-  width: 50%;
+  width: 90%;
   border: 2px solid black;
   margin-left: auto;
   margin-right: auto;
 }
 .addNoteButton,
 #addNoteSubmitButton {
-  width: 15%;
-  height: 8%;
+  width: 25%;
+  height: 10%;
   margin: 20px;
+}
+#bookInfoContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+#bookTextContainer {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 70%;
+}
+#editButton,
+#cancelEditButton {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.currentpageInput,
+.startedonInput,
+.finishedonInput {
+  width: 50%;
+}
+.currentpageInput {
+  text-align: left;
+}
+#patchBookForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+.labelAndInput {
+  display: flex;
+  justify-content: space-around;
+}
+.fullBookImage {
+  width: 35%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+#saveAndDeleteButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+#bookInfoHeader {
+  margin: 0;
+}
+#noteContent {
+  text-align: left !important;
+  padding: 8px;
+}
+#upcomingExtendedInfo {
+  display: flex;
+  justify-content: space-evenly;
+}
+#upcomingExtendedInfo {
+  padding: 8px;
+}
+#descriptionParagraph,
+#upcomingPicture {
+  margin: 8px;
+  /* width: 40%; */
+  margin-top: auto;
+  margin-bottom: auto;
+}
+#descriptionParagraph {
+  text-align: right !important;
+}
+.noteInput {
+  width: 45%;
+}
+#titleSelector,
+#dateSelector {
+  display: flex;
+  justify-content: center;
+  /* justify-content: space-evenly; */
 }

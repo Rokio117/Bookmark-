@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": "nicks-bookmark-app",
   "name": "Bookmark",
   "routes": [
     {

@@ -24,7 +24,11 @@ class Accordion extends Component {
     const moveOptions = tabOptions
       .filter(tab => tab !== value.tab)
       .map(filteredTab => {
-        return <option value={filteredTab}>{filteredTab}</option>;
+        return (
+          <option value={filteredTab} className="moveOption">
+            {filteredTab}
+          </option>
+        );
       });
     if (prop.note) {
       return (
@@ -68,7 +72,7 @@ class Accordion extends Component {
             }
           }}
         >
-          <option selected disabled value="">
+          <option selected disabled value="" className="moveOption">
             Move
           </option>
           {moveOptions}
@@ -99,6 +103,69 @@ class Accordion extends Component {
       return "noteAccordion";
     }
   }
+  formatAuthors(authors) {
+    //authors is either an array or null, depending on if the book had a listed author
+    let result = [];
+    let formattedAuthors = [];
+    if (authors) {
+      if (authors.length > 1) {
+        authors.forEach(author => {
+          formattedAuthors.unshift(author);
+        });
+
+        return (result = (
+          <p className="accordionAuthor">{` ${formattedAuthors}`}</p>
+        ));
+      } else {
+        result = <p className="accordionAuthor">{` ${authors[0]}`}</p>;
+        return result;
+      }
+    } else
+      return (
+        <p className="accordionAuthor">{` Sorry, we could not find an author for this`}</p>
+      );
+  }
+
+  displaySubheader(props) {
+    if (props.book) {
+      return this.formatAuthors(props.book.authors);
+    }
+    if (props.note) {
+      return <p>{props.note.notedate}</p>;
+    }
+  }
+
+  imageDisplay(props) {
+    if (props.book) {
+      return (
+        <img
+          src={props.book.coverart}
+          alt={`coverart for ${props.book.title}`}
+          id="thumbnailPicture"
+        ></img>
+      );
+    }
+  }
+
+  accordionTopSelector(props) {
+    if (props.note) {
+      return "accordionNoteTop";
+    } else return "accordionTop";
+  }
+
+  extenderButtonClass(prop, location) {
+    if (prop.book && location === "note") {
+      return "hidden";
+    } else if (prop.note && location === "book") {
+      return "hidden";
+    }
+  }
+
+  noteHeaderClass(props) {
+    if (props.note) {
+      return "noteHeaderDisplay";
+    }
+  }
 
   render() {
     return (
@@ -110,19 +177,44 @@ class Accordion extends Component {
             : this.props.note.notetitle;
           return (
             <div className={this.accordionClass(this.props)}>
-              <div className="accordionTop">
+              <div className={this.accordionTopSelector(this.props)}>
                 <button
-                  className="extenderButton"
+                  className={`extenderButton ${this.extenderButtonClass(
+                    this.props,
+                    "book"
+                  )}`}
                   onClick={e => {
                     !this.state.extended
                       ? this.setState({ extended: true })
                       : this.setState({ extended: false });
                   }}
                 >
-                  {this.buttonDisplay(this.state.extended)}
+                  <div>{this.buttonDisplay(this.state.extended)}</div>
                 </button>
-                <h2 className="bookTitle">{title}</h2>
-                {this.buttonRender(this.props, value)}
+                <div
+                  id="headerDisplay"
+                  className={this.noteHeaderClass(this.props)}
+                >
+                  <button
+                    className={`extenderButton ${this.extenderButtonClass(
+                      this.props,
+                      "note"
+                    )}`}
+                    onClick={e => {
+                      !this.state.extended
+                        ? this.setState({ extended: true })
+                        : this.setState({ extended: false });
+                    }}
+                  >
+                    <div>{this.buttonDisplay(this.state.extended)}</div>
+                  </button>
+                  {this.imageDisplay(this.props)}
+                  <div id="headerTextDisplay">
+                    <h3 className="bookTitle">{title}</h3>
+                    {this.displaySubheader(this.props)}
+                  </div>
+                  {this.buttonRender(this.props, value)}
+                </div>
               </div>
               {this.renderContent(this.props)}
             </div>
