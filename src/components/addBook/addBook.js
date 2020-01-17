@@ -25,24 +25,25 @@ class AddBook extends Component {
 
   componentDidMount() {}
 
-  findBookClickHandler(event) {
+  findBookClickHandler(event, value) {
     //add case where only blank space is entered
     //it will throw a 400 if thats the case
     const noSpaces = this.state.bookToSearch.replace(/\s/g, "");
 
     if (noSpaces === "") {
       this.setState({ noBookEntered: true });
-    } else
-      helpers.getBook(this.state.bookToSearch).then(results => {
-        console.log(results, "results of find book");
-        //totalItems
+    } else value.setLoading();
+    helpers.getBook(this.state.bookToSearch).then(results => {
+      console.log(results, "results of find book");
+      //totalItems
 
-        let searchResults = results.items;
-        if (results.totalItems === 0) {
-          searchResults = ["No results found"];
-        }
-        this.setState({ searchResults: searchResults });
-      });
+      let searchResults = results.items;
+      if (results.totalItems === 0) {
+        searchResults = ["No results found"];
+      }
+      value.setLoading();
+      this.setState({ searchResults: searchResults });
+    });
   }
 
   selectedBook(id) {
@@ -253,6 +254,7 @@ class AddBook extends Component {
                 if (!this.state.chosenBook) {
                   this.setState({ noBookSelected: true });
                 } else {
+                  value.setLoading();
                   return helpers
                     .AddBook(
                       this.formatBook(this.state.chosenBook, value),
@@ -291,7 +293,10 @@ class AddBook extends Component {
                   onClick={e => {
                     e.preventDefault();
                     this.state.bookToSearch
-                      ? this.findBookClickHandler(this.state.bookToSearch)
+                      ? this.findBookClickHandler(
+                          this.state.bookToSearch,
+                          value
+                        )
                       : this.setState({ noBookEntered: true });
                   }}
                 >

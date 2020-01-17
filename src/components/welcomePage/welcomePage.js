@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import helpers from "../../helpers";
 import store from "../../helperData/store";
 import "./welcomePage.css";
+import { loader } from "../loader";
 class WelcomePage extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +15,8 @@ class WelcomePage extends Component {
       repeatPassword: "",
       hasError: false,
       errorLocation: "",
-      errorMessage: ""
+      errorMessage: "",
+      isLoading: false
     };
   }
 
@@ -22,6 +24,11 @@ class WelcomePage extends Component {
     if (location === this.state.errorLocation && this.state.hasError) {
       return <p id="error">{this.state.errorMessage}</p>;
     }
+  }
+  setLoading() {
+    if (this.state.isLoading) {
+      this.setState({ isLoading: false });
+    } else this.setState({ isLoading: true });
   }
 
   setError = () => {
@@ -33,7 +40,7 @@ class WelcomePage extends Component {
       <form
         onSubmit={e => {
           e.preventDefault();
-
+          this.setLoading(); //loading set to true
           helpers
             .postNewUser(
               this.state.newUserName,
@@ -42,12 +49,14 @@ class WelcomePage extends Component {
             )
             .then(response => {
               if (response.error || !response.authToken) {
+                this.setLoading(); //loading set to false
                 this.setState({ errorLocation: "register" });
                 this.setState({ hasError: true });
                 this.setState({
                   errorMessage: response.error || "Sorry, an error occurred"
                 });
               } else {
+                this.setLoading(); //loading set to false
                 sessionStorage.setItem("authToken", response.authToken);
                 return this.props.login(response.username, "add");
               }
@@ -110,10 +119,12 @@ class WelcomePage extends Component {
               id="loginAsGuestButton"
               onClick={e => {
                 e.preventDefault();
+                this.setLoading();
                 helpers
                   .validateAndGetReturningUser("Demo", "password")
                   .then(loginResponse => {
                     if (loginResponse.error || !loginResponse.authToken) {
+                      this.setLoading();
                       this.setState({ hasError: true });
                       this.setState({
                         errorMessage:
@@ -121,6 +132,7 @@ class WelcomePage extends Component {
                       });
                       this.setState({ errorLocation: "login" });
                     } else {
+                      this.setLoading();
                       sessionStorage.setItem(
                         "authToken",
                         loginResponse.authToken
@@ -143,6 +155,7 @@ class WelcomePage extends Component {
       <form
         onSubmit={e => {
           e.preventDefault();
+          this.setLoading();
           helpers
             .validateAndGetReturningUser(
               this.state.returnUserName,
@@ -150,10 +163,12 @@ class WelcomePage extends Component {
             )
             .then(loginResponse => {
               if (loginResponse.error) {
+                this.setLoading();
                 this.setState({ hasError: true });
                 this.setState({ errorMessage: loginResponse.error });
                 this.setState({ errorLocation: "login" });
               } else {
+                this.setLoading();
                 sessionStorage.setItem("authToken", loginResponse.authToken);
 
                 this.props.login(this.state.returnUserName);
@@ -205,6 +220,7 @@ class WelcomePage extends Component {
   render() {
     return (
       <div>
+        {loader.displayLoading(this.state.isLoading)}
         <h2>Welcome!</h2>
         <br></br>
         <p>

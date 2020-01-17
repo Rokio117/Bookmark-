@@ -9,6 +9,7 @@ import WelcomePage from "./components/welcomePage/welcomePage";
 import { withRouter } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import ErrorDisplay from "./components/errorDisplay/errorDisplay";
+import { loader } from "./components/loader";
 import helpers from "./helpers";
 
 class App extends Component {
@@ -28,6 +29,11 @@ class App extends Component {
   setError = () => {
     this.setState({ hasError: true });
   };
+  setLoading = () => {
+    this.state.isLoading
+      ? this.setState({ isLoading: false })
+      : this.setState({ isLoading: true });
+  };
   componentDidMount() {
     const sessionInfo = JSON.parse(sessionStorage.getItem("state"));
 
@@ -39,6 +45,7 @@ class App extends Component {
     this.setState({ tab: tab });
   };
   login = (username, tab) => {
+    this.setLoading(); //loading set to true
     //does props need to call the function itself?
 
     const jwt = sessionStorage.getItem("authToken");
@@ -61,7 +68,7 @@ class App extends Component {
           userProfile: userProfile,
           loggedIn: true,
           hasError: false,
-          isLoading: false
+          isLoading: false //loading set to false
         };
         return appState;
         //  this.setState({
@@ -119,10 +126,14 @@ class App extends Component {
           tab: this.state.tab,
           refresh: this.login,
           userProfile: this.state.userProfile,
-          setError: this.setError
+          setError: this.setError,
+          setLoading: this.setLoading
         }}
       >
-        <ErrorDisplay>{this.errorDisplay()}</ErrorDisplay>
+        <ErrorDisplay>
+          {loader.displayLoading(this.state.isLoading)}
+          {this.errorDisplay()}
+        </ErrorDisplay>
       </bookMarkContext.Provider>
     );
   }

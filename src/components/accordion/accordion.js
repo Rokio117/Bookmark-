@@ -36,7 +36,7 @@ class Accordion extends Component {
           className="deleteNoteButton"
           onClick={e => {
             e.preventDefault();
-
+            value.setLoading();
             helpers
               .deleteNote(value.user.username, prop.note.id)
               .then(response => {
@@ -61,6 +61,7 @@ class Accordion extends Component {
             console.log(value.tab, "value.tab in change book tab");
             const newTab = e.target.value;
             if (e.target.value) {
+              value.setLoading();
               helpers
                 //prop.book.id is probably the id for the book itself, not the user book info
                 .patchBookTab(prop.book.id, e.target.value)

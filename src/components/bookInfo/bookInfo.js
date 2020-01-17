@@ -62,6 +62,7 @@ class BookInfo extends Component {
         id="patchBookForm"
         onSubmit={e => {
           e.preventDefault();
+          value.setLoading();
           const newBookInfo = {
             currentpage: this.state.newCurrentPage || book.currentpage,
             startedon: this.state.newStartDate || book.startedon,
@@ -71,6 +72,7 @@ class BookInfo extends Component {
             .patchBookInfo(book.id, newBookInfo, value.user.username)
             .then(response => {
               if (response.error) {
+                value.setLoading();
                 value.setError();
               } else value.refresh(value.user.username, value.tab);
             });
@@ -117,10 +119,12 @@ class BookInfo extends Component {
           <button
             type="button"
             onClick={e => {
+              value.setLoading();
               helpers
                 .deleteBook(value.user.username, book.id)
                 .then(response => {
                   if (response.error) {
+                    value.setLoading();
                     value.setError();
                   } else value.refresh(value.user.username, value.tab);
                 });
@@ -179,6 +183,7 @@ class BookInfo extends Component {
           id="addNoteForm"
           onSubmit={e => {
             e.preventDefault();
+            value.setLoading();
             const newNoteObject = {
               notetitle: this.state.newNoteTitle,
               notedate: this.state.newNoteDate,
@@ -188,6 +193,7 @@ class BookInfo extends Component {
               .postNewNote(value.user.username, book.id, newNoteObject)
               .then(response => {
                 if (response.error) {
+                  value.setLoading();
                   value.setError();
                 } else value.refresh(value.user.username, value.tab);
               });
