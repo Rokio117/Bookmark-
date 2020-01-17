@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookmarkContext from "../../context";
 import helpers from "../../helpers";
+import { loader } from "../loader";
 import "./AddBook.css";
 class AddBook extends Component {
   constructor(props) {
@@ -19,11 +20,18 @@ class AddBook extends Component {
       noBookSelected: false,
       resultId: "",
       hasError: false,
-      errorMessage: ""
+      errorMessage: "",
+      isLoading: false
     };
   }
 
   componentDidMount() {}
+
+  setLoading() {
+    this.state.isLoading
+      ? this.setState({ isLoading: false })
+      : this.setState({ isLoading: true });
+  }
 
   findBookClickHandler(event, value) {
     //add case where only blank space is entered
@@ -32,18 +40,23 @@ class AddBook extends Component {
 
     if (noSpaces === "") {
       this.setState({ noBookEntered: true });
-    } else value.setLoading();
-    helpers.getBook(this.state.bookToSearch).then(results => {
-      console.log(results, "results of find book");
-      //totalItems
+    } else {
+      this.setLoading();
+      helpers.getBook(this.state.bookToSearch).then(results => {
+        console.log(results, "results of find book");
+        //totalItems
 
-      let searchResults = results.items;
-      if (results.totalItems === 0) {
-        searchResults = ["No results found"];
-      }
-      value.setLoading();
-      this.setState({ searchResults: searchResults });
-    });
+        let searchResults = results.items;
+        if (results.totalItems === 0) {
+          this.setLoading();
+          searchResults = ["No results found"];
+        } else {
+          console.log("else ran");
+          this.setLoading();
+          this.setState({ searchResults: searchResults });
+        }
+      });
+    }
   }
 
   selectedBook(id) {
@@ -247,90 +260,98 @@ class AddBook extends Component {
       <bookmarkContext.Consumer>
         {value => {
           return (
-            <form
-              id="AddBookForm"
-              onSubmit={e => {
-                e.preventDefault();
-                if (!this.state.chosenBook) {
-                  this.setState({ noBookSelected: true });
-                } else {
-                  value.setLoading();
-                  return helpers
-                    .AddBook(
-                      this.formatBook(this.state.chosenBook, value),
-                      value.user.username
-                    )
-                    .then(response => {
-                      if (response.error) {
-                        this.setState({
-                          hasError: true,
-                          errorMessage: response.error
-                        });
-                      } else
-                        value.refresh(value.user.username, this.state.addingTo);
-                    });
-                }
-              }}
-            >
-              <fieldset className="AddBookFieldset" id="findBookFieldset">
-                <legend id="findBookLegend">Find Book</legend>
+            <>
+              {loader.displayLoading(this.state.isLoading)}
+              <form
+                id="AddBookForm"
+                onSubmit={e => {
+                  e.preventDefault();
+                  this.setLoading();
+                  if (!this.state.chosenBook) {
+                    this.setLoading();
+                    this.setState({ noBookSelected: true });
+                  } else {
+                    return helpers
+                      .AddBook(
+                        this.formatBook(this.state.chosenBook, value),
+                        value.user.username
+                      )
+                      .then(response => {
+                        if (response.error) {
+                          this.setState({
+                            hasError: true,
+                            errorMessage: response.error
+                          });
+                        } else
+                          value.refresh(
+                            value.user.username,
+                            this.state.addingTo
+                          );
+                      });
+                  }
+                }}
+              >
+                <fieldset className="AddBookFieldset" id="findBookFieldset">
+                  <legend id="findBookLegend">Find Book</legend>
 
-                <input
-                  id="findBookInputButton"
-                  type="text"
-                  required
-                  placeholder="Pride and Prejudice"
-                  onChange={e => {
-                    this.setState({
-                      bookToSearch: e.target.value,
-                      noBookEntered: false
-                    });
-                  }}
-                ></input>
-                <button
-                  id="searchButton"
-                  type="submit"
-                  onClick={e => {
-                    e.preventDefault();
-                    this.state.bookToSearch
-                      ? this.findBookClickHandler(
-                          this.state.bookToSearch,
-                          value
-                        )
-                      : this.setState({ noBookEntered: true });
-                  }}
-                >
-                  Search
-                </button>
-                {this.noBookEntered(this.state.noBookEntered)}
-                <br></br>
-                <h2>Results</h2>
-                <ul id="resultsList">
-                  {this.results(this.state.searchResults)}
-                </ul>
-              </fieldset>
-              <fieldset id="bookDetailsFieldset" className="AddBookFieldset">
-                <legend>Book Details</legend>
-                <label htmlFor="pageSelect">Add to:</label>
-                <select
-                  id="pageSelect"
-                  onChange={e => {
-                    this.setState({ addingTo: e.target.value });
-                  }}
-                >
-                  <option value="upcoming">Upcoming</option>
-                  <option value="current">Current</option>
-                  <option value="finished">Finished</option>
-                </select>
-                <br></br>
-                {this.bookDetailsToRender(this.state.addingTo)}
-                {this.noBookSelected(this.state.noBookSelected)}
-                {this.duplicateBookMessage()}
-                <button type="submit" id="bookSubmitButton">
-                  Submit
-                </button>
-              </fieldset>
-            </form>
+                  <input
+                    id="findBookInputButton"
+                    type="text"
+                    required
+                    placeholder="Pride and Prejudice"
+                    onChange={e => {
+                      this.setState({
+                        bookToSearch: e.target.value,
+                        noBookEntered: false
+                      });
+                    }}
+                  ></input>
+                  <button
+                    id="searchButton"
+                    type="submit"
+                    onClick={e => {
+                      e.preventDefault();
+
+                      this.state.bookToSearch
+                        ? this.findBookClickHandler(
+                            this.state.bookToSearch,
+                            value
+                          )
+                        : this.setState({ noBookEntered: true });
+                    }}
+                  >
+                    Search
+                  </button>
+                  {this.noBookEntered(this.state.noBookEntered)}
+                  <br></br>
+                  <h2>Results</h2>
+                  <ul id="resultsList">
+                    {this.results(this.state.searchResults)}
+                  </ul>
+                </fieldset>
+                <fieldset id="bookDetailsFieldset" className="AddBookFieldset">
+                  <legend>Book Details</legend>
+                  <label htmlFor="pageSelect">Add to:</label>
+                  <select
+                    id="pageSelect"
+                    onChange={e => {
+                      this.setState({ addingTo: e.target.value });
+                    }}
+                  >
+                    <option value="upcoming">Upcoming</option>
+                    <option value="current">Current</option>
+                    <option value="finished">Finished</option>
+                  </select>
+                  <br></br>
+                  {this.bookDetailsToRender(this.state.addingTo)}
+                  {this.noBookSelected(this.state.noBookSelected)}
+                  {this.duplicateBookMessage()}
+                  <button type="submit" id="bookSubmitButton">
+                    Submit
+                  </button>
+                </fieldset>
+              </form>
+            </>
           );
         }}
       </bookmarkContext.Consumer>
