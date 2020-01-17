@@ -1,0 +1,34 @@
+.signUpLabel {
+  display: block;
+}
+.inputCombo {
+  display: flex;
+  flex-direction: column;
+}
+.signUpForm {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#loginPassword,
+#loginUsername {
+  width: 60%;
+}
+
+.loginLabelandInput {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 8px;
+}
+#loginInputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#registerOptions {
+  display: flex;
+  justify-content: space-evenly;
+}
+.registerFormButton {
+  width: 40%;
+}

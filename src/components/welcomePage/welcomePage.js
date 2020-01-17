@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import helpers from "../../helpers";
 import store from "../../helperData/store";
+import "./welcomePage.css";
 class WelcomePage extends Component {
   constructor(props) {
     super(props);
@@ -55,43 +56,84 @@ class WelcomePage extends Component {
       >
         <fieldset>
           <legend>Sign up</legend>
-          <label htmlFor="username">Username(must be unique)</label>
-          <input
-            required
-            className="signUpform"
-            id="username"
-            type="text"
-            onChange={e => {
-              this.setState({ newUserName: e.target.value });
-            }}
-          ></input>
+          <div id="usernameLabelAndInput" className="inputCombo">
+            <label htmlFor="username" className="signUpLabel">
+              Username(must be unique)
+            </label>
+            <input
+              required
+              className="signUpForm"
+              id="username"
+              type="text"
+              onChange={e => {
+                this.setState({ newUserName: e.target.value });
+              }}
+            ></input>
+          </div>
           <br></br>
-          <label className="signUpLabel" htmlFor="password">
-            Password
-          </label>
-          <input
-            required
-            className="signhtmlForm"
-            id="password"
-            type="password"
-            onChange={e => {
-              this.setState({ newUserPassword: e.target.value });
-            }}
-          ></input>
+          <div id="passwordLabelAndInput" className="inputCombo">
+            <label className="signUpLabel" htmlFor="password">
+              Password
+            </label>
+            <input
+              required
+              className="signUpForm"
+              id="password"
+              type="password"
+              onChange={e => {
+                this.setState({ newUserPassword: e.target.value });
+              }}
+            ></input>
+          </div>
           <br></br>
-          <label htmlFor="repeatPassword">Repeat Password:</label>
-          <input
-            required
-            className="signUpform"
-            id="repeatPassword"
-            type="password"
-            onChange={e => {
-              this.setState({ repeatPassword: e.target.value });
-            }}
-          ></input>
+          <div id="repeatPWLabelAndInput" className="inputCombo">
+            <label htmlFor="repeatPassword" className="signUpLabel">
+              Repeat Password:
+            </label>
+            <input
+              required
+              className="signUpForm"
+              id="repeatPassword"
+              type="password"
+              onChange={e => {
+                this.setState({ repeatPassword: e.target.value });
+              }}
+            ></input>
+          </div>
           <br></br>
           {this.loginError("register")}
-          <button>Register</button>
+          <div id="registerOptions">
+            <button className="registerFormButton">Register</button>
+            <div>Or</div>
+            <button
+              className="registerFormButton"
+              id="loginAsGuestButton"
+              onClick={e => {
+                e.preventDefault();
+                helpers
+                  .validateAndGetReturningUser("Demo", "password")
+                  .then(loginResponse => {
+                    if (loginResponse.error || !loginResponse.authToken) {
+                      this.setState({ hasError: true });
+                      this.setState({
+                        errorMessage:
+                          loginResponse.error || "Sorry, an error occurred"
+                      });
+                      this.setState({ errorLocation: "login" });
+                    } else {
+                      sessionStorage.setItem(
+                        "authToken",
+                        loginResponse.authToken
+                      );
+
+                      this.props.login("Demo");
+                    }
+                  });
+              }}
+            >
+              Login as guest
+            </button>
+          </div>
         </fieldset>
       </form>
     );
@@ -121,57 +163,40 @@ class WelcomePage extends Component {
       >
         <fieldset>
           <legend>Sign in</legend>
-          <label htmlFor="loginUsername">Username:</label>
-          <input
-            required
-            type="text"
-            id="loginUsername"
-            onChange={e => {
-              this.setState({
-                returnUserName: e.target.value,
-                hasError: false
-              });
-            }}
-          ></input>
-          <label htmlFor="loginPassword">Password</label>
-          <input
-            required
-            type="password"
-            id="loginPassword"
-            onChange={e => {
-              this.setState({
-                loginPassword: e.target.value,
-                hasError: false
-              });
-            }}
-          ></input>
-          {this.loginError("login")}
-          <button type="submit">Login</button>
-          <button
-            onClick={e => {
-              e.preventDefault();
-              helpers
-                .validateAndGetReturningUser("Demo", "password")
-                .then(loginResponse => {
-                  if (loginResponse.error || !loginResponse.authToken) {
-                    this.setState({ hasError: true });
-                    this.setState({
-                      errorMessage:
-                        loginResponse.error || "Sorry, an error occurred"
-                    });
-                    this.setState({ errorLocation: "login" });
-                  } else {
-                    sessionStorage.setItem(
-                      "authToken",
-                      loginResponse.authToken
-                    );
-
-                    this.props.login("Demo");
-                  }
-                });
-            }}
-          >
-            Login as guest
+          <div id="loginInputs">
+            <div className="loginLabelandInput">
+              <label htmlFor="loginUsername">Username:</label>
+              <input
+                required
+                type="text"
+                id="loginUsername"
+                onChange={e => {
+                  this.setState({
+                    returnUserName: e.target.value,
+                    hasError: false
+                  });
+                }}
+              ></input>
+            </div>
+            <div className="loginLabelandInput">
+              <label htmlFor="loginPassword">Password:</label>
+              <input
+                required
+                type="password"
+                id="loginPassword"
+                onChange={e => {
+                  this.setState({
+                    loginPassword: e.target.value,
+                    hasError: false
+                  });
+                }}
+              ></input>
+              {this.loginError("login")}
+            </div>
+          </div>
+          <br></br>
+          <button type="submit" id="loginButton">
+            Login
           </button>
         </fieldset>
       </form>
