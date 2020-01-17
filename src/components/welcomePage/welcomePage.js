@@ -64,13 +64,11 @@ class WelcomePage extends Component {
         }}
       >
         <fieldset>
-          <legend>Sign up</legend>
+          <legend className="welcomeLegend">Sign up</legend>
           <div id="usernameLabelAndInput" className="inputCombo">
-            <label htmlFor="username" className="signUpLabel">
-              Username(must be unique)
-            </label>
             <input
               required
+              placeholder="User name"
               className="signUpForm"
               id="username"
               type="text"
@@ -81,11 +79,9 @@ class WelcomePage extends Component {
           </div>
           <br></br>
           <div id="passwordLabelAndInput" className="inputCombo">
-            <label className="signUpLabel" htmlFor="password">
-              Password
-            </label>
             <input
               required
+              placeholder="Password"
               className="signUpForm"
               id="password"
               type="password"
@@ -96,11 +92,9 @@ class WelcomePage extends Component {
           </div>
           <br></br>
           <div id="repeatPWLabelAndInput" className="inputCombo">
-            <label htmlFor="repeatPassword" className="signUpLabel">
-              Repeat Password:
-            </label>
             <input
               required
+              placeholder="Confirm Password"
               className="signUpForm"
               id="repeatPassword"
               type="password"
@@ -113,7 +107,7 @@ class WelcomePage extends Component {
           {this.loginError("register")}
           <div id="registerOptions">
             <button className="registerFormButton">Register</button>
-            <div>Or</div>
+            <div id="Or">Or</div>
             <button
               className="registerFormButton"
               id="loginAsGuestButton"
@@ -177,11 +171,12 @@ class WelcomePage extends Component {
         }}
       >
         <fieldset>
-          <legend>Sign in</legend>
+          <legend className="welcomeLegend">Sign in</legend>
           <div id="loginInputs">
             <div className="loginLabelandInput">
-              <label htmlFor="loginUsername">Username:</label>
               <input
+                className="signUpForm"
+                placeholder="Username"
                 required
                 type="text"
                 id="loginUsername"
@@ -194,8 +189,9 @@ class WelcomePage extends Component {
               ></input>
             </div>
             <div className="loginLabelandInput">
-              <label htmlFor="loginPassword">Password:</label>
               <input
+                className="signUpForm"
+                placeholder="Password"
                 required
                 type="password"
                 id="loginPassword"
@@ -210,7 +206,7 @@ class WelcomePage extends Component {
             </div>
           </div>
           <br></br>
-          <button type="submit" id="loginButton">
+          <button type="submit" id="loginButton" className="registerFormButton">
             Login
           </button>
         </fieldset>
@@ -221,21 +217,22 @@ class WelcomePage extends Component {
     return (
       <div>
         {loader.displayLoading(this.state.isLoading)}
-        <h2>Welcome!</h2>
+        <h2 id="welcomeHeader">Welcome!</h2>
         <br></br>
-        <p>
+        <p id="welcomeParagraph">
           Bookmark! is an app designed to help avid readers keep track of their
           books. using Bookmark! you can keep track of books you are currently
           reading, books you would like to read, or books you have already
           finished!
         </p>
-        <br></br>
-        <h2>New?</h2>
-        {this.registerForm()}
+
         <br></br>
         <h2>Returning?</h2>
         <br></br>
         {this.loginForm()}
+        <br></br>
+        <h2>New?</h2>
+        {this.registerForm()}
       </div>
     );
   }
