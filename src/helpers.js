@@ -1,8 +1,8 @@
 import config from "./config";
 import store from "./helperData/store";
 
-//const endpoint = config.API_ENDPOINT;
-const endpoint = config.LIVE_ENDPOINT;
+const endpoint = config.API_ENDPOINT;
+//const endpoint = config.LIVE_ENDPOINT;
 const authToken = sessionStorage.getItem("authToken");
 const helpers = {
   getBook(title) {
@@ -59,6 +59,7 @@ const helpers = {
   patchBookTab(bookInfoId, ontab) {
     //PATCH/api/bookmark/book/changeTab
     //body needs keys "bookInfoId" and "ontab"
+    console.log(bookInfoId, ontab, "bookinfoId and ontab in patch bookTab");
     return fetch(`${endpoint}/bookmark/book/changeTab`, {
       method: "PATCH",
       headers: {
@@ -104,7 +105,7 @@ const helpers = {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer=${authToken}`
+        authorization: `Bearer=${sessionStorage.getItem("authToken")}`
       },
       body: JSON.stringify({
         currentpage: newBookInfo.currentpage,

@@ -48,6 +48,7 @@ class Accordion extends Component {
         </button>
       );
     } else {
+      console.log(prop, "prop in patch book in client");
       return (
         <select
           className="moveBookButton"
@@ -57,6 +58,7 @@ class Accordion extends Component {
             const newTab = e.target.value;
             if (e.target.value) {
               helpers
+                //prop.book.id is probably the id for the book itself, not the user book info
                 .patchBookTab(prop.book.id, e.target.value)
                 .then(response => {
                   if (response.error) {
