@@ -9,3 +9,12 @@
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.bookAccordion {
+  background-color: darkslateblue;
+  color: lavenderblush;
+  border-radius: 15px;
+  border: 2px solid lavenderblush;
+}
+.noteAccordion {
+  border-radius: 15px;
+}

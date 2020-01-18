@@ -239,7 +239,7 @@ class BookInfo extends Component {
           ></textarea>
           <br></br>
           <button id="addNoteSubmitButton" type="submit">
-            submit
+            Submit
           </button>
         </form>
       );

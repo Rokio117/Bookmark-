@@ -41,6 +41,7 @@ class Tab extends Component {
                 <h1 id="appTitle">Bookmark!</h1>
 
                 <button
+                  id="upcomingButton"
                   className={this.currentPageSelect(tab, "upcoming")}
                   onClick={e => {
                     this.props.changeTab("upcoming");

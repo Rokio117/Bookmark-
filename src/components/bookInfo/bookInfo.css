@@ -101,6 +101,7 @@
   justify-content: center;
   /* justify-content: space-evenly; */
 }
+
 @media screen and (min-width: 767px) {
   .labelAndInput {
     width: 100%;
@@ -116,7 +117,7 @@
   #saveButton,
   #deleteButton {
     height: 50px;
-    width: 45%;
+    width: 25%;
   }
   #cancelEditButton,
   #editButton {
@@ -128,17 +129,61 @@
   .finishedonInput {
     margin-left: auto;
     margin-right: auto;
+    font-size: 30px;
   }
   .inputLabel {
     width: 40%;
     text-align: left;
   }
   #addNoteButton {
-    width: 90%;
+    width: 60%;
     height: 50px;
+    font-size: 30px;
   }
   #descriptionParagraph {
     font-size: 20px;
+  }
+  .noteInput {
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    text-align: left;
+    font-size: 30px;
+  }
+  .notecontentSelector {
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    font-size: 30px;
+  }
+  #dateSelector,
+  #titleSelector {
+    flex-direction: column;
+  }
+  #addNoteForm {
+    font-size: 30px;
+  }
+  #addNoteSubmitButton {
+    height: 50px;
+    width: 80%;
+    font-size: 30px;
+  }
+  #cancelAddNoteButton,
+  #editButton,
+  #cancelEditButton {
+    width: 60%;
+    font-size: 30px;
+    height: 50px;
+  }
+  #saveButton,
+  #deleteButton {
+    font-size: 30px;
+  }
+  #saveAndDeleteButtons {
+    justify-content: center;
   }
 }
 

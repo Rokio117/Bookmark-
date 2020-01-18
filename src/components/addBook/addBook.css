@@ -57,7 +57,7 @@ legend {
   border-style: outset;
 }
 img {
-  border: 1px solid black;
+  border: 1px solid lavenderblush;
 }
 
 #bookSubmitButton {
@@ -134,6 +134,12 @@ img {
 #resultsFlexContainer {
   margin-left: auto;
   margin-right: auto;
+}
+#findBookLegend,
+h2,
+#bookDetailsLegend,
+.detailsLabel {
+  color: lavenderblush;
 }
 
 /* Media queries */
