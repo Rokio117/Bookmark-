@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookMarkContext from "../../context";
 
+import "./errorDisplay.css";
 class ErrorDisplay extends Component {
   constructor(props) {
     super(props);
@@ -15,28 +16,34 @@ class ErrorDisplay extends Component {
     return (
       <bookMarkContext.Consumer>
         {value => {
-          if (this.state.hasError || this.props.error) {
+          let hasError = this.props.error;
+          if (this.state.hasError || hasError) {
             return (
               <div>
-                <h2>
+                <h2 id="errorMessage">
                   Oops! Somethings went wrong. If this problem persists try
                   loggin out and back in.
                 </h2>
                 <button
+                  id="gotErrorButton"
                   onClick={e => {
+                    e.preventDefault();
+                    hasError = false;
                     this.setState({ hasError: false });
-
-                    const sessionInfo = JSON.parse(
-                      sessionStorage.getItem("state")
-                    );
-                    if (sessionInfo) {
-                      if (Object.keys(sessionInfo.user).length) {
-                        value.refresh(
-                          sessionInfo.user.username,
-                          sessionInfo.tab
-                        );
-                      } else this.props.history.push("/");
-                    } else this.props.history.push("/");
+                    this.props.history.push("/");
+                    value.logout();
+                    window.location.reload(true);
+                    // const sessionInfo = JSON.parse(
+                    //   sessionStorage.getItem("state")
+                    // );
+                    // if (sessionInfo) {
+                    //   if (Object.keys(sessionInfo.user).length) {
+                    //     value.refresh(
+                    //       sessionInfo.user.username,
+                    //       sessionInfo.tab
+                    //     );
+                    //   } else this.props.history.push("/");
+                    //} else
                   }}
                 >
                   Got it

@@ -13,6 +13,7 @@ li {
 #findBookInputButton {
   text-align: left;
   margin-right: 8px;
+  border-radius: 8px;
 }
 #searchButton {
   display: inline-block;
@@ -41,7 +42,7 @@ legend {
   margin-right: auto;
   margin-top: 25px;
   margin-bottom: 25px;
-
+  color: lavenderblush;
   display: flex;
 }
 .searchImage {
@@ -53,7 +54,7 @@ legend {
   margin-bottom: auto;
 }
 .selected-book {
-  border: 10px solid silver;
+  border: 10px solid darkslateblue;
   border-style: outset;
 }
 img {
@@ -110,6 +111,7 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 8px;
 }
 .detailSelector {
   display: flex;
@@ -117,6 +119,7 @@ img {
 }
 .detailLabel {
   display: block;
+  color: lavenderblush;
 }
 .smallDetailSelector {
   display: inline-block;

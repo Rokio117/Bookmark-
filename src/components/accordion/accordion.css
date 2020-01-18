@@ -123,6 +123,7 @@
   .deleteNoteButton {
     width: 10%;
     height: 50%;
+    font-size: 20px;
   }
   .fullBookImage {
     width: 25%;
@@ -133,7 +134,7 @@
   }
   #bookInfoHeader,
   #noteInfoHeader {
-    font-size: 30px;
+    font-size: 40px;
   }
 }
 

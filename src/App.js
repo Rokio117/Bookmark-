@@ -29,6 +29,9 @@ class App extends Component {
   setError = () => {
     this.setState({ hasError: true });
   };
+  removeError = () => {
+    this.setState({ hasError: false });
+  };
   setLoading = () => {
     this.state.isLoading
       ? this.setState({ isLoading: false })
@@ -89,6 +92,10 @@ class App extends Component {
       });
   };
 
+  logout = () => {
+    this.props.history.push("/");
+  };
+
   errorDisplay() {
     if (this.state.hasError) {
       return <ErrorDisplay error={true} />;
@@ -127,7 +134,9 @@ class App extends Component {
           refresh: this.login,
           userProfile: this.state.userProfile,
           setError: this.setError,
-          setLoading: this.setLoading
+          setLoading: this.setLoading,
+          logout: this.logout,
+          removeError: this.removeError
         }}
       >
         <ErrorDisplay>

@@ -10,7 +10,7 @@ select:hover {
 }
 .loader {
   border: 16px solid black;
-  border-top: 16px solid rgb(50, 50, 50);
+  border-top: 16px solid lavenderblush;
   color: white;
   border-radius: 50%;
   width: 50px;

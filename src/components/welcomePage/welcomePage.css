@@ -10,6 +10,12 @@
   height: 50px;
   font-size: 25px;
 }
+#error {
+  color: black;
+  font-size: 25px;
+  font-weight: bold;
+  display: block;
+}
 
 .loginLabelandInput {
   display: flex;

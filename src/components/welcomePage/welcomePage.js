@@ -22,7 +22,12 @@ class WelcomePage extends Component {
 
   loginError(location) {
     if (location === this.state.errorLocation && this.state.hasError) {
-      return <p id="error">{this.state.errorMessage}</p>;
+      return (
+        <>
+          <br></br>
+          <p id="error">{this.state.errorMessage}</p>
+        </>
+      );
     }
   }
   setLoading() {
@@ -204,8 +209,9 @@ class WelcomePage extends Component {
                   });
                 }}
               ></input>
-              {this.loginError("login")}
+              <br></br>
             </div>
+            <div id="errorDiv">{this.loginError("login")}</div>
           </div>
           <br></br>
           <button type="submit" id="loginButton" className="registerFormButton">
