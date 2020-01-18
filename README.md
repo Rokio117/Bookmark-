@@ -38,7 +38,7 @@ Register Team (large screen)
                                                                                               
 
 ## API
-The API for Trivia Tracker can be found at: https://github.com/Rokio117/Bookmark--api
+The API for Bookmark! can be found at: https://github.com/Rokio117/Bookmark--api
 
 ## Available Scripts
 
