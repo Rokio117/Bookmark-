@@ -115,7 +115,8 @@
   #noteContent {
     font-size: 20px;
   }
-  .moveBookButton {
+  .moveBookButton,
+  .deleteNoteButton {
     width: 10%;
     height: 50%;
   }
@@ -129,5 +130,18 @@
   #bookInfoHeader,
   #noteInfoHeader {
     font-size: 30px;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .accordionTop,
+  .accordionNoteTop {
+    border-bottom: 0 !important;
+  }
+  .currentpageInput,
+  .startedonInput,
+  .finishedonInput {
+    font-size: 30px !important;
+    height: 50px !important;
   }
 }

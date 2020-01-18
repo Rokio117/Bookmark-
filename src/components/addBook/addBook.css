@@ -131,6 +131,10 @@ img {
 .findBookBreak {
   width: 0;
 }
+#resultsFlexContainer {
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* Media queries */
 
@@ -203,5 +207,13 @@ img {
   }
   .findBookBreak {
     display: none;
+  }
+}
+@media screen and (min-width: 1023px) {
+  #descriptionShell {
+    overflow: auto;
+  }
+  .searchImage {
+    width: initial;
   }
 }

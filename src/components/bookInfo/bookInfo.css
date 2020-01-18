@@ -141,3 +141,38 @@
     font-size: 20px;
   }
 }
+
+@media screen and (min-width: 1023px) {
+  .bookAccordion {
+    width: 60% !important;
+  }
+  #thumbnailPicture {
+    width: 12% !important;
+  }
+  .fullBookImage {
+    width: 15% !important;
+  }
+  #descriptionContainer {
+    overflow: auto;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  #thumbnailPicture {
+    width: 8% !important;
+  }
+
+  #thumbnailPicture {
+    display: none !important;
+  }
+  .extenderButton {
+    display: none;
+  }
+  #headerTextDisplay {
+    margin-left: 20%;
+    border-bottom: none;
+  }
+  #noteContent {
+    font-size: 30px !important;
+  }
+}

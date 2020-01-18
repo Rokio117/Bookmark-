@@ -277,7 +277,7 @@ class BookInfo extends Component {
     //needs this.props.book
     //and value.tab
     return (
-      <div>
+      <div id="fullBookContainer">
         <h2 id="bookInfoHeader">Info</h2>
         <br></br>
         <div id="bookInfoContainer">

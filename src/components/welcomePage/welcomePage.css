@@ -50,9 +50,21 @@
 #welcomeHeader {
   font-size: 50px;
   margin: 20px;
+  margin-bottom: 0 !important;
 }
 #welcomeParagraph {
   font-size: 20px;
+}
+.welcomeForm {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+#welcomeParagraph {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.formHeader {
+  margin-bottom: 0;
 }
 @media screen and (min-width: 767px) {
   .welcomeForm {
@@ -62,5 +74,18 @@
   #welcomeParagraph {
     margin-left: 15px;
     margin-right: 15px;
+  }
+}
+
+@media screen and (min-width: 1023px) {
+  .welcomeForm {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #welcomeParagraph {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

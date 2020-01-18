@@ -220,7 +220,7 @@ class WelcomePage extends Component {
       <div>
         {loader.displayLoading(this.state.isLoading)}
         <h2 id="welcomeHeader">Welcome!</h2>
-        <br></br>
+
         <p id="welcomeParagraph">
           Bookmark! is an app designed to help avid readers keep track of their
           books. using Bookmark! you can keep track of books you are currently
@@ -228,12 +228,11 @@ class WelcomePage extends Component {
           finished!
         </p>
 
-        <br></br>
-        <h2>Returning?</h2>
-        <br></br>
+        <h2 className="formHeader">Returning?</h2>
+
         {this.loginForm()}
-        <br></br>
-        <h2>New?</h2>
+
+        <h2 className="formHeader">New?</h2>
         {this.registerForm()}
       </div>
     );
