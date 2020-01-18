@@ -24,7 +24,7 @@ Trivia Tracker was created using responsive mobile-first web disign.
 Welcome Page | Upcoming Tab | Current Tab | Find Book Form 
 ------------ | ------------ | ------------ | ------------
 
-<img src="readmeimages/phoneWelcomePage.jpg" alt="welcome page as seen on a phone" width="200px"> | <img src="readmeimages/phoneHistory.jpg" alt="team history as seen on a phone" width ="200px"> | <img src="readmeimages/phoneNavMenu.jpg" alt="nav menu seen on a phone" width="200px"> | <img src="readmeimages/phoneCreateEvent.jpg" alt="create event screen on a phone" width="200px">
+<img src="bookmarkRMPictures/bookmarkPhoneMain.jpg" alt="main page as seen by a phone" width="200px"> | <img src="readmeimages/phoneHistory.jpg" alt="team history as seen on a phone" width ="200px"> | <img src="readmeimages/phoneNavMenu.jpg" alt="nav menu seen on a phone" width="200px"> | <img src="readmeimages/phoneCreateEvent.jpg" alt="create event screen on a phone" width="200px">
 
 Home Page (large screen)
 
