@@ -115,8 +115,11 @@ class BookInfo extends Component {
         </div>
         <br></br>
         <div id="saveAndDeleteButtons">
-          <button type="submit">Save</button>
+          <button type="submit" id="saveButton">
+            Save
+          </button>
           <button
+            id="deleteButton"
             type="button"
             onClick={e => {
               value.setLoading();
@@ -288,7 +291,7 @@ class BookInfo extends Component {
         </div>
         {this.editAndCancelButtons()}
         <br></br>
-        <h2>Notes:</h2>
+        <h2 id="noteInfoHeader">Notes:</h2>
         {this.bookNotesDisplay(book, tab)}
 
         {this.addNoteForm(value, book)}

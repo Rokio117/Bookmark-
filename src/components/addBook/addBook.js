@@ -341,7 +341,9 @@ class AddBook extends Component {
                 </fieldset>
                 <fieldset id="bookDetailsFieldset" className="AddBookFieldset">
                   <legend id="bookDetailsLegend">Book Details</legend>
-                  <label htmlFor="pageSelect">Add to:</label>
+                  <label htmlFor="pageSelect" className="detailLabel">
+                    Add to:
+                  </label>
                   <select
                     id="pageSelect"
                     onChange={e => {

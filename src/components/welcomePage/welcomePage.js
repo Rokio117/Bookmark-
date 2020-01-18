@@ -38,6 +38,7 @@ class WelcomePage extends Component {
   registerForm() {
     return (
       <form
+        className="welcomeForm"
         onSubmit={e => {
           e.preventDefault();
           this.setLoading(); //loading set to true
@@ -147,6 +148,7 @@ class WelcomePage extends Component {
   loginForm() {
     return (
       <form
+        className="welcomeForm"
         onSubmit={e => {
           e.preventDefault();
           this.setLoading();

@@ -158,7 +158,7 @@ img {
     font-size: 25px !important;
     height: 50px;
   }
-  label {
+  .detailLabel {
     font-size: 25px !important;
   }
   #startOnSelector,
