@@ -125,17 +125,26 @@ class AddBook extends Component {
                 src={bookObject.coverart}
                 alt={`Cover art for ${bookObject.title}`}
               ></img>
-              <div id="resultsInfo">
-                <h3
-                  className="foundInfo"
-                  id="foundTitle"
-                >{` ${bookObject.title}`}</h3>
-                <br></br>
-                {authors}
-                <br></br>
-                <p id="description">{`Description: ${result.volumeInfo.description}`}</p>
-                <br></br>
-                <p className="foundInfo">{`${result.volumeInfo.publishedDate}`}</p>
+              <div id="resultsFlexContainer">
+                <div id="resultsInfo">
+                  <h3
+                    className="foundInfo"
+                    id="foundTitle"
+                  >{` ${bookObject.title}`}</h3>
+                  <br className="findBookBreak"></br>
+                  {authors}
+                  <br className="findBookBreak"></br>
+                  <p id="description">{`Description: ${result.volumeInfo.description}`}</p>
+                  <br className="findBookBreak"></br>
+                  <p className="foundInfo">{`${result.volumeInfo.publishedDate}`}</p>
+                  <br className="findBookBreak"></br>
+                </div>
+                <div id="descriptionShell">
+                  <p id="foundDescription">
+                    {result.volumeInfo.description ||
+                      "No description available"}
+                  </p>
+                </div>
               </div>
               <button
                 id="selectButton"
@@ -293,35 +302,36 @@ class AddBook extends Component {
               >
                 <fieldset className="AddBookFieldset" id="findBookFieldset">
                   <legend id="findBookLegend">Find Book</legend>
+                  <div id="findBookContainer">
+                    <input
+                      id="findBookInputButton"
+                      type="text"
+                      required
+                      placeholder="Pride and Prejudice"
+                      onChange={e => {
+                        this.setState({
+                          bookToSearch: e.target.value,
+                          noBookEntered: false
+                        });
+                      }}
+                    ></input>
+                    <button
+                      id="searchButton"
+                      type="submit"
+                      onClick={e => {
+                        e.preventDefault();
 
-                  <input
-                    id="findBookInputButton"
-                    type="text"
-                    required
-                    placeholder="Pride and Prejudice"
-                    onChange={e => {
-                      this.setState({
-                        bookToSearch: e.target.value,
-                        noBookEntered: false
-                      });
-                    }}
-                  ></input>
-                  <button
-                    id="searchButton"
-                    type="submit"
-                    onClick={e => {
-                      e.preventDefault();
-
-                      this.state.bookToSearch
-                        ? this.findBookClickHandler(
-                            this.state.bookToSearch,
-                            value
-                          )
-                        : this.setState({ noBookEntered: true });
-                    }}
-                  >
-                    Search
-                  </button>
+                        this.state.bookToSearch
+                          ? this.findBookClickHandler(
+                              this.state.bookToSearch,
+                              value
+                            )
+                          : this.setState({ noBookEntered: true });
+                      }}
+                    >
+                      Search
+                    </button>
+                  </div>
                   {this.noBookEntered(this.state.noBookEntered)}
                   <br></br>
                   <h2>Results</h2>
@@ -330,7 +340,7 @@ class AddBook extends Component {
                   </ul>
                 </fieldset>
                 <fieldset id="bookDetailsFieldset" className="AddBookFieldset">
-                  <legend>Book Details</legend>
+                  <legend id="bookDetailsLegend">Book Details</legend>
                   <label htmlFor="pageSelect">Add to:</label>
                   <select
                     id="pageSelect"

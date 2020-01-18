@@ -9,8 +9,6 @@ li {
   height: 100%;
   margin-right: auto;
   margin-left: auto;
-
-  padding: px;
 }
 #findBookInputButton {
   text-align: left;
@@ -72,8 +70,11 @@ img {
 }
 #resultsInfo {
   flex-direction: column;
-  width: 70%;
+  width: 100%;
   text-align: right;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
 }
 .foundInfo {
   margin: 0;
@@ -120,4 +121,87 @@ img {
 .smallDetailSelector {
   display: inline-block;
   width: 50%;
+}
+#descriptionShell {
+  overflow: scroll;
+  width: 100%;
+  height: 100px;
+  display: none;
+}
+.findBookBreak {
+  width: 0;
+}
+
+/* Media queries */
+
+@media screen and (min-width: 767px) {
+  #findBookLegend,
+  #bookDetailsLegend {
+    font-size: 35px !important;
+  }
+
+  #searchButton {
+    height: 50px;
+    width: 30%;
+  }
+  #findBookInputButton {
+    margin: 0;
+    padding: 0;
+  }
+  #findBookContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #searchButton,
+  #bookSubmitButton {
+    font-size: 25px !important;
+    height: 50px;
+  }
+  label {
+    font-size: 25px !important;
+  }
+  #startOnSelector,
+  #currentPageSelector,
+  #findBookInputButton,
+  #pageSelect,
+  #finishedOnSelector {
+    font-size: 25px !important;
+    height: 50px;
+  }
+  #resultsInfo {
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 20px !important;
+    margin-bottom: 10px;
+    height: 50%;
+  }
+  #descriptionShell {
+    display: block;
+    margin-bottom: 10px;
+  }
+  #resultsFlexContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 240px;
+    font-size: 20px !important;
+  }
+  .bookResult {
+    height: 250px;
+  }
+  #foundDescription {
+    padding: 5px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    height: 100%;
+  }
+  .findBookBreak {
+    display: none;
+  }
 }
