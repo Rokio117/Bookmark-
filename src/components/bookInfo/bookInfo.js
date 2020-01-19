@@ -13,13 +13,15 @@ class BookInfo extends Component {
     super(props);
     this.state = {
       editMode: false,
-      newCurrentPage: undefined,
-      newStartDate: undefined,
-      newEndDate: undefined,
+      newCurrentPage: null,
+      newStartDate: null,
+      newEndDate: null,
       addNoteMode: false,
       newNoteTitle: "",
       newNoteDate: null,
-      newNoteContent: ""
+      newNoteContent: "",
+      hasError: false,
+      errorMessage: ""
     };
   }
 
@@ -56,12 +58,23 @@ class BookInfo extends Component {
       return <p>{`${key}: ${value}`}</p>;
     }
   }
+  displayError() {
+    if (this.state.hasError) {
+      return <p className="error">{this.state.errorMessage}</p>;
+    }
+  }
   editBookInfo(book, value) {
     return (
       <form
         id="patchBookForm"
         onSubmit={e => {
           e.preventDefault();
+          if (this.state.newCurrentPage && this.state.newCurrentPage < 0) {
+            return this.setState({
+              hasError: true,
+              errorMessage: "page number must be positive"
+            });
+          }
           value.setLoading();
           const newBookInfo = {
             currentpage: this.state.newCurrentPage || book.currentpage,
@@ -136,6 +149,7 @@ class BookInfo extends Component {
             Delete
           </button>
         </div>
+        {this.displayError()}
       </form>
     );
   }

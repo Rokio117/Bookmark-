@@ -275,10 +275,19 @@ class AddBook extends Component {
                 id="AddBookForm"
                 onSubmit={e => {
                   e.preventDefault();
+                  if (
+                    this.state.currentPage !== null &&
+                    this.state.currentPage < 0
+                  ) {
+                    return this.setState({
+                      hasError: true,
+                      errorMessage: "page number must be positive"
+                    });
+                  }
                   this.setLoading();
                   if (!this.state.chosenBook) {
                     this.setLoading();
-                    this.setState({ noBookSelected: true });
+                    return this.setState({ noBookSelected: true });
                   } else {
                     return helpers
                       .AddBook(

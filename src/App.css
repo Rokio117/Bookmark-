@@ -15,6 +15,7 @@ select:hover {
 .loader {
   border: 16px solid lavenderblush;
   border-top: 16px solid darkslateblue;
+  border-bottom: 16px solid darkslateblue;
   color: lavenderblush;
   border-radius: 50%;
   width: 50px;

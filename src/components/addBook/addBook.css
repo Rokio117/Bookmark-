@@ -153,6 +153,9 @@ h2,
 #bookSubmitButton:hover {
   border: 2px solid darkslateblue;
 }
+.error {
+  color: lavenderblush;
+}
 
 /* Media queries */
 
@@ -160,6 +163,9 @@ h2,
   #findBookLegend,
   #bookDetailsLegend {
     font-size: 35px !important;
+  }
+  .error {
+    font-size: 20px;
   }
 
   #searchButton {
@@ -233,5 +239,8 @@ h2,
   }
   .searchImage {
     width: initial;
+  }
+  .error {
+    font-size: 30px;
   }
 }
