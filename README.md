@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Bookmark! is a site designed for avid readers who would like a consistant way of tracking their reading history. After registering, a user can login and start adding books to their profile. This app uses Google's open source book api to make sure users can find the correct author and cover art for their book of choice.
 
-After selecting a book the user can choose to put it into the upcoming, current, or finished categories. If a user is a part of a book club or needs to document their reading there is an option to keep notes for each book. Users can also keep track of the start and end dates for all of their books, as well as their current page(if they are currently reading it).
+After selecting a book the user can choose to put it into the upcoming, current, or finished categories. If a user is a part of a book club or needs to document their reading there is an option to keep notes for each book. Users can also keep track of the start and end dates for all of their books, as well as their current page (if they are currently reading it).
 
 ## Technologies Used
  <img src="bookmarkRMPictures/CSS3_logo_and_wordmark.svg.png" height="50" alt="CSS logo" align="left">
