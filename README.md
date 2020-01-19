@@ -17,14 +17,14 @@ After selecting a book the user can choose to put it into the upcoming, current,
  
 
 
-Trivia Tracker was created using Javascript, ReactJs, and CSS.
-Trivia Tracker was created using responsive mobile-first web disign. 
+Bookmark! was created using Javascript, ReactJs, and CSS.
+Bookmark! was created using responsive mobile-first web disign. 
 
 ## Take A Look
 Welcome Page | Upcoming Tab | Current Tab | Find Book Form 
 ------------ | ------------ | ------------ | ------------
 
-<img src="bookmarkRMPictures/bookmarkPhoneMain.jpg" alt="main page as seen by a phone" width="200px"> | <img src="readmeimages/phoneHistory.jpg" alt="team history as seen on a phone" width ="200px"> | <img src="readmeimages/phoneNavMenu.jpg" alt="nav menu seen on a phone" width="200px"> | <img src="readmeimages/phoneCreateEvent.jpg" alt="create event screen on a phone" width="200px">
+<img src="bookmarkRMPictures/BookmarkPhoneMain.jpg" alt="main page as seen from a phone" width="200px"> | <img src="bookmarkRMPictures/BookmarkUpcomingPhone.jpg" alt="upcoming tab as seen from a phone" width ="200px"> | <img src="bookmarkRMPictures/BookmarkPhoneHome.jpg" alt="Current tab seen from a phone" width="200px"> | <img src="bookmarkRMPictures/BookmarkPhoneGetBook.jpg" alt="Find book form seen from a phone" width="200px">
 
 Home Page (large screen)
 
