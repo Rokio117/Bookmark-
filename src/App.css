@@ -46,6 +46,10 @@ button:active {
 #bookSubmitButton {
   background-color: darkslateblue;
 }
+legend {
+  margin-left: auto;
+  margin-right: auto;
+}
 
 @keyframes spin {
   0% {
