@@ -26,13 +26,13 @@ Welcome Page | Upcoming Tab | Current Tab | Find Book Form
 
 <img src="bookmarkRMPictures/BookmarkPhoneMain.jpg" alt="main page as seen from a phone" width="200px"> | <img src="bookmarkRMPictures/BookmarkUpcomingPhone.jpg" alt="upcoming tab as seen from a phone" width ="200px"> | <img src="bookmarkRMPictures/BookmarkPhoneHome.jpg" alt="Current tab seen from a phone" width="200px"> | <img src="bookmarkRMPictures/BookmarkPhoneGetBook.jpg" alt="Find book form seen from a phone" width="200px">
 
-Home Page (large screen)
+Welcome Page (large screen)
 
-<img src="readmeimages/mainPageLarge.png" alt="Home page as seen on a large screen" >
+<img src="bookmarkRMPictures/Bookmark%20Login%20Large.png" alt="Welcome page as seen on a large screen" >
 
-Register Team (large screen)
+Current Tab (large screen)
 
-<img src="readmeimages/registerTeamLarge.png" alt="Register team form on a large screen">
+<img src="bookmarkRMPictures/Bookmark%20Book%20Large.png" alt="Current tab as seen on a large screen">
 
 
                                                                                               
