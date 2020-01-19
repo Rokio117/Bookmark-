@@ -1,5 +1,45 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Bookmark!
+
+## Live site: https://nicks-bookmark-app.now.sh/
+
+## What is Bookmark!?
+
+Bookmark! is a site designed for avid readers who would like a consistant way of tracking their reading history. After registering, a user can login and start adding books to their profile. This app uses Google's open source book api to make sure users can find the correct author and cover art for their book of choice.
+
+After selecting a book the user can choose to put it into the upcoming, current, or finished categories. If a user is a part of a book club or needs to document their reading there is an option to keep notes for each book. Users can also keep track of the start and end dates for all of their books, as well as their current page(if they are currently reading it).
+
+## Technologies Used
+ <img src="readmeimages/CSS3_logo_and_wordmark.svg.png" height="50" alt="CSS logo" align="left">
+ <img src="readmeimages/React-logo.png" height="50" alt="react logo" align="left"> 
+ <img src="readmeimages/js.jpg" height="50 alt="javascript logo" align="center"> 
+ 
+
+
+Trivia Tracker was created using Javascript, ReactJs, and CSS.
+Trivia Tracker was created using responsive mobile-first web disign. 
+
+## Take A Look
+Welcome Page | Upcoming Tab | Current Tab | Find Book Form 
+------------ | ------------ | ------------ | ------------
+
+<img src="bookmarkRMPictures/bookmarkPhoneMain.jpg" alt="main page as seen by a phone" width="200px"> | <img src="readmeimages/phoneHistory.jpg" alt="team history as seen on a phone" width ="200px"> | <img src="readmeimages/phoneNavMenu.jpg" alt="nav menu seen on a phone" width="200px"> | <img src="readmeimages/phoneCreateEvent.jpg" alt="create event screen on a phone" width="200px">
+
+Home Page (large screen)
+
+<img src="readmeimages/mainPageLarge.png" alt="Home page as seen on a large screen" >
+
+Register Team (large screen)
+
+<img src="readmeimages/registerTeamLarge.png" alt="Register team form on a large screen">
+
+
+                                                                                              
+
+## API
+The API for Bookmark! can be found at: https://github.com/Rokio117/Bookmark--api
+
 ## Available Scripts
 
 In the project directory, you can run:
