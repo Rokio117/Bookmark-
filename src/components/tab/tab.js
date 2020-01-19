@@ -8,6 +8,8 @@ class Tab extends Component {
     this.state = { selectedTab: "current" };
   }
 
+  //this component displays the tabs seen at the top of the screen
+
   currentPageSelect(activeTab, displayTab) {
     if (displayTab === activeTab) {
       return "selected tab-button";

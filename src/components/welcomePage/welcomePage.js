@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import helpers from "../../helpers";
-import store from "../../helperData/store";
 import "./welcomePage.css";
 import { loader } from "../loader";
 class WelcomePage extends Component {
@@ -46,7 +45,7 @@ class WelcomePage extends Component {
         className="welcomeForm"
         onSubmit={e => {
           e.preventDefault();
-          this.setLoading(); //loading set to true
+          this.setLoading();
           helpers
             .postNewUser(
               this.state.newUserName,
@@ -55,14 +54,14 @@ class WelcomePage extends Component {
             )
             .then(response => {
               if (response.error || !response.authToken) {
-                this.setLoading(); //loading set to false
+                this.setLoading();
                 this.setState({ errorLocation: "register" });
                 this.setState({ hasError: true });
                 this.setState({
                   errorMessage: response.error || "Sorry, an error occurred"
                 });
               } else {
-                this.setLoading(); //loading set to false
+                this.setLoading();
                 sessionStorage.setItem("authToken", response.authToken);
                 return this.props.login(response.username, "add");
               }

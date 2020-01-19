@@ -7,8 +7,6 @@
 
   border-bottom: 1px solid mediumslateblue;
   outline: 0;
-
-  /* border-bottom: 1px solid rgb(245, 202, 121); */
 }
 .selected:focus {
   text-decoration: none;

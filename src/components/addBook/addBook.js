@@ -12,7 +12,6 @@ class AddBook extends Component {
       bookToSearch: "",
       chosenBook: undefined,
       searchResults: [],
-      //searchResults is the list of items from the query
       startedOn: null,
       finishedOn: null,
       currentPage: null,
@@ -25,8 +24,6 @@ class AddBook extends Component {
     };
   }
 
-  componentDidMount() {}
-
   setLoading() {
     this.state.isLoading
       ? this.setState({ isLoading: false })
@@ -34,8 +31,6 @@ class AddBook extends Component {
   }
 
   findBookClickHandler(event, value) {
-    //add case where only blank space is entered
-    //it will throw a 400 if thats the case
     const noSpaces = this.state.bookToSearch.replace(/\s/g, "");
 
     if (noSpaces === "") {
@@ -43,15 +38,11 @@ class AddBook extends Component {
     } else {
       this.setLoading();
       helpers.getBook(this.state.bookToSearch).then(results => {
-        console.log(results, "results of find book");
-        //totalItems
-
         let searchResults = results.items;
         if (results.totalItems === 0) {
           this.setLoading();
           searchResults = ["No results found"];
         } else {
-          console.log("else ran");
           this.setLoading();
           this.setState({ searchResults: searchResults });
         }
@@ -66,12 +57,10 @@ class AddBook extends Component {
   }
 
   results(resultList) {
-    console.log(resultList, "resultList in add book");
-    //needs to be sent results.items
+    // partially filtered results from fetch request to google book API
+
     if (resultList[0] !== "No results found") {
       return resultList.map(result => {
-        //where is authors coming from?
-
         let authors = [];
         let formattedAuthors = [];
         if (result.volumeInfo.authors) {
@@ -167,6 +156,8 @@ class AddBook extends Component {
   }
 
   bookDetailsToRender(state) {
+    //'current page' will not be an option if you are adding a book to 'finished'
+    //'finished on' will not be an option if adding to current
     if (state === "current") {
       return (
         <div className="detailSelector">

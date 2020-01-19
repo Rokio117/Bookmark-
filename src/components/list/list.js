@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookmarkContext from "../../context";
-import PropTypes from "prop-types";
 import defaultProps from "../defaultProps";
 import Accordion from "../accordion/accordion";
 
@@ -10,6 +9,7 @@ class List extends Component {
     super(props);
     this.state = { tab: this.props.tab };
   }
+  //this displays both lists of books and notes, both of which are held in the Accordion class
 
   createBookList(bookList) {
     return bookList.map(book => {

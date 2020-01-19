@@ -33,17 +33,7 @@ class ErrorDisplay extends Component {
                     this.props.history.push("/");
                     value.logout();
                     window.location.reload(true);
-                    // const sessionInfo = JSON.parse(
-                    //   sessionStorage.getItem("state")
-                    // );
-                    // if (sessionInfo) {
-                    //   if (Object.keys(sessionInfo.user).length) {
-                    //     value.refresh(
-                    //       sessionInfo.user.username,
-                    //       sessionInfo.tab
-                    //     );
-                    //   } else this.props.history.push("/");
-                    //} else
+                    //add re-login functionality
                   }}
                 >
                   Got it

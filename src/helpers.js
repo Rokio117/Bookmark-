@@ -1,9 +1,8 @@
 import config from "./config";
-import store from "./helperData/store";
 
 //const endpoint = config.API_ENDPOINT;
 const endpoint = config.LIVE_ENDPOINT;
-const authToken = sessionStorage.getItem("authToken");
+
 const helpers = {
   getBook(title) {
     return fetch(
@@ -20,7 +19,6 @@ const helpers = {
       });
   },
   validateAndGetReturningUser(username, password) {
-    //POST /api/auth/login
     return fetch(`${endpoint}/auth/login`, {
       method: "POST",
       headers: {
@@ -39,9 +37,6 @@ const helpers = {
       });
   },
   getUserInfo(username, jwt) {
-    //GET /api/bookmark/userInfo/:username
-    //require auth
-
     return fetch(`${endpoint}/bookmark/userInfo/${username}`, {
       method: "GET",
       headers: {
@@ -57,9 +52,6 @@ const helpers = {
       });
   },
   patchBookTab(bookInfoId, ontab) {
-    //PATCH/api/bookmark/book/changeTab
-    //body needs keys "bookInfoId" and "ontab"
-    console.log(bookInfoId, ontab, "bookinfoId and ontab in patch bookTab");
     return fetch(`${endpoint}/bookmark/book/changeTab`, {
       method: "PATCH",
       headers: {
@@ -73,13 +65,6 @@ const helpers = {
     });
   },
   AddBook(bookObject, username) {
-    console.log(
-      sessionStorage.getItem("authToken"),
-      "storage.getitem in add book"
-    );
-    // POST /api/bookmark/userinfo/:username/books/add
-    //requires keys
-    //"ontab" "currentpage" "startedon" "finishedon" "userid" "title" "coverart" "description" "googleid"
     return fetch(`${endpoint}/bookmark/userinfo/${username}/books/add`, {
       method: "POST",
       headers: {
@@ -122,8 +107,6 @@ const helpers = {
       });
   },
   deleteBook(username, bookId) {
-    // DELETE /api/bookmark/:username/book/delete
-    //required keys "bookInfoId"
     return fetch(`${endpoint}/bookmark/${username}/book/delete`, {
       method: "DELETE",
       headers: {
@@ -142,8 +125,6 @@ const helpers = {
       });
   },
   postNewUser(username, password, repeatPassword) {
-    // POST /api/auth/register
-    // required keys "user_name" "password" "repeat_password"
     return fetch(`${endpoint}/auth/register`, {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -161,8 +142,6 @@ const helpers = {
       });
   },
   postNewNote(username, bookId, noteObject) {
-    //POST /api/bookmark/:username/notes
-    // required keys "notetitle" "notedate" "notecontent" "bookInfoId"
     return fetch(`${endpoint}/bookmark/${username}/notes`, {
       method: "POST",
       headers: {
@@ -184,8 +163,6 @@ const helpers = {
       });
   },
   deleteNote(username, noteId) {
-    // DELETE /api/bookmark/:username/notes
-    //required keys "noteId"
     return fetch(`${endpoint}/bookmark/:${username}/notes`, {
       method: "DELETE",
       headers: {
@@ -197,7 +174,6 @@ const helpers = {
       })
     })
       .then(response => {
-        console.log(response, "response after deleteNote");
         return response.json(response);
       })
       .catch(error => {

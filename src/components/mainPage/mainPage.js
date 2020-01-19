@@ -3,8 +3,7 @@ import { withRouter } from "react-router-dom";
 import bookMarkContext from "../../context";
 import List from "../list/list";
 import AddBook from "../addBook/AddBook";
-import Accordion from "../accordion/accordion";
-import bookInfo from "../bookInfo/bookInfo";
+
 import defaultProps from "../defaultProps";
 import "./mainPage.css";
 class MainPage extends Component {
@@ -18,6 +17,7 @@ class MainPage extends Component {
     } else return <List books={this.bookSorter(props.books, props)} />;
   }
   bookSorter(userBooks, value) {
+    //sorts books by their tab and returns list of books for current tab
     let currentBooks = [];
     let finishedBooks = [];
     let upcomingBooks = [];

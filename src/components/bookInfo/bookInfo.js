@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookmarkContext from "../../context";
-import Accordion from "../accordion/accordion";
+
 import List from "../list/list";
-import PropTypes from "prop-types";
+
 import defaultProps from "../defaultProps";
 import helpers from "../../helpers";
-import store from "../../helperData/store";
+
 import "./bookInfo.css";
 class BookInfo extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class BookInfo extends Component {
       errorMessage: ""
     };
   }
+  //this class displays info for both books and notes, depending on the props
 
   bookNotesDisplay(book, tab) {
     if (tab !== "upcoming") {
@@ -50,8 +51,6 @@ class BookInfo extends Component {
   }
 
   formatData(key, value) {
-    //takes currentpage, startedon, finishedon and changes 'null' to ~
-
     if (value === null) {
       return <p>{`${key}: ~`}</p>;
     } else {
@@ -288,8 +287,7 @@ class BookInfo extends Component {
   }
 
   fullBookInfo(book, tab, value) {
-    //needs this.props.book
-    //and value.tab
+    //displays on 'current' and 'finished' tabs
     return (
       <div id="fullBookContainer">
         <h2 id="bookInfoHeader">Info</h2>
@@ -314,7 +312,7 @@ class BookInfo extends Component {
     );
   }
   upcomingInfo(book) {
-    //requires this.props.book
+    //displays on 'upcoming' tab
     return (
       <div id="upcomingExtendedInfo">
         <div id="descriptionContainer">
@@ -338,8 +336,6 @@ class BookInfo extends Component {
 
   displayInfo(props, value) {
     const tab = value.tab;
-    //requires value.tab
-    //requires this.props
     if (tab === "upcoming") {
       return this.upcomingInfo(props.book);
     }
@@ -350,7 +346,6 @@ class BookInfo extends Component {
 
   render() {
     return (
-      //props will be individual sorted book object
       <bookmarkContext.Consumer>
         {value => {
           return <div>{this.displayInfo(this.props, value)}</div>;

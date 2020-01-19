@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookMarkContext from "../../context";
 import BookInfo from "../bookInfo/bookInfo";
-import PropTypes from "prop-types";
 import defaultProps from "../defaultProps";
 import helpers from "../../helpers";
 import "./accordion.css";
@@ -13,9 +12,11 @@ class Accordion extends Component {
       extended: true
     };
   }
+  //this class is used for both book and note info
 
   buttonRender(prop, value) {
-    //value.tab
+    //if Accordion is displaying a book it shows the 'move book' button
+    //if it is displaying a note it shows the 'delete note' button
 
     let tabOptions = [];
     if (value.tab === "upcoming") {
@@ -52,18 +53,16 @@ class Accordion extends Component {
         </button>
       );
     } else {
-      console.log(prop, "prop in patch book in client");
       return (
         <select
           className="moveBookButton"
           onChange={e => {
             e.preventDefault();
-            console.log(value.tab, "value.tab in change book tab");
+
             const newTab = e.target.value;
             if (e.target.value) {
               value.setLoading();
               helpers
-                //prop.book.id is probably the id for the book itself, not the user book info
                 .patchBookTab(prop.book.id, e.target.value)
                 .then(response => {
                   if (response.error) {
@@ -95,6 +94,8 @@ class Accordion extends Component {
   };
 
   renderContent(props) {
+    //Switches display for book or note depending on props
+    // (BookInfo displays both book info and note info)
     if (this.state.extended) {
       if (props.book) {
         return <BookInfo book={props.book} />;
@@ -112,6 +113,7 @@ class Accordion extends Component {
   }
   formatAuthors(authors) {
     //authors is either an array or null, depending on if the book had a listed author
+
     let result = [];
     let formattedAuthors = [];
     if (authors) {

@@ -81,7 +81,6 @@
 #descriptionParagraph,
 #upcomingPicture {
   margin: 8px;
-  /* width: 40%; */
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -99,7 +98,6 @@
 #dateSelector {
   display: flex;
   justify-content: center;
-  /* justify-content: space-evenly; */
 }
 .error {
   margin-left: auto;
