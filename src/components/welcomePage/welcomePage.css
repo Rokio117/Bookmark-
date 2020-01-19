@@ -82,6 +82,14 @@
 .mainPage {
   background-color: mediumslateblue;
 }
+#selectDisplay {
+  text-align: center;
+}
+select:focus {
+  border: 1px solid lavenderblush;
+  outline: 0;
+}
+
 @media screen and (min-width: 767px) {
   .welcomeForm {
     margin-left: 15px;

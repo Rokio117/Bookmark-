@@ -25,7 +25,7 @@ class Accordion extends Component {
       .filter(tab => tab !== value.tab)
       .map(filteredTab => {
         return (
-          <option value={filteredTab} className="moveOption">
+          <option id="moveOption" value={filteredTab} className="moveOption">
             {filteredTab}
           </option>
         );
@@ -73,7 +73,13 @@ class Accordion extends Component {
             }
           }}
         >
-          <option selected disabled value="" className="moveOption">
+          <option
+            id="selectDisplay"
+            selected
+            disabled
+            value=""
+            className="moveOption"
+          >
             Move
           </option>
           {moveOptions}

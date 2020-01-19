@@ -4,14 +4,18 @@
 p {
   margin: 0;
 }
-button,
+button:hover,
 select:hover {
   cursor: pointer;
+  /* background-color: lavenderblush; */
+  /* background-color: rgb(28, 21, 73); */
+  background-color: lavenderblush !important;
+  color: darkslateblue;
 }
 .loader {
-  border: 16px solid black;
-  border-top: 16px solid lavenderblush;
-  color: white;
+  border: 16px solid lavenderblush;
+  border-top: 16px solid darkslateblue;
+  color: lavenderblush;
   border-radius: 50%;
   width: 50px;
   height: 50px;

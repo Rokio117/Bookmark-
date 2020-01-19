@@ -98,6 +98,9 @@ img {
   width: 100%;
   height: 100%;
 }
+#smallSelectButton:hover {
+  background-color: inherit !important;
+}
 
 .detailSelector {
   display: flex;
@@ -143,6 +146,12 @@ h2,
 #bookDetailsLegend,
 .detailsLabel {
   color: lavenderblush;
+}
+
+#searchButton:hover,
+#pageSelect:hover,
+#bookSubmitButton:hover {
+  border: 2px solid darkslateblue;
 }
 
 /* Media queries */
