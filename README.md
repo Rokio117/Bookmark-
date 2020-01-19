@@ -11,9 +11,9 @@ Bookmark! is a site designed for avid readers who would like a consistant way of
 After selecting a book the user can choose to put it into the upcoming, current, or finished categories. If a user is a part of a book club or needs to document their reading there is an option to keep notes for each book. Users can also keep track of the start and end dates for all of their books, as well as their current page(if they are currently reading it).
 
 ## Technologies Used
- <img src="readmeimages/CSS3_logo_and_wordmark.svg.png" height="50" alt="CSS logo" align="left">
- <img src="readmeimages/React-logo.png" height="50" alt="react logo" align="left"> 
- <img src="readmeimages/js.jpg" height="50 alt="javascript logo" align="center"> 
+ <img src="bookmarkRMPictures/CSS3_logo_and_wordmark.svg.png" height="50" alt="CSS logo" align="left">
+ <img src="bookmarkRMPictures/React-logo.png" height="50" alt="react logo" align="left"> 
+ <img src="bookmarkRMPictures/js.jpg" height="50 alt="javascript logo" align="center"> 
  
 
 
