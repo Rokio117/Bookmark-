@@ -43,10 +43,6 @@ class Accordion extends Component {
               .then(response => {
                 value.refresh(value.user.username, value.tab);
               });
-            // .catch(error => {
-            //   value.setError();
-            // });
-            //make fetch request to delete note
           }}
         >
           Delete
@@ -178,7 +174,6 @@ class Accordion extends Component {
 
   render() {
     return (
-      //returns wither props.notes or props.book
       <bookMarkContext.Consumer>
         {value => {
           const title = this.props.book

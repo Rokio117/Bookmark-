@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookmarkContext from "../../context";
-
 import List from "../list/list";
-
 import defaultProps from "../defaultProps";
 import helpers from "../../helpers";
-
 import "./bookInfo.css";
 class BookInfo extends Component {
   constructor(props) {

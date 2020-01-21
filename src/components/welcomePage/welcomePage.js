@@ -68,7 +68,7 @@ class WelcomePage extends Component {
             });
         }}
       >
-        <fieldset>
+        <fieldset className="welcomeFieldset">
           <legend className="welcomeLegend">Sign up</legend>
           <div id="usernameLabelAndInput" className="inputCombo">
             <input
@@ -176,7 +176,7 @@ class WelcomePage extends Component {
             });
         }}
       >
-        <fieldset>
+        <fieldset className="welcomeFieldset">
           <legend className="welcomeLegend">Sign in</legend>
           <div id="loginInputs">
             <div className="loginLabelandInput">
@@ -232,13 +232,17 @@ class WelcomePage extends Component {
           reading, books you would like to read, or books you have already
           finished!
         </p>
+        <div id="formsContainer">
+          <div className="formContainer">
+            <h2 className="formHeader">Returning?</h2>
 
-        <h2 className="formHeader">Returning?</h2>
-
-        {this.loginForm()}
-
-        <h2 className="formHeader">New?</h2>
-        {this.registerForm()}
+            {this.loginForm()}
+          </div>
+          <div className="formContainer">
+            <h2 className="formHeader">New?</h2>
+            {this.registerForm()}
+          </div>
+        </div>
       </div>
     );
   }

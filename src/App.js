@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import bookMarkContext from "./context";
-import AddBook from "./components/addBook/AddBook";
 import "./App.css";
-import config from "./config";
 import Tab from "./components/tab/tab";
 import MainPage from "./components/mainPage/mainPage";
 import WelcomePage from "./components/welcomePage/welcomePage";
@@ -48,8 +46,7 @@ class App extends Component {
     this.setState({ tab: tab });
   };
   login = (username, tab) => {
-    this.setLoading(); //loading set to true
-    //does props need to call the function itself?
+    this.setLoading();
 
     const jwt = sessionStorage.getItem("authToken");
     helpers
@@ -59,7 +56,6 @@ class App extends Component {
         const user = {
           username: userProfile.username,
           id: userProfile.id
-          //password: userProfile.password
         };
         const books =
           userProfile.books || sessionStorage.getItem("state").books;
@@ -71,18 +67,9 @@ class App extends Component {
           userProfile: userProfile,
           loggedIn: true,
           hasError: false,
-          isLoading: false //loading set to false
+          isLoading: false
         };
         return appState;
-        //  this.setState({
-        //   user: user,
-        //   books: books,
-        //   tab: tab || "current",
-        //   userProfile: userProfile,
-        //   loggedIn: true,
-        //   hasError: false,
-        //   isLoading: false
-        // });
       })
       .then(appState => {
         this.props.history.push("/home");

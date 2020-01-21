@@ -63,7 +63,6 @@ const defaultProps = {
       user: "",
       books: [],
       tab: "",
-
       userProfile: {}
     };
   }

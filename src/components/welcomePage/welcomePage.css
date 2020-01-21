@@ -109,10 +109,19 @@ select:focus {
     width: 60%;
     margin-left: auto;
     margin-right: auto;
+    height: 100%;
   }
   #welcomeParagraph {
     width: 60%;
     margin-left: auto;
     margin-right: auto;
+  }
+  #formsContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .formContainer {
+    width: 50%;
   }
 }
