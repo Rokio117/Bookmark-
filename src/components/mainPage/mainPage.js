@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import bookMarkContext from "../../context";
 import List from "../list/list";
-import AddBook from "../addBook/AddBook";
+import AddBook from "../addBook/addBook";
 import defaultProps from "../defaultProps";
 import "./mainPage.css";
 class MainPage extends Component {
