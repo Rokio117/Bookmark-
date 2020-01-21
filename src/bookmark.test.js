@@ -10,6 +10,7 @@ import Tab from "./components/tab/tab";
 import WelcomePage from "./components/welcomePage/welcomePage";
 import defaultProps from "./components/defaultProps";
 import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 
 describe("smoke tests", () => {
   const components = [
@@ -39,7 +40,8 @@ describe("smoke tests", () => {
       )
     },
     { name: "Tab", component: <Tab /> },
-    { name: "WelcomePage", component: <WelcomePage /> }
+    { name: "WelcomePage", component: <WelcomePage /> },
+    { name: "App", component: <App /> }
   ];
 
   components.map(component => {
